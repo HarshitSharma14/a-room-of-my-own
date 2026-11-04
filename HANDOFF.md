@@ -19,8 +19,8 @@ Harshit is building a personal portfolio for the Wispr Flow creative application
 - Production site: `https://a-room-of-my-own.vercel.app/`
 - Also used as a site URL: `https://harshit-portfolio-wisprflow.vercel.app/`
 - Vercel project: `harshit-portfolio-wisprflow`
-- Latest verified production deployment: `dpl_9g7EoXofcQFVmGM9jdSeKBX9Y6Nt` (ready, HTTP 200, title `Harshit Portfolio | Wispr Flow`). The page, laptop patch asset, and object-section script returned HTTP 200.
-- Published code commit: `bc7d763 Hide only painted laptop during unchanged front transition`. The prior full-patch revert was `239c4bc`.
+- Latest verified production deployment: `dpl_8QKFVpa7ngMHxqkhMte63Xn9FSNZ` (ready, HTTP 200, title `Harshit Portfolio | Wispr Flow`). The previous deployment's page, laptop patch asset, and object-section script returned HTTP 200.
+- Published code commit: `dde6225 Keep room laptop hidden through return`. The prior full-patch revert was `239c4bc`.
 
 ## Current implementation
 
