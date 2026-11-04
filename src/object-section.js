@@ -15,21 +15,25 @@ const objectSectionContent={
 
 export function createObjectSection({id,room,button,scene,image,getView,getFootMotion,isStill,onChange,onCue}){
   const content=objectSectionContent[id];
+  const isLaptop=id==='laptop';
   const dialog=document.createElement('dialog');
   dialog.className=`object-dialog object-dialog--${id}`;dialog.id=`${id}-dialog`;
   dialog.setAttribute('aria-labelledby',`${id}-title`);
-  dialog.innerHTML=`<button class="object-backdrop" type="button" tabindex="-1" aria-label="Close ${content.label} section"></button>
-    <canvas class="object-magic" aria-hidden="true"></canvas>
-    <div class="object-traveler" aria-hidden="true"><div class="object-portrait"></div></div>
-    <article class="object-panel" tabindex="0" aria-label="${content.label} section">
+  const panelHTML=`<article class="object-panel" tabindex="0" aria-label="${content.label} section">
       <button class="object-close" type="button" aria-label="Close ${content.label} section" autofocus>×</button>
+      ${isLaptop?'<div class="laptop-toolbar" aria-hidden="true"><span class="laptop-led"></span><span>HARSHIT / PROJECTS</span><span>01 — 01</span></div>':''}
       <span class="object-eyebrow"></span><h2 id="${id}-title"></h2>
       <p class="object-lead"></p><p class="object-body"></p><div class="object-rule"></div><p class="object-detail"></p>
       <span class="object-footer">A ROOM OF MY OWN</span>
     </article>`;
+  dialog.innerHTML=`<button class="object-backdrop" type="button" tabindex="-1" aria-label="Close ${content.label} section"></button>
+    <canvas class="object-magic" aria-hidden="true"></canvas>
+    ${isLaptop?`<div class="object-traveler object-laptop"><div class="object-laptop-flip"><div class="object-portrait" aria-hidden="true"></div>${panelHTML}</div></div>`
+      :`<div class="object-traveler" aria-hidden="true"><div class="object-portrait"></div></div>${panelHTML}`}`;
   for(const [selector,value] of [['.object-eyebrow',content.eyebrow],['h2',content.title],['.object-lead',content.lead],['.object-body',content.body],['.object-detail',content.detail]]) dialog.querySelector(selector).textContent=value;
   document.body.append(dialog);
   const traveler=dialog.querySelector('.object-traveler'), portrait=dialog.querySelector('.object-portrait');
+  const flip=dialog.querySelector('.object-laptop-flip');
   const panel=dialog.querySelector('.object-panel'), backdrop=dialog.querySelector('.object-backdrop');
   const magic=createPageMagic(dialog.querySelector('.object-magic'));
   portrait.style.backgroundImage=`url("${image.currentSrc||image.src}")`;
@@ -41,19 +45,25 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
   const ease=value=>value*value*(3-2*value);
   function render(){
     const {rect,crop}=getView(),source=projectPageRect(content.bounds,scene,rect,crop);
-    const destination=pageDestination(rect), t=ease(clamp((progress-pageTiming.arrival)/(1-pageTiming.arrival),0,1));
+    const insetX=Math.min(12,rect.width*.025),insetY=Math.min(12,rect.height*.025);
+    const destination=isLaptop?{left:rect.left+insetX,top:rect.top+insetY,width:rect.width-2*insetX,height:rect.height-2*insetY}:pageDestination(rect);
+    const t=ease(clamp((progress-pageTiming.arrival)/(1-pageTiming.arrival),0,1));
     const cx=source.left+source.width/2+(destination.left+destination.width/2-source.left-source.width/2)*t;
     const cy=source.top+source.height/2+(destination.top+destination.height/2-source.top-source.height/2)*t;
     const width=source.width+(destination.width-source.width)*t;
     const height=source.height+(destination.height-source.height)*t;
-    Object.assign(traveler.style,{left:`${cx-width/2}px`,top:`${cy-height/2}px`,width:`${width}px`,height:`${height}px`,opacity:String(clamp(1-(progress-.63)/.25,0,1)),transform:`rotate(${(id==='guitar'?8:-4)*Math.sin(t*Math.PI)}deg)`});
+    Object.assign(traveler.style,{left:`${cx-width/2}px`,top:`${cy-height/2}px`,width:`${width}px`,height:`${height}px`,
+      opacity:isLaptop?'1':String(clamp(1-(progress-.63)/.25,0,1)),
+      transform:isLaptop?'none':`rotate(${(id==='guitar'?8:-4)*Math.sin(t*Math.PI)}deg)`,
+      pointerEvents:isLaptop&&progress>.85?'auto':'none'});
+    if(flip)flip.style.transform=`rotateY(${180*ease(clamp((progress-pageTiming.arrival)/(.86-pageTiming.arrival),0,1))}deg)`;
     const imageWidth=rect.width/crop.width,imageHeight=rect.height/crop.height;
     portrait.style.backgroundSize=`${imageWidth}px ${imageHeight}px`;
     portrait.style.backgroundPosition=`${-(source.left-rect.left+crop.x*imageWidth)}px ${-(source.top-rect.top+crop.y*imageHeight)}px`;
     portrait.style.width=`${source.width}px`;portrait.style.height=`${source.height}px`;
     portrait.style.transform=`scale(${width/source.width},${height/source.height})`;
-    panel.style.opacity=String(ease(clamp((progress-.66)/.34,0,1)));
-    panel.style.transform=`translateY(${(1-t)*28}px) scale(${.94+.06*t})`;
+    panel.style.opacity=isLaptop?'1':String(ease(clamp((progress-.66)/.34,0,1)));
+    if(!isLaptop)panel.style.transform=`translateY(${(1-t)*28}px) scale(${.94+.06*t})`;
     panel.style.pointerEvents=progress>.85?'auto':'none';
     backdrop.style.opacity=String(progress*.75);
     const center=[source.left+source.width/2,source.top+source.height/2];

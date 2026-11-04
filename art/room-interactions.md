@@ -9,7 +9,7 @@ gently dimmed. Closing reverses the object's journey. No calibration UI.
 | --- | --- | --- |
 | Hanging page | His foot moves and sparkles travel to the nail. The nail loosens, the page swings, detaches, and floats into the center. It opens into a readable sheet. Closing sends it back and reseats the nail. | About me and career story |
 | Cat | His foot sends a sparkle cue to the cat. The cat stirs and its section comes forward. | A quieter side of the room |
-| Laptop | His foot sends a sparkle cue to the laptop. It comes forward and opens the projects section. | Projects and how they were built |
+| Laptop | His foot sends a sparkle cue to the laptop. It turns its screen toward the visitor and expands across the viewport to show projects. | Projects and how they were built |
 | Guitar | His foot sends a sparkle cue to the guitar. It comes forward and opens a space for interests. | Life beyond coding |
 | Books | He glances toward the shelf. A book slides out and opens in the center. Page turns move through chapters. | Skills and learning journey, supported by examples |
 | Trophy | A sleepy smile, then a glint. The trophy lifts forward and its engraved plate expands. Selecting a milestone reveals its story. | Achievements, awards, certificates, milestones |

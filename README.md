@@ -32,7 +32,8 @@ The server serves only `dist/`.
   the paper floats into the center. Close with Escape, the × button, or the
   dimmed room. Closing during flight reverses from the current position.
 - Click the cat, guitar, or laptop to open their sections. His foot sends a
-  sparkle cue to the object before it comes forward. Each section closes with
+  sparkle cue to the object before it comes forward. The laptop turns its
+  screen toward you and expands across the viewport. Each section closes with
   Escape, the × button, or the dimmed room.
 - The midpoint between the eyes is the gaze baseline. Each eye aims toward the
   pointer from its own position, including when the pointer sits between them.
