@@ -22,8 +22,8 @@ Harshit is building a personal portfolio for the Wispr Flow creative application
 - Production site: `https://a-room-of-my-own.vercel.app/`
 - Also used as a site URL: `https://harshit-portfolio-wisprflow.vercel.app/`
 - Vercel project: `harshit-portfolio-wisprflow`
-- Latest verified production deployment: `dpl_3f14KyBwaS3PNKc8P3fDK8F7Nad4` (ready, HTTP 200, title `Harshit Portfolio | Wispr Flow`).
-- Published code commit: `ecb51f9 Start paper and laptop motion without sparkle wait`. The prior full-patch revert was `239c4bc`.
+- Latest verified production deployment: `dpl_22KPDMa7BzyRvn33a9CQGLJLueVD` (ready, HTTP 200, title `Harshit Portfolio | Wispr Flow`). The live cat assets and object-section script returned HTTP 200.
+- Published code commit: `8f9e3c0 Fly front-facing cat into forehead close-up`. The prior full-patch revert was `239c4bc`.
 
 ## Current implementation
 
