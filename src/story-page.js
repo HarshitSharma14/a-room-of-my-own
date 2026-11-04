@@ -1,6 +1,5 @@
 import { projectPageRect, pageDestination, advancePage, pagePose, pageTiming, footTipOnScreen, magicPoint } from './page-motion.js';
 import { storyContent } from './story-content.js';
-import { createPageMagic } from './page-magic.js';
 
 export function createStoryPage({room,button,scene,getView,getFootMotion,isStill,onChange}) {
   const patch=document.createElement('img');
@@ -11,7 +10,6 @@ export function createStoryPage({room,button,scene,getView,getFootMotion,isStill
   dialog.setAttribute('aria-labelledby','story-title');
   dialog.innerHTML=`
     <button class="story-backdrop" type="button" tabindex="-1" aria-label="Return the page to the wall"></button>
-    <canvas class="story-magic" aria-hidden="true"></canvas>
     <div class="story-sheet">
       <img class="story-sprite" src="./art/story-page.png" alt="" draggable="false">
       <div class="story-paper">
@@ -43,7 +41,6 @@ export function createStoryPage({room,button,scene,getView,getFootMotion,isStill
   const paper=dialog.querySelector('.story-paper'), copy=dialog.querySelector('.story-copy');
   const nail=dialog.querySelector('.story-nail'), backdrop=dialog.querySelector('.story-backdrop');
   const closeButton=dialog.querySelector('.story-close');
-  const magic=createPageMagic(dialog.querySelector('.story-magic'));
   button.setAttribute('aria-haspopup','dialog');button.setAttribute('aria-controls',dialog.id);
   button.setAttribute('aria-expanded','false');
   let active=false, pending=false, progress=0, direction=1, frame=0, last=0, currentPose=null, focus=null;
@@ -67,7 +64,6 @@ export function createStoryPage({room,button,scene,getView,getFootMotion,isStill
     backdrop.style.opacity=String(pose.dim);
     const pin=projectPageRect(scene.page.nail,scene,rect,crop);place(nail,pin);
     const toe=footTipOnScreen(getFootMotion(),scene,rect,crop), nailCenter=[pin.left+pin.width/2,pin.top+pin.height/2];
-    magic.draw(progress,toe,nailCenter,rect,direction>0&&!isStill());
     focus=direction>0&&progress<pageTiming.arrival?magicPoint(progress,toe,nailCenter):[pose.cx,pose.cy];
     nail.style.transform=`translate(${pose.nail.x}px,${pose.nail.y}px) rotate(${pose.nail.angle}deg)`;
     nail.style.opacity=String(pose.nail.opacity);

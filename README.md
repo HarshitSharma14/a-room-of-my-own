@@ -28,11 +28,11 @@ The server serves only `dist/`.
 
 - The expanded illustration fills the viewport without borders or page sections.
 - Click the loose page at the lower-right of the pinboard to read **My story**.
-  His foot moves, sparkles travel to the nail, then the nail releases and
+  His foot moves, then the nail releases and
   the paper floats into the center. Close with Escape, the × button, or the
   dimmed room. Closing during flight reverses from the current position.
-- Click the cat, guitar, or laptop to open their sections. His foot sends a
-  sparkle cue to the object before it comes forward. The laptop turns its
+- Click the cat, guitar, or laptop to open their sections. The cat and guitar
+  retain their sparkle cues. The laptop turns its
   screen toward you and expands across the viewport. Each section closes with
   Escape, the × button, or the dimmed room.
 - The midpoint between the eyes is the gaze baseline. Each eye aims toward the

@@ -11,6 +11,7 @@ Harshit is building a personal portfolio for the Wispr Flow creative application
 - The laptop should appear to turn as a physical laptop, bringing its screen toward the visitor and close enough that the final view is still clearly a laptop screen. The front image should match the illustrated laptop already in the room. `public/art/laptop-front.png` is the approved front view. Keep its current turn and zoom unless the user asks to change them.
 - The user clarified that **the front laptop and its transition must stay exactly as they are**. Their only request is for the original painted laptop behind it to disappear when the front laptop appears, as the poster does. The first room patch in commit `94da9a8` covered too much of the surrounding person and sofa; the user disliked that version, so it was reverted in `239c4bc`. The current fix reuses the replacement art but clips its display tightly to the painted laptop's shape. Do not alter the front laptop art, turn, zoom, text, or timing as part of this behavior.
 - This file is the requested resume context. Keep it current when important visual decisions change.
+- Latest requested change: remove the visible sparkle particles from the hanging page and laptop. Preserve their existing foot, page, and laptop motion; cat and guitar still use the sparkle canvas.
 
 ## Live and source locations
 
@@ -28,7 +29,8 @@ Harshit is building a personal portfolio for the Wispr Flow creative application
 - `src/room.js`: room loop, gaze, viewport crop/pan, hotspots, ambient motion, and section setup.
 - `src/scene-config.js`: artwork coordinate calibration and hotspots.
 - `src/renderer.js`, `src/gaze-map.js`, `src/scene-math.js`: painted room effects, eyes/head tracking, and coordinate math.
-- `src/story-page.js`, `src/story-content.js`, `src/page-motion.js`, `src/page-magic.js`: hanging poster/page story, reversible motion, and sparkle cue.
+- `src/story-page.js`, `src/story-content.js`, `src/page-motion.js`: hanging poster/page story and reversible motion. The page has no sparkle canvas.
+- `src/page-magic.js`: sparkle effect, now used by the cat and guitar only.
 - `src/object-section.js`: shared cat, guitar, and laptop section behavior. The laptop traveler uses `public/art/laptop-front.png`, CSS 3D turn, scale/position interpolation, and project copy placed inside the screen. A separate `laptop-room-patch` covers the original painted laptop for the entire active interaction, from click through the end of return, and is hidden only when the dialog closes. This timing avoids showing both laptops at the start of return.
 - `public/art/laptop-sofa-patch.png` and its `clip-path` in `src/room.css` replace only the painted laptop footprint. The broad feathered cover from commit `94da9a8` is intentionally not used.
 - `src/room.css`: traveler, laptop, dialogs, overlays, and responsive styling.

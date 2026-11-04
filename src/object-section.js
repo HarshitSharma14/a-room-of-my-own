@@ -29,7 +29,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
       <span class="object-footer">A ROOM OF MY OWN</span>`;
   const panelHTML=`<article class="object-panel" tabindex="0" aria-label="${content.label} section">${isLaptop?`<div class="laptop-screen-content">${panelBody}</div>`:panelBody}</article>`;
   dialog.innerHTML=`<button class="object-backdrop" type="button" tabindex="-1" aria-label="Close ${content.label} section"></button>
-    <canvas class="object-magic" aria-hidden="true"></canvas>
+    ${isLaptop?'':'<canvas class="object-magic" aria-hidden="true"></canvas>'}
     ${isLaptop?`<div class="object-traveler object-laptop"><div class="laptop-machine"><img class="laptop-front" src="./art/laptop-front.png" alt="" draggable="false">${panelHTML}</div></div>`
       :`<div class="object-traveler" aria-hidden="true"><div class="object-portrait"></div></div>${panelHTML}`}`;
   for(const [selector,value] of [['.object-eyebrow',content.eyebrow],['h2',content.title],['.object-lead',content.lead],['.object-body',content.body],['.object-detail',content.detail]]) dialog.querySelector(selector).textContent=value;
@@ -38,7 +38,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
   const machine=dialog.querySelector('.laptop-machine');
   const screenContent=dialog.querySelector('.laptop-screen-content');
   const panel=dialog.querySelector('.object-panel'), backdrop=dialog.querySelector('.object-backdrop');
-  const magic=createPageMagic(dialog.querySelector('.object-magic'));
+  const magic=isLaptop?null:createPageMagic(dialog.querySelector('.object-magic'));
   if(portrait)portrait.style.backgroundImage=`url("${image.currentSrc||image.src}")`;
   const closeButton=dialog.querySelector('.object-close');
   button.setAttribute('aria-haspopup','dialog');button.setAttribute('aria-controls',dialog.id);button.setAttribute('aria-expanded','false');
@@ -82,7 +82,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
     backdrop.style.opacity=String(progress*.75);
     const center=[source.left+source.width/2,source.top+source.height/2];
     const toe=footTipOnScreen(getFootMotion(),scene,rect,crop);
-    magic.draw(progress,toe,center,rect,direction>0&&!isStill());
+    magic?.draw(progress,toe,center,rect,direction>0&&!isStill());
     focus=direction>0&&progress<pageTiming.arrival?magicPoint(progress,toe,center):[cx,cy];
     room.dataset.section=id;onChange();
   }

@@ -60,7 +60,6 @@ body { background: #242b38; }
 .story-close svg { width: 21px; height: 21px; }
 .story-fold { position: absolute; bottom: 0; right: 0; width: 30px; height: 30px; background: linear-gradient(135deg,transparent 48%,#b6a28466 49%,#e9d8ba 54%,#f8edd7); clip-path: polygon(100% 0,100% 100%,0 100%); pointer-events: none; }
 .story-nail { position: absolute; pointer-events: none; transform-origin: 50% 50%; }
-.story-magic { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 .story-dialog:not([data-state="open"]) .story-copy { pointer-events: none; }
 @media(max-width:600px) { .story-copy { padding: 44px 27px 30px; }.story-copy h2 { margin-top: 28px; }.story-chapters { grid-template-columns: 1fr; gap: 24px; }.story-chapters p { font-size: 13px; }.story-lead { font-size: 17px; }.story-masthead { font-size: 8px; }.story-rule { margin: 23px 0; } }
 @media(prefers-reduced-motion:reduce) { .room-hotspot[data-object="story"]::after { transition: none; } }

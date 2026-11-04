@@ -56,7 +56,7 @@ test('pin release and readable copy happen in order, and every intermediate pose
   }
 });
 
-test('foot moves first and the nail and page stay fixed until sparkles arrive',()=>{
+test('foot moves first and the nail and page stay fixed until release',()=>{
   const source={left:180,top:290,width:57,height:92}, destination=pageDestination({left:0,top:0,width:1440,height:813});
   const start=pagePose(0,source,destination);
   assert.ok(pagePose(.1,source,destination).footGesture>.5);
@@ -70,7 +70,7 @@ test('foot moves first and the nail and page stay fixed until sparkles arrive',(
   assert.ok(Math.abs(final.footGesture)<1e-8);
 });
 
-test('sparkle path starts at the posed toe and ends on the nail after cropping or panning',()=>{
+test('gaze cue path starts at the posed toe and ends on the nail after cropping or panning',()=>{
   for(const [width,height,center] of [[1440,813,.56],[390,844,.2],[844,390,.4],[3440,1440,.56]]) {
     const rect={left:12,top:24,width,height},crop=coverCrop(width,height,...scene.size,center);
     const toe=footTipOnScreen(.9,scene,rect,crop), pin=projectPageRect(scene.page.nail,scene,rect,crop);
