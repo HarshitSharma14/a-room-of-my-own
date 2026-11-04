@@ -77,12 +77,16 @@ body { background: #242b38; }
 .object-panel {position:absolute;z-index:2;left:50%;top:50%;width:min(640px,calc(100vw - 32px));height:min(760px,calc(100vh - 40px));transform:translateY(28px);margin-left:calc(-1 * min(640px,100vw - 32px) / 2);margin-top:calc(-1 * min(760px,100vh - 40px) / 2);padding:48px 56px 38px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;border:1px solid #d6c2a179;border-radius:22px;background:linear-gradient(145deg,#34394b,#202937 65%,#1b2432);box-shadow:0 30px 90px #070b13a8,inset 0 1px #ffffff18;}
 .object-dialog--cat .object-panel {background:linear-gradient(140deg,#4e3e44,#2b303d 60%,#252c39);}
 .object-dialog--guitar .object-panel {background:linear-gradient(135deg,#443a42,#2b2d3d 65%,#202634);}
-.object-dialog--laptop .object-panel {background:linear-gradient(140deg,#293d50,#1c2a38 65%,#18212e);}
-.object-dialog--laptop .object-traveler {z-index:2;overflow:visible;border-radius:0;filter:drop-shadow(0 24px 42px #050a12b8);-webkit-mask-image:none;mask-image:none;perspective:1400px;}
-.object-laptop-flip {position:absolute;inset:0;transform-style:preserve-3d;transform-origin:center;}
-.object-dialog--laptop .object-portrait {border-radius:18px;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;-webkit-mask-image:radial-gradient(ellipse,#000 55%,transparent 79%);mask-image:radial-gradient(ellipse,#000 55%,transparent 79%);}
-.object-dialog--laptop .object-panel {left:0;top:0;width:100%;height:100%;margin:0;padding:62px clamp(26px,7vw,110px) 38px;border:12px solid #0b111d;border-radius:22px;box-shadow:inset 0 0 0 1px #80a2bc55,inset 0 1px 40px #74c9ee12;background:linear-gradient(140deg,#21364b,#142536 65%,#101c2b);transform:rotateY(180deg);backface-visibility:hidden;-webkit-backface-visibility:hidden;}
-.object-dialog--laptop .object-panel::before {left:50%;right:auto;top:-8px;width:6px;height:6px;border-radius:50%;background:#4b7095;box-shadow:0 0 0 2px #101827;transform:translateX(-50%);}
+.object-dialog--laptop .object-traveler {z-index:2;overflow:visible;border-radius:0;filter:drop-shadow(0 24px 42px #050a12b8);-webkit-mask-image:none;mask-image:none;perspective:1500px;}
+.laptop-machine {position:absolute;inset:0;transform-style:preserve-3d;transform-origin:50% 74%;}
+.laptop-lid {position:absolute;left:0;top:0;width:100%;height:calc(100% - var(--base-height,74px));padding:10px;border:3px solid #111927;border-radius:20px 20px 9px 9px;background:#0a101b;box-shadow:inset 0 1px #8ca7b058,0 0 0 1px #050a12;transform:translateZ(7px);}
+.laptop-lid::before {content:'';position:absolute;top:3px;left:50%;width:6px;height:6px;border-radius:50%;background:#416487;box-shadow:0 0 0 2px #111927;transform:translateX(-50%);z-index:3;}
+.object-dialog--laptop .object-panel {left:0;top:0;width:100%;height:100%;margin:0;padding:49px clamp(26px,7vw,110px) 28px;border:1px solid #7b9db63d;border-radius:10px;box-shadow:inset 0 1px 40px #74c9ee12;background:linear-gradient(140deg,#21364b,#142536 65%,#101c2b);transform:none;}
+.object-dialog--laptop .object-panel::before {display:none;}
+.laptop-screen-content {min-height:100%;}
+.laptop-base {position:absolute;left:-1.5%;bottom:0;width:103%;height:var(--base-height,74px);border:2px solid #0c1420;border-radius:3px 3px 20px 20px;background:linear-gradient(#4c5c69 0,#202b3a 18%,#111a28 76%,#080e18);box-shadow:inset 0 2px #93a5af78,0 7px 16px #05081096;clip-path:polygon(1.5% 0,98.5% 0,100% 72%,97% 100%,3% 100%,0 72%);transform:rotateX(55deg);transform-origin:50% 0;}
+.laptop-keyboard {position:absolute;left:8%;top:12%;width:84%;height:51%;border:1px solid #8d9aa547;border-radius:4px;background:repeating-linear-gradient(90deg,#09111c 0 16px,#425365 17px 18px),repeating-linear-gradient(0deg,transparent 0 12px,#748391 13px 14px);background-blend-mode:multiply;opacity:.8;}
+.laptop-trackpad {position:absolute;left:43%;bottom:8%;width:14%;height:25%;border:1px solid #9daeb25c;border-radius:4px;background:#293849;}
 .object-dialog--laptop .object-panel h2 {max-width:780px;margin:clamp(35px,7vh,84px) 0 18px;font-size:clamp(42px,6vw,76px);}
 .object-dialog--laptop .object-lead,.object-dialog--laptop .object-body,.object-dialog--laptop .object-detail {max-width:690px;}
 .object-dialog--laptop .object-footer {max-width:690px;}
