@@ -46,8 +46,8 @@ test('pin release and readable copy happen in order, and every intermediate pose
   const destination={left:400,top:30,width:640,height:760};
   assert.equal(pagePose(.1,source,destination).copy,0);
   const afterImpact=p=>pageTiming.arrival+p*(1-pageTiming.arrival);
-  assert.ok(pagePose(afterImpact(.38),source,destination).flight<1e-8);
-  assert.ok(pagePose(afterImpact(.54),source,destination).nail.opacity<1e-8);
+  assert.ok(pagePose(afterImpact(.11),source,destination).flight>0);
+  assert.ok(pagePose(afterImpact(.38),source,destination).nail.opacity<1e-8);
   assert.equal(pagePose(afterImpact(.54),source,destination).copy,0);
   for(let i=0;i<=180;i++) {
     const pose=pagePose(i/180,source,destination);

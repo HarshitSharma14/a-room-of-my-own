@@ -7,9 +7,9 @@ gently dimmed. Closing reverses the object's journey. No calibration UI.
 
 | Object | Character and object choreography | Content |
 | --- | --- | --- |
-| Hanging page | His foot moves. The nail loosens, the page swings, detaches, and floats into the center. It opens into a readable sheet. Closing sends it back and reseats the nail. | About me and career story |
+| Hanging page | The nail loosens immediately; the page swings, detaches, and floats into the center. It opens into a readable sheet. Closing sends it back and reseats the nail. | About me and career story |
 | Cat | His foot sends a sparkle cue to the cat. The cat stirs and its section comes forward. | A quieter side of the room |
-| Laptop | His foot moves. The laptop turns its screen toward the visitor and expands across the viewport to show projects. | Projects and how they were built |
+| Laptop | The laptop immediately turns its screen toward the visitor and expands across the viewport to show projects. | Projects and how they were built |
 | Guitar | His foot sends a sparkle cue to the guitar. It comes forward and opens a space for interests. | Life beyond coding |
 | Books | He glances toward the shelf. A book slides out and opens in the center. Page turns move through chapters. | Skills and learning journey, supported by examples |
 | Trophy | A sleepy smile, then a glint. The trophy lifts forward and its engraved plate expands. Selecting a milestone reveals its story. | Achievements, awards, certificates, milestones |
@@ -26,10 +26,10 @@ Use the existing loose sheet at the lower-right of the corkboard. Do not add a
 new button/card to the room. Hover/focus may reveal a small “My story” label;
 the page itself is the touch and keyboard target.
 
-Sequence: `idle → foot cue → loosening → flying → open → returning → idle`.
+Sequence: `idle → loosening → flying → open → returning → idle`.
 
-- Approximately 3 seconds to open: gaze leads, the foot moves, then the nail releases,
-  paper rocks around its upper edge, then arcs into the center and straightens.
+- The nail starts releasing on click. The paper briefly rocks around its upper edge,
+  then arcs into the center and straightens.
 - Use an extracted paper sprite during travel. A restored background patch
   covers the original sheet while it is away, so there is no duplicate page.
 - Fade from the illustration into a warm, readable paper surface as it grows.

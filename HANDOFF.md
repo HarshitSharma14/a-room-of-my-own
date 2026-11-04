@@ -11,7 +11,8 @@ Harshit is building a personal portfolio for the Wispr Flow creative application
 - The laptop should appear to turn as a physical laptop, bringing its screen toward the visitor and close enough that the final view is still clearly a laptop screen. The front image should match the illustrated laptop already in the room. `public/art/laptop-front.png` is the approved front view. Keep its current turn and zoom unless the user asks to change them.
 - The user clarified that **the front laptop and its transition must stay exactly as they are**. Their only request is for the original painted laptop behind it to disappear when the front laptop appears, as the poster does. The first room patch in commit `94da9a8` covered too much of the surrounding person and sofa; the user disliked that version, so it was reverted in `239c4bc`. The current fix reuses the replacement art but clips its display tightly to the painted laptop's shape. Do not alter the front laptop art, turn, zoom, text, or timing as part of this behavior.
 - This file is the requested resume context. Keep it current when important visual decisions change.
-- Latest requested change: remove the visible sparkle particles from the hanging page and laptop. Preserve their existing foot, page, and laptop motion; cat and guitar still use the sparkle canvas.
+- The sparkle particles were removed from the hanging page and laptop. Cat and guitar still use the sparkle canvas.
+- Follow-up: remove the empty wait that remained after removing sparkles. Paper and laptop now start at `pageTiming.arrival` on click, so their visible motion begins immediately. The paper's nail and flight phases were moved earlier; the laptop return closes at `arrival` instead of continuing through an invisible prelude. Cat and guitar retain their original timing and sparkle cues.
 
 ## Live and source locations
 

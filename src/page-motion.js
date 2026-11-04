@@ -48,8 +48,8 @@ export function advancePage(progress, direction, seconds, still=false) {
 export function pagePose(progress, source, destination) {
   // The original page sequence begins only after magic reaches the nail.
   const raw=clamp(progress,0,1), p=pageRange(raw,pageTiming.arrival,1);
-  const flight=pageRange(p,.38,1), ease=pageEase(flight);
-  const rock=pageRange(p,.12,.38);
+  const flight=pageRange(p,.1,1), ease=pageEase(flight);
+  const rock=pageRange(p,0,.1);
   const angle=flight>0 ? Math.sin(flight*Math.PI*2)*9*(1-flight)
     : Math.sin(rock*Math.PI*3)*7*Math.sin(rock*Math.PI);
   const sx=pageMix(source.width/destination.width,1,ease);
@@ -60,14 +60,14 @@ export function pagePose(progress, source, destination) {
   const cx=pageMix(source.left+source.width/2,destination.left+destination.width/2,ease)-Math.sin(radians)*hinge;
   const cy=pageMix(source.top+source.height/2,destination.top+destination.height/2,ease)
     -Math.sin(flight*Math.PI)*Math.min(110,destination.height*.16)+(Math.cos(radians)-1)*hinge;
-  const lift=pageRange(p,.23,.54);
+  const lift=pageRange(p,0,.32);
   return {cx,cy,sx,sy,angle,flight,
     surface:pageEase(pageRange(p,.55,.84)), copy:pageEase(pageRange(p,.75,.98)),
     dim:pageEase(pageRange(p,.3,.92))*.66,
     nail:{x:lift===0?0:-Math.sin(lift*Math.PI)*18,y:lift===0?0:-Math.sin(lift*Math.PI)*24+lift*lift*125,
-      angle:lift*205+Math.sin(pageRange(p,.1,.23)*Math.PI*6)*(lift===0?12:0),
-      opacity:1-pageEase(pageRange(p,.4,.54))},
+      angle:lift*205+Math.sin(pageRange(p,0,.13)*Math.PI*6)*(lift===0?12:0),
+      opacity:1-pageEase(pageRange(p,.18,.32))},
     footGesture:Math.sin(pageRange(raw,pageTiming.footStart,pageTiming.footEnd)*Math.PI),
-    state:raw<pageTiming.launch?'foot-cue':raw<pageTiming.arrival?'casting':p===1?'open':p<.12?'impact':p<.38?'loosening':'flying',
+    state:raw<pageTiming.launch?'foot-cue':raw<pageTiming.arrival?'casting':p===1?'open':p<.02?'impact':p<.1?'loosening':'flying',
   };
 }

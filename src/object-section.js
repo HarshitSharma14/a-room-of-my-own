@@ -95,13 +95,13 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
     const dt=last?Math.min((now-last)/1000,.25):0;last=now;
     progress=advancePage(progress,direction,dt*1.3,isStill());
     render();
-    if(direction<0&&progress===0){finishClose();return;}
+    if(direction<0&&progress<=(isLaptop?pageTiming.arrival:0)){finishClose();return;}
     if(direction>0&&progress===1){panel.scrollTop=0;last=0;return;}
     frame=requestAnimationFrame(tick);
   }
   function schedule(){if(active&&!frame&&!document.hidden)frame=requestAnimationFrame(tick);}
   function open(){
-    if(active)return;active=true;direction=1;progress=isStill()?1:0;last=0;
+    if(active)return;active=true;direction=1;progress=isStill()?1:isLaptop?pageTiming.arrival:0;last=0;
     button.setAttribute('aria-expanded','true');panel.scrollTop=0;
     dialog.showModal();onCue(id);render();closeButton.focus({preventScroll:true});
     if(progress===1)panel.scrollTop=0;

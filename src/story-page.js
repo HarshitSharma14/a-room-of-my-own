@@ -89,7 +89,7 @@ export function createStoryPage({room,button,scene,getView,getFootMotion,isStill
   function schedule() {if(!frame&&active&&!document.hidden)frame=requestAnimationFrame(tick);}
   async function open() {
     if(active||pending)return;pending=true;await ready;pending=false;
-    active=true;direction=1;progress=isStill()||!assetsReady?1:0;last=0;
+    active=true;direction=1;progress=isStill()||!assetsReady?1:pageTiming.arrival;last=0;
     patch.hidden=!assetsReady;copy.scrollTop=0;
     button.setAttribute('aria-expanded','true');
     dialog.showModal();render();closeButton.focus({preventScroll:true});schedule();
