@@ -33,14 +33,34 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
       <span class="object-eyebrow"></span><h2 id="${id}-title"></h2>
       <p class="object-lead"></p><p class="object-body"></p><div class="object-rule"></div><p class="object-detail"></p>
       <span class="object-footer">A ROOM OF MY OWN</span>`;
-  const panelHTML=`<article class="object-panel" tabindex="0" aria-label="${content.label} section">${isLaptop?`<div class="laptop-screen-content">${panelBody}</div>`:panelBody}</article>`;
+  const catPanelBody=`
+      <button class="object-close" type="button" aria-label="Close ${content.label} section" autofocus>×</button>
+      <div class="wispr-header-badge" aria-hidden="true">
+        <img src="./art/wispr-flow-icon-light.png" alt="" class="wispr-header-icon" />
+        <span class="wispr-header-title">WISPR FLOW VOICE DICTATION</span>
+      </div>
+      <span class="object-eyebrow">${content.eyebrow}</span>
+      <h2 id="${id}-title">Spoken into reality</h2>
+      <div class="wispr-speech-box">
+        <div class="wispr-icon-wrap" aria-hidden="true">
+          <img src="./art/wispr-flow-icon-light.png" alt="" />
+          <span class="wispr-pulse-ring"></span>
+        </div>
+        <div class="wispr-word-flow" id="cat-speech-output" aria-live="polite"></div>
+      </div>
+      <div class="object-rule"></div>
+      <p class="object-detail">Wispr Flow transformed Harshit's spoken thoughts into the code, copy, and interactions of this room.</p>
+      <span class="object-footer">A ROOM OF MY OWN</span>`;
+  const panelHTML=`<article class="object-panel" tabindex="0" aria-label="${content.label} section">${isLaptop?`<div class="laptop-screen-content">${panelBody}</div>`:isCat?catPanelBody:panelBody}</article>`;
   dialog.innerHTML=`<button class="object-backdrop" type="button" tabindex="-1" aria-label="Close ${content.label} section"></button>
     ${isLaptop||isBook?'':'<canvas class="object-magic" aria-hidden="true"></canvas>'}
     ${isLaptop?`<div class="object-traveler object-laptop"><div class="laptop-machine"><img class="laptop-front" src="./art/laptop-front.png" alt="" draggable="false">${panelHTML}</div></div>`
-      :isCat?`<div class="object-traveler object-cat" aria-hidden="true"><img class="cat-front" src="./art/cat-front.png" alt="" draggable="false"></div>${panelHTML}`
+      :isCat?`<div class="object-traveler object-cat" aria-hidden="true"><img class="cat-front cat-front--closed" src="./art/cat-front.png" alt="" draggable="false"><img class="cat-front cat-front--talking" src="./art/cat-front-talking.png" alt="" draggable="false" style="display:none;"></div>${panelHTML}`
       :isBook?`<div class="object-traveler object-book" aria-hidden="true"><img class="book-open" src="./art/book-open.png" alt="" draggable="false"><div class="book-cover"><img class="book-front" src="./art/book-front.png" alt="" draggable="false"></div></div>${panelHTML}`
       :`<div class="object-traveler" aria-hidden="true"><div class="object-portrait"></div></div>${panelHTML}`}`;
-  for(const [selector,value] of [['.object-eyebrow',content.eyebrow],['h2',content.title],['.object-lead',content.lead],['.object-body',content.body],['.object-detail',content.detail]]) dialog.querySelector(selector).textContent=value;
+  if(!isCat){
+    for(const [selector,value] of [['.object-eyebrow',content.eyebrow],['h2',content.title],['.object-lead',content.lead],['.object-body',content.body],['.object-detail',content.detail]]) dialog.querySelector(selector).textContent=value;
+  }
   document.body.append(dialog);
   const traveler=dialog.querySelector('.object-traveler'), portrait=dialog.querySelector('.object-portrait');
   const machine=dialog.querySelector('.laptop-machine');
@@ -53,6 +73,65 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
   button.setAttribute('aria-haspopup','dialog');button.setAttribute('aria-controls',dialog.id);button.setAttribute('aria-expanded','false');
   button.dataset.label=id==='cat'?'The cat':id==='laptop'?'Projects':id==='book'?'The book':'Beyond code';
   let active=false,progress=0,direction=1,frame=0,last=0,focus=null;
+  let catSpeechTimer=null,catMouthTimer=null,catAutoReturnTimer=null,catSpeaking=false;
+  const catClosedImg=isCat?dialog.querySelector('.cat-front--closed'):null;
+  const catTalkingImg=isCat?dialog.querySelector('.cat-front--talking'):null;
+  const catSpeechOutput=isCat?dialog.querySelector('#cat-speech-output'):null;
+  const catWisprWrap=isCat?dialog.querySelector('.wispr-icon-wrap'):null;
+
+  function stopCatSpeech(){
+    if(catSpeechTimer){clearInterval(catSpeechTimer);catSpeechTimer=null;}
+    if(catMouthTimer){clearInterval(catMouthTimer);catMouthTimer=null;}
+    if(catAutoReturnTimer){clearTimeout(catAutoReturnTimer);catAutoReturnTimer=null;}
+    catSpeaking=false;
+    if(catClosedImg)catClosedImg.style.display='block';
+    if(catTalkingImg)catTalkingImg.style.display='none';
+    if(catWisprWrap)catWisprWrap.classList.remove('is-speaking');
+  }
+
+  function startCatSpeech(){
+    if(!isCat||catSpeaking)return;
+    stopCatSpeech();
+    catSpeaking=true;
+    if(catSpeechOutput)catSpeechOutput.innerHTML='';
+    if(catWisprWrap)catWisprWrap.classList.add('is-speaking');
+
+    const speechText="Meow! Harshit built this entire room using Wispr Flow. Instead of typing every line of code, he just spoke his thoughts out loud — and Wispr Flow turned his voice into fluid code, interactive logic, and stories. Every interaction in this room started as a spoken idea!";
+    const words=speechText.split(' ');
+    let wordIndex=0;
+
+    let mouthOpen=false;
+    catMouthTimer=setInterval(()=>{
+      if(!catSpeaking)return;
+      mouthOpen=!mouthOpen;
+      if(catClosedImg)catClosedImg.style.display=mouthOpen?'none':'block';
+      if(catTalkingImg)catTalkingImg.style.display=mouthOpen?'block':'none';
+    },140);
+
+    catSpeechTimer=setInterval(()=>{
+      if(!catSpeaking)return;
+      if(wordIndex<words.length){
+        const word=words[wordIndex++];
+        const span=document.createElement('span');
+        span.className='wispr-word wispr-word-latest';
+        span.textContent=word;
+        const prevLatest=catSpeechOutput.querySelector('.wispr-word-latest');
+        if(prevLatest&&prevLatest!==span)prevLatest.classList.remove('wispr-word-latest');
+        catSpeechOutput.append(span);
+        catSpeechOutput.scrollTop=catSpeechOutput.scrollHeight;
+      }else{
+        if(catSpeechTimer){clearInterval(catSpeechTimer);catSpeechTimer=null;}
+        if(catMouthTimer){clearInterval(catMouthTimer);catMouthTimer=null;}
+        if(catClosedImg)catClosedImg.style.display='block';
+        if(catTalkingImg)catTalkingImg.style.display='none';
+        if(catWisprWrap)catWisprWrap.classList.remove('is-speaking');
+        catAutoReturnTimer=setTimeout(()=>{
+          if(active&&direction>0)close();
+        },1800);
+      }
+    },170);
+  }
+
   const clamp=(value,min,max)=>Math.max(min,Math.min(max,value));
   const ease=value=>value*value*(3-2*value);
   function render(){
@@ -73,14 +152,17 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
     let bookFlight=0;
     if(isCat){
       const aspect=1312/1199,phase=clamp((progress-pageTiming.arrival)/(1-pageTiming.arrival),0,1);
-      const fly=ease(clamp(phase/.6,0,1)),zoom=ease(clamp((phase-.6)/.4,0,1));
-      const startWidth=source.height*aspect,midWidth=Math.min(rect.width*.68,rect.height*.92);
-      const closeWidth=Math.max(rect.width/.32,rect.height*aspect/.2);
-      width=startWidth+(midWidth-startWidth)*fly+(closeWidth-midWidth)*zoom;height=width/aspect;
+      const fly=ease(clamp(phase,0,1));
+      const startWidth=source.height*aspect;
+      const isMobile=rect.width<=700;
+      const targetWidth=isMobile?Math.min(rect.width*.44,rect.height*.38*aspect):Math.min(rect.width*.36,rect.height*.52*aspect);
+      width=startWidth+(targetWidth-startWidth)*fly;
+      height=width/aspect;
       const startCx=source.left+source.width/2,startCy=source.top+source.height/2;
-      const middleCx=rect.left+rect.width/2,middleCy=rect.top+rect.height*.5;
-      cx=startCx+(middleCx-startCx)*fly;
-      cy=startCy+(middleCy-startCy)*fly+height*(.5-.21)*zoom;
+      const targetCx=isMobile?rect.left+rect.width*.3:rect.left+rect.width*.22;
+      const targetCy=isMobile?rect.top+rect.height*.3:rect.top+rect.height*.52;
+      cx=startCx+(targetCx-startCx)*fly;
+      cy=startCy+(targetCy-startCy)*fly;
     }
     if(isBook){
       const closedAspect=1115/1410,openAspect=1536/1024;
@@ -115,7 +197,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
       portrait.style.transform=`scale(${width/source.width},${height/source.height})`;
     }
     panel.style.opacity=isLaptop?'1':String(ease(clamp((progress-(isCat||isBook?.8:.66))/(isCat||isBook?.2:.34),0,1)));
-    if(!isLaptop)panel.style.transform=isBook?'translateY(-50%)':`translateY(${(1-t)*28}px) scale(${.94+.06*t})`;
+    if(!isLaptop)panel.style.transform=isBook?'translateY(-50%)':isCat?'translateY(-50%)':`translateY(${(1-t)*28}px) scale(${.94+.06*t})`;
     panel.style.pointerEvents=progress>.85?'auto':'none';
     backdrop.style.opacity=String(progress*.75);
     const center=[source.left+source.width/2,source.top+source.height/2];
@@ -125,6 +207,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
     room.dataset.section=id;onChange();
   }
   function finishClose(){
+    stopCatSpeech();
     active=false;progress=0;focus=null;last=0;if(roomPatch)roomPatch.hidden=true;dialog.close();delete room.dataset.section;
     button.setAttribute('aria-expanded','false');button.focus({preventScroll:true});onChange();
   }
@@ -134,7 +217,11 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
     progress=advancePage(progress,direction,dt*1.3,isStill());
     render();
     if(direction<0&&progress<=((isLaptop||isCat||isBook)?pageTiming.arrival:0)){finishClose();return;}
-    if(direction>0&&progress===1){panel.scrollTop=0;last=0;return;}
+    if(direction>0&&progress===1){
+      panel.scrollTop=0;last=0;
+      if(isCat)startCatSpeech();
+      return;
+    }
     frame=requestAnimationFrame(tick);
   }
   function schedule(){if(active&&!frame&&!document.hidden)frame=requestAnimationFrame(tick);}
@@ -142,10 +229,17 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
     if(active)return;active=true;direction=1;progress=isStill()?1:isLaptop||isBook?pageTiming.arrival:0;last=0;
     button.setAttribute('aria-expanded','true');panel.scrollTop=0;
     dialog.showModal();onCue(id);render();closeButton.focus({preventScroll:true});
-    if(progress===1)panel.scrollTop=0;
+    if(progress===1){
+      panel.scrollTop=0;
+      if(isCat)startCatSpeech();
+    }
     schedule();
   }
-  function close(){if(!active||direction<0)return;direction=-1;last=0;schedule();}
+  function close(){
+    if(!active||direction<0)return;
+    stopCatSpeech();
+    direction=-1;last=0;schedule();
+  }
   button.addEventListener('click',open);
   closeButton.addEventListener('click',close);backdrop.addEventListener('click',close);
   dialog.addEventListener('cancel',event=>{event.preventDefault();close();});
