@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#242b38" />
+    <meta name="description" content="A little room, a few things I love, and a story still being written. Harshit Sharma's interactive portfolio." />
+    <title>A room of my own — Harshit Sharma</title>
+    <link rel="preload" as="image" href="./art/room-scene.jpg" fetchpriority="high" />
+    <link rel="stylesheet" href="./src/room.css" />
+  </head>
+  <body>
+    <main id="room" class="room" tabindex="0" aria-label="Harshit's room" aria-describedby="room-description">
+      <h1 class="sr-only">A room of my own — Harshit Sharma</h1>
+      <p id="room-description" class="sr-only">A cozy illustrated room. I'm relaxing on the sofa with my laptop and phone, while an orange cat sleeps beside me. Move your pointer and I will gently follow it. Select the loose page on the pinboard to read my story. On a narrow screen, drag or use the left and right arrow keys to explore the room.</p>
+      <img id="room-image" class="room-image" src="./art/room-scene.jpg" width="2752" height="1536" alt="A sleepy developer lounging on a sofa with a laptop and phone, an orange cat, a warm lamp, a desk, books, and personal objects around the room." fetchpriority="high" draggable="false" />
+      <canvas id="room-canvas" class="room-canvas" aria-hidden="true"></canvas>
+      <div id="room-status" class="sr-only" role="status" aria-live="polite"></div>
+    </main>
+    <button id="motion-toggle" class="motion-toggle" type="button" aria-label="Pause room animation" aria-pressed="false" title="Pause animation">
+      <svg class="icon-pause" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6v12M15 6v12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" /></svg>
+      <svg class="icon-play" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 6 9 6-9 6V6Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" /></svg>
+    </button>
+    <noscript><p class="noscript-note">The room is still here. Enable JavaScript for its small movements.</p></noscript>
+    <script type="module" src="./src/room.js"></script>
+  </body>
+</html>
