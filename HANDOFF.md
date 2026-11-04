@@ -13,6 +13,7 @@ Harshit is building a personal portfolio for the Wispr Flow creative application
 - This file is the requested resume context. Keep it current when important visual decisions change.
 - The sparkle particles were removed from the hanging page and laptop. Cat and guitar still use the sparkle canvas.
 - Follow-up: remove the empty wait that remained after removing sparkles. Paper and laptop now start at `pageTiming.arrival` on click, so their visible motion begins immediately. The paper's nail and flight phases were moved earlier; the laptop return closes at `arrival` instead of continuing through an invisible prelude. Cat and guitar retain their original timing and sparkle cues.
+- Cat follow-up: `public/art/cat-front.png` is a transparent front-facing cutout made from the room cat reference. `public/art/cat-sofa-patch.png` restores the blanket while the cat is away. `src/object-section.js` flies the front cat from its sofa anchor to center, then zooms into its forehead; `src/room.css` puts the readable cat panel over the close-up. The original cat stays visible through its initial sparkle cue, disappears when the flying cat appears, and returns when the flight closes at `pageTiming.arrival`. Preserve these handoffs when changing its timing.
 
 ## Live and source locations
 
@@ -32,7 +33,7 @@ Harshit is building a personal portfolio for the Wispr Flow creative application
 - `src/renderer.js`, `src/gaze-map.js`, `src/scene-math.js`: painted room effects, eyes/head tracking, and coordinate math.
 - `src/story-page.js`, `src/story-content.js`, `src/page-motion.js`: hanging poster/page story and reversible motion. The page has no sparkle canvas.
 - `src/page-magic.js`: sparkle effect, now used by the cat and guitar only.
-- `src/object-section.js`: shared cat, guitar, and laptop section behavior. The laptop traveler uses `public/art/laptop-front.png`, CSS 3D turn, scale/position interpolation, and project copy placed inside the screen. A separate `laptop-room-patch` covers the original painted laptop for the entire active interaction, from click through the end of return, and is hidden only when the dialog closes. This timing avoids showing both laptops at the start of return.
+- `src/object-section.js`: shared cat, guitar, and laptop section behavior. The laptop traveler uses `public/art/laptop-front.png`, CSS 3D turn, scale/position interpolation, and project copy placed inside the screen. A separate `laptop-room-patch` covers the original painted laptop for the entire active interaction, from click through the end of return, and is hidden only when the dialog closes. This timing avoids showing both laptops at the start of return. The cat has a dedicated front cutout, sofa cover, and two-stage fly/forehead zoom.
 - `public/art/laptop-sofa-patch.png` and its `clip-path` in `src/room.css` replace only the painted laptop footprint. The broad feathered cover from commit `94da9a8` is intentionally not used.
 - `src/room.css`: traveler, laptop, dialogs, overlays, and responsive styling.
 - `scripts/build.mjs`: copies source and art to `dist/` and builds portable preview. Add any new runtime image to its `pageAssets` list.

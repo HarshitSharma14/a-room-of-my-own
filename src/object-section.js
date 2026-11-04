@@ -16,8 +16,9 @@ const objectSectionContent={
 export function createObjectSection({id,room,button,scene,image,getView,getFootMotion,isStill,onChange,onCue}){
   const content=objectSectionContent[id];
   const isLaptop=id==='laptop';
-  const roomPatch=isLaptop?document.createElement('img'):null;
-  if(roomPatch){roomPatch.src='./art/laptop-sofa-patch.png';roomPatch.alt='';roomPatch.className='laptop-room-patch';roomPatch.hidden=true;room.append(roomPatch);}
+  const isCat=id==='cat';
+  const roomPatch=isLaptop||isCat?document.createElement('img'):null;
+  if(roomPatch){roomPatch.src=isLaptop?'./art/laptop-sofa-patch.png':'./art/cat-sofa-patch.png';roomPatch.alt='';roomPatch.className=isLaptop?'laptop-room-patch':'cat-room-patch';roomPatch.hidden=true;room.append(roomPatch);}
   const dialog=document.createElement('dialog');
   dialog.className=`object-dialog object-dialog--${id}`;dialog.id=`${id}-dialog`;
   dialog.setAttribute('aria-labelledby',`${id}-title`);
@@ -31,6 +32,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
   dialog.innerHTML=`<button class="object-backdrop" type="button" tabindex="-1" aria-label="Close ${content.label} section"></button>
     ${isLaptop?'':'<canvas class="object-magic" aria-hidden="true"></canvas>'}
     ${isLaptop?`<div class="object-traveler object-laptop"><div class="laptop-machine"><img class="laptop-front" src="./art/laptop-front.png" alt="" draggable="false">${panelHTML}</div></div>`
+      :isCat?`<div class="object-traveler object-cat" aria-hidden="true"><img class="cat-front" src="./art/cat-front.png" alt="" draggable="false"></div>${panelHTML}`
       :`<div class="object-traveler" aria-hidden="true"><div class="object-portrait"></div></div>${panelHTML}`}`;
   for(const [selector,value] of [['.object-eyebrow',content.eyebrow],['h2',content.title],['.object-lead',content.lead],['.object-body',content.body],['.object-detail',content.detail]]) dialog.querySelector(selector).textContent=value;
   document.body.append(dialog);
@@ -49,34 +51,45 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
   function render(){
     const {rect,crop}=getView(),source=projectPageRect(content.bounds,scene,rect,crop);
     if(roomPatch){
-      const bounds=projectPageRect([1320,560,480,430],scene,rect,crop);
+      const bounds=projectPageRect(isLaptop?[1320,560,480,430]:[940,680,470,390],scene,rect,crop);
       Object.assign(roomPatch.style,{left:`${bounds.left}px`,top:`${bounds.top}px`,width:`${bounds.width}px`,height:`${bounds.height}px`});
-      roomPatch.hidden=false;
+      roomPatch.hidden=isCat&&progress<pageTiming.arrival;
     }
     const finalWidth=Math.max(rect.width*1.15,rect.height*1.78),finalHeight=finalWidth*1086/1448;
     const destination=isLaptop?{left:rect.left+(rect.width-finalWidth)/2,top:rect.top+rect.height*.6-finalHeight/2,width:finalWidth,height:finalHeight}:pageDestination(rect);
     const starting=isLaptop?{left:source.left,top:source.top+(source.height-source.width*1086/1448)/2,width:source.width,height:source.width*1086/1448}:source;
     const t=ease(clamp((progress-pageTiming.arrival)/(1-pageTiming.arrival),0,1));
-    const cx=starting.left+starting.width/2+(destination.left+destination.width/2-starting.left-starting.width/2)*t;
-    const cy=starting.top+starting.height/2+(destination.top+destination.height/2-starting.top-starting.height/2)*t;
-    const width=starting.width+(destination.width-starting.width)*t;
-    const height=starting.height+(destination.height-starting.height)*t;
+    let cx=starting.left+starting.width/2+(destination.left+destination.width/2-starting.left-starting.width/2)*t;
+    let cy=starting.top+starting.height/2+(destination.top+destination.height/2-starting.top-starting.height/2)*t;
+    let width=starting.width+(destination.width-starting.width)*t;
+    let height=starting.height+(destination.height-starting.height)*t;
+    if(isCat){
+      const aspect=1312/1199,phase=clamp((progress-pageTiming.arrival)/(1-pageTiming.arrival),0,1);
+      const fly=ease(clamp(phase/.6,0,1)),zoom=ease(clamp((phase-.6)/.4,0,1));
+      const startWidth=source.height*aspect,midWidth=Math.min(rect.width*.68,rect.height*.92);
+      const closeWidth=Math.max(rect.width/.32,rect.height*aspect/.2);
+      width=startWidth+(midWidth-startWidth)*fly+(closeWidth-midWidth)*zoom;height=width/aspect;
+      const startCx=source.left+source.width/2,startCy=source.top+source.height/2;
+      const middleCx=rect.left+rect.width/2,middleCy=rect.top+rect.height*.5;
+      cx=startCx+(middleCx-startCx)*fly;
+      cy=startCy+(middleCy-startCy)*fly+height*(.5-.21)*zoom;
+    }
     Object.assign(traveler.style,{left:`${cx-width/2}px`,top:`${cy-height/2}px`,width:`${width}px`,height:`${height}px`,
-      opacity:isLaptop?String(progress>=pageTiming.arrival?1:0):String(clamp(1-(progress-.63)/.25,0,1)),
-      transform:isLaptop?'none':`rotate(${(id==='guitar'?8:-4)*Math.sin(t*Math.PI)}deg)`,
+      opacity:isLaptop||isCat?String(progress>=pageTiming.arrival?1:0):String(clamp(1-(progress-.63)/.25,0,1)),
+      transform:isLaptop||isCat?'none':`rotate(${8*Math.sin(t*Math.PI)}deg)`,
       pointerEvents:isLaptop&&progress>.85?'auto':'none'});
     if(machine){
       const turn=ease(clamp((progress-pageTiming.arrival)/(.9-pageTiming.arrival),0,1));
       machine.style.transform=`rotateY(${54*(1-turn)}deg) rotateX(${-9*(1-turn)}deg) rotateZ(${-8*(1-turn)}deg)`;
       screenContent.style.opacity=String(ease(clamp((progress-.61)/.3,0,1)));
-    }else{
+    }else if(portrait){
       const imageWidth=rect.width/crop.width,imageHeight=rect.height/crop.height;
       portrait.style.backgroundSize=`${imageWidth}px ${imageHeight}px`;
       portrait.style.backgroundPosition=`${-(source.left-rect.left+crop.x*imageWidth)}px ${-(source.top-rect.top+crop.y*imageHeight)}px`;
       portrait.style.width=`${source.width}px`;portrait.style.height=`${source.height}px`;
       portrait.style.transform=`scale(${width/source.width},${height/source.height})`;
     }
-    panel.style.opacity=isLaptop?'1':String(ease(clamp((progress-.66)/.34,0,1)));
+    panel.style.opacity=isLaptop?'1':String(ease(clamp((progress-(isCat?.8:.66))/(isCat?.2:.34),0,1)));
     if(!isLaptop)panel.style.transform=`translateY(${(1-t)*28}px) scale(${.94+.06*t})`;
     panel.style.pointerEvents=progress>.85?'auto':'none';
     backdrop.style.opacity=String(progress*.75);
@@ -95,7 +108,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
     const dt=last?Math.min((now-last)/1000,.25):0;last=now;
     progress=advancePage(progress,direction,dt*1.3,isStill());
     render();
-    if(direction<0&&progress<=(isLaptop?pageTiming.arrival:0)){finishClose();return;}
+    if(direction<0&&progress<=((isLaptop||isCat)?pageTiming.arrival:0)){finishClose();return;}
     if(direction>0&&progress===1){panel.scrollTop=0;last=0;return;}
     frame=requestAnimationFrame(tick);
   }

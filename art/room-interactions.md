@@ -8,7 +8,7 @@ gently dimmed. Closing reverses the object's journey. No calibration UI.
 | Object | Character and object choreography | Content |
 | --- | --- | --- |
 | Hanging page | The nail loosens immediately; the page swings, detaches, and floats into the center. It opens into a readable sheet. Closing sends it back and reseats the nail. | About me and career story |
-| Cat | His foot sends a sparkle cue to the cat. The cat stirs and its section comes forward. | A quieter side of the room |
+| Cat | His foot sends a sparkle cue to the cat. A matching front-facing cat flies toward the visitor, then the camera pushes into its forehead with the section readable over the close-up. The painted sofa cat disappears while the front cat is away. | A quieter side of the room |
 | Laptop | The laptop immediately turns its screen toward the visitor and expands across the viewport to show projects. | Projects and how they were built |
 | Guitar | His foot sends a sparkle cue to the guitar. It comes forward and opens a space for interests. | Life beyond coding |
 | Books | He glances toward the shelf. A book slides out and opens in the center. Page turns move through chapters. | Skills and learning journey, supported by examples |

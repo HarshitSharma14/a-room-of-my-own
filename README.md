@@ -32,7 +32,8 @@ The server serves only `dist/`.
   Close with Escape, the × button, or the
   dimmed room. Closing during flight reverses from the current position.
 - Click the cat, guitar, or laptop to open their sections. The cat and guitar
-  retain their sparkle cues. The laptop immediately turns its
+  retain their sparkle cues. The cat flies forward in a matching front view,
+  then zooms into its forehead behind its readable story. The laptop immediately turns its
   screen toward you and expands across the viewport. Each section closes with
   Escape, the × button, or the dimmed room.
 - The midpoint between the eyes is the gaze baseline. Each eye aims toward the
@@ -81,6 +82,8 @@ cannot supply the hidden parts of those movements.
 - `public/art/story-*.png`: extracted sheet/nail and retouched background patch.
 - `public/art/laptop-front.png`: front view of the room laptop used during its turn toward the visitor.
 - `public/art/laptop-sofa-patch.png`: replacement art clipped to the painted laptop while its front view is open.
+- `public/art/cat-front.png`: front-facing cat cutout for the fly-in and forehead zoom.
+- `public/art/cat-sofa-patch.png`: restored blanket shown while the cat is away.
 - `art/`: source prompts, generation metadata, and motion direction.
 
 Gemini generated the illustration using the locally configured key. `.env` stays
