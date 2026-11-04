@@ -35,22 +35,13 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
       <span class="object-footer">A ROOM OF MY OWN</span>`;
   const catPanelBody=`
       <button class="object-close" type="button" aria-label="Close ${content.label} section" autofocus>×</button>
-      <div class="wispr-header-badge" aria-hidden="true">
-        <img src="./art/wispr-flow-icon-light.png" alt="" class="wispr-header-icon" />
-        <span class="wispr-header-title">WISPR FLOW VOICE DICTATION</span>
-      </div>
-      <span class="object-eyebrow">${content.eyebrow}</span>
-      <h2 id="${id}-title">Spoken into reality</h2>
-      <div class="wispr-speech-box">
+      <div class="wispr-minimal-flow">
         <div class="wispr-icon-wrap" aria-hidden="true">
           <img src="./art/wispr-flow-icon-light.png" alt="" />
           <span class="wispr-pulse-ring"></span>
         </div>
         <div class="wispr-word-flow" id="cat-speech-output" aria-live="polite"></div>
-      </div>
-      <div class="object-rule"></div>
-      <p class="object-detail">Wispr Flow transformed Harshit's spoken thoughts into the code, copy, and interactions of this room.</p>
-      <span class="object-footer">A ROOM OF MY OWN</span>`;
+      </div>`;
   const panelHTML=`<article class="object-panel" tabindex="0" aria-label="${content.label} section">${isLaptop?`<div class="laptop-screen-content">${panelBody}</div>`:isCat?catPanelBody:panelBody}</article>`;
   dialog.innerHTML=`<button class="object-backdrop" type="button" tabindex="-1" aria-label="Close ${content.label} section"></button>
     ${isLaptop||isBook?'':'<canvas class="object-magic" aria-hidden="true"></canvas>'}
