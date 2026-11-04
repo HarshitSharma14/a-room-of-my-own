@@ -16,6 +16,8 @@ const objectSectionContent={
 export function createObjectSection({id,room,button,scene,image,getView,getFootMotion,isStill,onChange,onCue}){
   const content=objectSectionContent[id];
   const isLaptop=id==='laptop';
+  const roomPatch=isLaptop?document.createElement('img'):null;
+  if(roomPatch){roomPatch.src='./art/laptop-sofa-patch.png';roomPatch.alt='';roomPatch.className='laptop-room-patch';roomPatch.hidden=true;room.append(roomPatch);}
   const dialog=document.createElement('dialog');
   dialog.className=`object-dialog object-dialog--${id}`;dialog.id=`${id}-dialog`;
   dialog.setAttribute('aria-labelledby',`${id}-title`);
@@ -46,6 +48,11 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
   const ease=value=>value*value*(3-2*value);
   function render(){
     const {rect,crop}=getView(),source=projectPageRect(content.bounds,scene,rect,crop);
+    if(roomPatch){
+      const bounds=projectPageRect([1320,560,480,430],scene,rect,crop);
+      Object.assign(roomPatch.style,{left:`${bounds.left}px`,top:`${bounds.top}px`,width:`${bounds.width}px`,height:`${bounds.height}px`});
+      roomPatch.hidden=progress<pageTiming.arrival;
+    }
     const finalWidth=Math.max(rect.width*1.15,rect.height*1.78),finalHeight=finalWidth*1086/1448;
     const destination=isLaptop?{left:rect.left+(rect.width-finalWidth)/2,top:rect.top+rect.height*.6-finalHeight/2,width:finalWidth,height:finalHeight}:pageDestination(rect);
     const starting=isLaptop?{left:source.left,top:source.top+(source.height-source.width*1086/1448)/2,width:source.width,height:source.width*1086/1448}:source;
@@ -80,7 +87,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
     room.dataset.section=id;onChange();
   }
   function finishClose(){
-    active=false;progress=0;focus=null;last=0;dialog.close();delete room.dataset.section;
+    active=false;progress=0;focus=null;last=0;if(roomPatch)roomPatch.hidden=true;dialog.close();delete room.dataset.section;
     button.setAttribute('aria-expanded','false');button.focus({preventScroll:true});onChange();
   }
   function tick(now){
