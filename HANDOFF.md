@@ -29,7 +29,7 @@ Harshit is building a personal portfolio for the Wispr Flow creative application
 - `src/scene-config.js`: artwork coordinate calibration and hotspots.
 - `src/renderer.js`, `src/gaze-map.js`, `src/scene-math.js`: painted room effects, eyes/head tracking, and coordinate math.
 - `src/story-page.js`, `src/story-content.js`, `src/page-motion.js`, `src/page-magic.js`: hanging poster/page story, reversible motion, and sparkle cue.
-- `src/object-section.js`: shared cat, guitar, and laptop section behavior. The laptop traveler uses `public/art/laptop-front.png`, CSS 3D turn, scale/position interpolation, and project copy placed inside the screen. A separate `laptop-room-patch` covers the original painted laptop once the traveler appears and is hidden again on close.
+- `src/object-section.js`: shared cat, guitar, and laptop section behavior. The laptop traveler uses `public/art/laptop-front.png`, CSS 3D turn, scale/position interpolation, and project copy placed inside the screen. A separate `laptop-room-patch` covers the original painted laptop for the entire active interaction, from click through the end of return, and is hidden only when the dialog closes. This timing avoids showing both laptops at the start of return.
 - `public/art/laptop-sofa-patch.png` and its `clip-path` in `src/room.css` replace only the painted laptop footprint. The broad feathered cover from commit `94da9a8` is intentionally not used.
 - `src/room.css`: traveler, laptop, dialogs, overlays, and responsive styling.
 - `scripts/build.mjs`: copies source and art to `dist/` and builds portable preview. Add any new runtime image to its `pageAssets` list.

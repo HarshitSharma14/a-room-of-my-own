@@ -51,7 +51,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
     if(roomPatch){
       const bounds=projectPageRect([1320,560,480,430],scene,rect,crop);
       Object.assign(roomPatch.style,{left:`${bounds.left}px`,top:`${bounds.top}px`,width:`${bounds.width}px`,height:`${bounds.height}px`});
-      roomPatch.hidden=progress<pageTiming.arrival;
+      roomPatch.hidden=false;
     }
     const finalWidth=Math.max(rect.width*1.15,rect.height*1.78),finalHeight=finalWidth*1086/1448;
     const destination=isLaptop?{left:rect.left+(rect.width-finalWidth)/2,top:rect.top+rect.height*.6-finalHeight/2,width:finalWidth,height:finalHeight}:pageDestination(rect);
