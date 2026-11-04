@@ -20,8 +20,8 @@ Harshit is building a personal portfolio for the Wispr Flow creative application
 - Production site: `https://a-room-of-my-own.vercel.app/`
 - Also used as a site URL: `https://harshit-portfolio-wisprflow.vercel.app/`
 - Vercel project: `harshit-portfolio-wisprflow`
-- Latest verified production deployment: `dpl_8QKFVpa7ngMHxqkhMte63Xn9FSNZ` (ready, HTTP 200, title `Harshit Portfolio | Wispr Flow`). The previous deployment's page, laptop patch asset, and object-section script returned HTTP 200.
-- Published code commit: `dde6225 Keep room laptop hidden through return`. The prior full-patch revert was `239c4bc`.
+- Latest verified production deployment: `dpl_JWvDi3mA9PCp6vXD7UoiqPMw8X4w` (ready, HTTP 200, title `Harshit Portfolio | Wispr Flow`). The deployed story script has no sparkle canvas, and the laptop script skips its sparkle canvas.
+- Published code commit: `25d4913 Remove sparkles from paper and laptop interactions`. The prior full-patch revert was `239c4bc`.
 
 ## Current implementation
 
