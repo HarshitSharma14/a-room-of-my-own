@@ -24,8 +24,8 @@ Harshit is building a personal portfolio for the Wispr Flow creative application
 - Production site: `https://a-room-of-my-own.vercel.app/`
 - Also used as a site URL: `https://harshit-portfolio-wisprflow.vercel.app/`
 - Vercel project: `harshit-portfolio-wisprflow`
-- Latest verified production deployment: `dpl_EkrFdrRE5cdn7yS8tpTxDDF1KJ3u` (ready, HTTP 200, title `Harshit Portfolio | Wispr Flow`). The live book assets, room script, and object-section script returned HTTP 200.
-- Published code commit: `cb08bbe Add flying green floor book cover interaction`. The prior full-patch revert was `239c4bc`.
+- Latest verified production deployment: `dpl_2Y4vRC6M7iX95agKD9uRcje9CaiV` (ready, HTTP 200, title `Harshit Portfolio | Wispr Flow`). The live open-book asset and object-section script returned HTTP 200.
+- Published code commit: `3434365 Open floor book into readable two-page spread`. The prior full-patch revert was `239c4bc`.
 
 ## Current implementation
 
