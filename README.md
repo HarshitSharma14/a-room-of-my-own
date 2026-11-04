@@ -79,6 +79,7 @@ cannot supply the hidden parts of those movements.
 - `src/object-section.js`: cat, guitar, and laptop sections and their shared animation.
 - `public/art/room-scene.jpg`: optimized delivery artwork, about 1.1 MB.
 - `public/art/story-*.png`: extracted sheet/nail and retouched background patch.
+- `public/art/laptop-front.png`: front view of the room laptop used during its turn toward the visitor.
 - `art/`: source prompts, generation metadata, and motion direction.
 
 Gemini generated the illustration using the locally configured key. `.env` stays
