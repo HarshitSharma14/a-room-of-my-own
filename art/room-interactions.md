@@ -11,7 +11,7 @@ gently dimmed. Closing reverses the object's journey. No calibration UI.
 | Cat | His foot sends a sparkle cue to the cat. A matching front-facing cat flies toward the visitor, then the camera pushes into its forehead with the section readable over the close-up. The painted sofa cat disappears while the front cat is away. | A quieter side of the room |
 | Laptop | The laptop immediately turns its screen toward the visitor and expands across the viewport to show projects. | Projects and how they were built |
 | Guitar | His foot sends a sparkle cue to the guitar. It comes forward and opens a space for interests. | Life beyond coding |
-| Green floor book | The closed olive book on papers on the rug lifts forward, turns its cover toward the visitor, then zooms into the cover with a readable learning section. Its painted floor version disappears while it is away. | Skills and learning journey, supported by examples |
+| Green floor book | The closed olive book on papers on the rug lifts forward, turns its cover toward the visitor, opens into a two-page spread, then brings the right page forward with a readable learning section. Its painted floor version disappears while it is away. | Skills and learning journey, supported by examples |
 | Trophy | A sleepy smile, then a glint. The trophy lifts forward and its engraved plate expands. Selecting a milestone reveals its story. | Achievements, awards, certificates, milestones |
 | Record and sleeve | He nods subtly. A record slides out and spins; the sleeve opens as a scrapbook. Audio is opt-in. | Interests, photography, music, life beyond coding |
 | Phone | A notification catches his attention. He turns the phone outward and it floats toward the visitor. | Email, GitHub, LinkedIn, contact |

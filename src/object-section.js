@@ -38,13 +38,14 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
     ${isLaptop||isBook?'':'<canvas class="object-magic" aria-hidden="true"></canvas>'}
     ${isLaptop?`<div class="object-traveler object-laptop"><div class="laptop-machine"><img class="laptop-front" src="./art/laptop-front.png" alt="" draggable="false">${panelHTML}</div></div>`
       :isCat?`<div class="object-traveler object-cat" aria-hidden="true"><img class="cat-front" src="./art/cat-front.png" alt="" draggable="false"></div>${panelHTML}`
-      :isBook?`<div class="object-traveler object-book" aria-hidden="true"><img class="book-front" src="./art/book-front.png" alt="" draggable="false"></div>${panelHTML}`
+      :isBook?`<div class="object-traveler object-book" aria-hidden="true"><img class="book-open" src="./art/book-open.png" alt="" draggable="false"><div class="book-cover"><img class="book-front" src="./art/book-front.png" alt="" draggable="false"></div></div>${panelHTML}`
       :`<div class="object-traveler" aria-hidden="true"><div class="object-portrait"></div></div>${panelHTML}`}`;
   for(const [selector,value] of [['.object-eyebrow',content.eyebrow],['h2',content.title],['.object-lead',content.lead],['.object-body',content.body],['.object-detail',content.detail]]) dialog.querySelector(selector).textContent=value;
   document.body.append(dialog);
   const traveler=dialog.querySelector('.object-traveler'), portrait=dialog.querySelector('.object-portrait');
   const machine=dialog.querySelector('.laptop-machine');
   const screenContent=dialog.querySelector('.laptop-screen-content');
+  const bookOpen=dialog.querySelector('.book-open'),bookCover=dialog.querySelector('.book-cover');
   const panel=dialog.querySelector('.object-panel'), backdrop=dialog.querySelector('.object-backdrop');
   const magic=isLaptop||isBook?null:createPageMagic(dialog.querySelector('.object-magic'));
   if(portrait)portrait.style.backgroundImage=`url("${image.currentSrc||image.src}")`;
@@ -69,21 +70,38 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
     let cy=starting.top+starting.height/2+(destination.top+destination.height/2-starting.top-starting.height/2)*t;
     let width=starting.width+(destination.width-starting.width)*t;
     let height=starting.height+(destination.height-starting.height)*t;
-    if(isCat||isBook){
-      const aspect=isCat?1312/1199:1115/1410,phase=clamp((progress-pageTiming.arrival)/(1-pageTiming.arrival),0,1);
+    let bookFlight=0;
+    if(isCat){
+      const aspect=1312/1199,phase=clamp((progress-pageTiming.arrival)/(1-pageTiming.arrival),0,1);
       const fly=ease(clamp(phase/.6,0,1)),zoom=ease(clamp((phase-.6)/.4,0,1));
-      const startWidth=isCat?source.height*aspect:source.width*.7;
-      const midWidth=isCat?Math.min(rect.width*.68,rect.height*.92):Math.min(rect.width*.68,rect.height*.7*aspect);
-      const closeWidth=isCat?Math.max(rect.width/.32,rect.height*aspect/.2):Math.max(rect.width*1.7,rect.height*aspect*1.6);
+      const startWidth=source.height*aspect,midWidth=Math.min(rect.width*.68,rect.height*.92);
+      const closeWidth=Math.max(rect.width/.32,rect.height*aspect/.2);
       width=startWidth+(midWidth-startWidth)*fly+(closeWidth-midWidth)*zoom;height=width/aspect;
       const startCx=source.left+source.width/2,startCy=source.top+source.height/2;
       const middleCx=rect.left+rect.width/2,middleCy=rect.top+rect.height*.5;
       cx=startCx+(middleCx-startCx)*fly;
-      cy=startCy+(middleCy-startCy)*fly+(isCat?height*(.5-.21)*zoom:0);
+      cy=startCy+(middleCy-startCy)*fly+height*(.5-.21)*zoom;
+    }
+    if(isBook){
+      const closedAspect=1115/1410,openAspect=1536/1024;
+      const phase=clamp((progress-pageTiming.arrival)/(1-pageTiming.arrival),0,1);
+      const fly=ease(clamp(phase/.46,0,1)),opening=ease(clamp((phase-.46)/.32,0,1)),approach=ease(clamp((phase-.78)/.22,0,1));
+      const startWidth=source.width*.7,midClosedWidth=Math.min(rect.width*.44,rect.height*.62*closedAspect);
+      const midOpenWidth=Math.min(rect.width*.9,rect.height*.9*openAspect);
+      const finalOpenWidth=Math.max(rect.width*1.1,rect.height*openAspect);
+      width=startWidth+(midClosedWidth-startWidth)*fly+(midOpenWidth-midClosedWidth)*opening+(finalOpenWidth-midOpenWidth)*approach;
+      height=startWidth/closedAspect+(midClosedWidth-startWidth)/closedAspect*fly+(midOpenWidth/openAspect-midClosedWidth/closedAspect)*opening+(finalOpenWidth-midOpenWidth)/openAspect*approach;
+      cx=source.left+source.width/2+(rect.left+rect.width/2-source.left-source.width/2)*fly;
+      cy=source.top+source.height/2+(rect.top+rect.height/2-source.top-source.height/2)*fly;
+      bookFlight=fly;
+      bookOpen.style.opacity=String(opening);
+      bookOpen.style.transform=`scaleX(${.55+.45*opening})`;
+      const coverWidth=startWidth+(midClosedWidth-startWidth)*fly;
+      Object.assign(bookCover.style,{width:`${coverWidth}px`,height:`${coverWidth/closedAspect}px`,opacity:String(1-opening),transform:`translate(-50%,-50%) rotateY(${-100*opening}deg)`});
     }
     Object.assign(traveler.style,{left:`${cx-width/2}px`,top:`${cy-height/2}px`,width:`${width}px`,height:`${height}px`,
       opacity:isLaptop||isCat||isBook?String(progress>=pageTiming.arrival?1:0):String(clamp(1-(progress-.63)/.25,0,1)),
-      transform:isBook?`perspective(1000px) rotateX(${55*(1-t)}deg) rotateZ(${-16*(1-t)}deg)`:isLaptop||isCat?'none':`rotate(${8*Math.sin(t*Math.PI)}deg)`,
+      transform:isBook?`perspective(1000px) rotateX(${55*(1-bookFlight)}deg) rotateZ(${-16*(1-bookFlight)}deg)`:isLaptop||isCat?'none':`rotate(${8*Math.sin(t*Math.PI)}deg)`,
       pointerEvents:isLaptop&&progress>.85?'auto':'none'});
     if(machine){
       const turn=ease(clamp((progress-pageTiming.arrival)/(.9-pageTiming.arrival),0,1));
@@ -97,7 +115,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
       portrait.style.transform=`scale(${width/source.width},${height/source.height})`;
     }
     panel.style.opacity=isLaptop?'1':String(ease(clamp((progress-(isCat||isBook?.8:.66))/(isCat||isBook?.2:.34),0,1)));
-    if(!isLaptop)panel.style.transform=`translateY(${(1-t)*28}px) scale(${.94+.06*t})`;
+    if(!isLaptop)panel.style.transform=isBook?'translateY(-50%)':`translateY(${(1-t)*28}px) scale(${.94+.06*t})`;
     panel.style.pointerEvents=progress>.85?'auto':'none';
     backdrop.style.opacity=String(progress*.75);
     const center=[source.left+source.width/2,source.top+source.height/2];

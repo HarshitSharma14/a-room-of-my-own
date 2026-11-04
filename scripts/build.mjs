@@ -11,7 +11,7 @@ for (const file of await readdir(path.join(root, 'src'))) {
   if (/\.(js|css)$/.test(file)) await copyFile(path.join(root, 'src', file), path.join(out, 'src', file));
 }
 await copyFile(path.join(root, 'public/art/room-scene.jpg'), path.join(out, 'art/room-scene.jpg'));
-const pageAssets=['story-page.png','story-wall.png','story-nail.png','laptop-front.png','laptop-sofa-patch.png','cat-front.png','cat-sofa-patch.png','book-front.png','book-floor-patch.png'];
+const pageAssets=['story-page.png','story-wall.png','story-nail.png','laptop-front.png','laptop-sofa-patch.png','cat-front.png','cat-sofa-patch.png','book-front.png','book-open.png','book-floor-patch.png'];
 for(const file of pageAssets) await copyFile(path.join(root,'public/art',file),path.join(out,'art',file));
 const image = await stat(path.join(out, 'art/room-scene.jpg'));
 // A portable preview uses the exact same sources, with assets embedded so a

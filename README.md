@@ -37,7 +37,7 @@ The server serves only `dist/`.
   screen toward you and expands across the viewport. Each section closes with
   Escape, the × button, or the dimmed room.
 - The closed green book on the rug lifts toward you, turns its cover forward,
-  and zooms into that cover to show a learning section.
+  opens into a two-page spread, and shows its learning section on the right page.
 - The midpoint between the eyes is the gaze baseline. Each eye aims toward the
   pointer from its own position, including when the pointer sits between them.
   Screen center correctly means looking left from this off-center face.
@@ -86,7 +86,8 @@ cannot supply the hidden parts of those movements.
 - `public/art/laptop-sofa-patch.png`: replacement art clipped to the painted laptop while its front view is open.
 - `public/art/cat-front.png`: front-facing cat cutout for the fly-in and forehead zoom.
 - `public/art/cat-sofa-patch.png`: restored blanket shown while the cat is away.
-- `public/art/book-front.png`: front view of the green floor book for its cover zoom.
+- `public/art/book-front.png`: front view of the green floor book before it opens.
+- `public/art/book-open.png`: blank open spread shown as the cover swings away.
 - `public/art/book-floor-patch.png`: restored papers and rug shown while the book is away.
 - `art/`: source prompts, generation metadata, and motion direction.
 
