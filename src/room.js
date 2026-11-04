@@ -48,6 +48,7 @@ const targets = [
   {id:'laptop', label:'Explore projects on the laptop', center:scene.laptop.center, radius:scene.laptop.radius},
   {id:'clock', label:'Check the time', center:scene.clock.center, radius:scene.clock.radius},
   {id:'guitar', label:'Play the guitar', center:scene.guitar.center, radius:scene.guitar.radius},
+  {id:'book', label:'Open the green book on the floor', center:scene.book.center, radius:scene.book.radius},
   {id:'controller', label:'Play a game', center:scene.controller.center, radius:scene.controller.radius},
 ].map(target => {
   const button = document.createElement('button');
@@ -59,7 +60,7 @@ const targets = [
     if (drag?.moved) { event.preventDefault(); return; }
 
     // Story is handled by its own module, don't do anything here.
-    if (['story','cat','guitar','laptop'].includes(target.id)) return;
+    if (['story','cat','guitar','laptop','book'].includes(target.id)) return;
 
     // Cat and lamp have simple pulse effects.
     if (target.id === 'lamp') {
@@ -218,7 +219,7 @@ addEventListener('pageshow', event => { if (event.persisted) start(); });
 updateToggle();
 story=createStoryPage({room,button:targets.find(target=>target.id==='story').button,scene,
   getView:()=>({rect,crop}),getFootMotion:()=>footMotion,isStill:()=>paused,onChange:schedule});
-sections=['cat','guitar','laptop'].map(id=>createObjectSection({id,room,image,scene,
+sections=['cat','guitar','laptop','book'].map(id=>createObjectSection({id,room,image,scene,
   button:targets.find(target=>target.id===id).button,getView:()=>({rect,crop}),
   getFootMotion:()=>footMotion,isStill:()=>paused,onChange:schedule,onCue:target=>{
     if(target==='cat')petStart=time;

@@ -31,11 +31,13 @@ The server serves only `dist/`.
   The nail releases immediately and the paper floats into the center.
   Close with Escape, the × button, or the
   dimmed room. Closing during flight reverses from the current position.
-- Click the cat, guitar, or laptop to open their sections. The cat and guitar
+- Click the cat, guitar, laptop, or green floor book to open their sections. The cat and guitar
   retain their sparkle cues. The cat flies forward in a matching front view,
   then zooms into its forehead behind its readable story. The laptop immediately turns its
   screen toward you and expands across the viewport. Each section closes with
   Escape, the × button, or the dimmed room.
+- The closed green book on the rug lifts toward you, turns its cover forward,
+  and zooms into that cover to show a learning section.
 - The midpoint between the eyes is the gaze baseline. Each eye aims toward the
   pointer from its own position, including when the pointer sits between them.
   Screen center correctly means looking left from this off-center face.
@@ -52,8 +54,8 @@ The server serves only `dist/`.
 
 The section concepts and choreography are documented in
 [`art/room-interactions.md`](art/room-interactions.md). The page, cat, guitar,
-and laptop sections are implemented. Books, trophy, record, and phone remain
-planned. Edit the page introduction in `src/story-content.js` and the three
+laptop, and floor book sections are implemented. Trophy, record, and phone remain
+planned. Edit the page introduction in `src/story-content.js` and the four
 object sections in `src/object-section.js`. Their copy is prototype content
 without invented career history.
 
@@ -77,13 +79,15 @@ cannot supply the hidden parts of those movements.
 - `src/story-page.js`: modal reading sheet, focus, lifecycle, and layer animation.
 - `src/page-motion.js`: reversible timeline and source/viewport projection.
 - `src/story-content.js`: editable introduction and story sections.
-- `src/object-section.js`: cat, guitar, and laptop sections and their shared animation.
+- `src/object-section.js`: cat, guitar, laptop, and floor book sections and their shared animation.
 - `public/art/room-scene.jpg`: optimized delivery artwork, about 1.1 MB.
 - `public/art/story-*.png`: extracted sheet/nail and retouched background patch.
 - `public/art/laptop-front.png`: front view of the room laptop used during its turn toward the visitor.
 - `public/art/laptop-sofa-patch.png`: replacement art clipped to the painted laptop while its front view is open.
 - `public/art/cat-front.png`: front-facing cat cutout for the fly-in and forehead zoom.
 - `public/art/cat-sofa-patch.png`: restored blanket shown while the cat is away.
+- `public/art/book-front.png`: front view of the green floor book for its cover zoom.
+- `public/art/book-floor-patch.png`: restored papers and rug shown while the book is away.
 - `art/`: source prompts, generation metadata, and motion direction.
 
 Gemini generated the illustration using the locally configured key. `.env` stays

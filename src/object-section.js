@@ -2,23 +2,28 @@ import { projectPageRect, pageDestination, advancePage, pageTiming, footTipOnScr
 import { createPageMagic } from './page-magic.js';
 
 const objectSectionContent={
-  cat:{title:'A little room to breathe',eyebrow:'THE CAT · 02 / 04',lead:'A quiet companion for a curious mind.',
+  cat:{title:'A little room to breathe',eyebrow:'THE CAT · 02 / 06',lead:'A quiet companion for a curious mind.',
     body:'The cat is part of the room’s rhythm. A small reaction, a moment of rest, and then back to making things. This corner is a reminder that good work also needs room to pause.',
     detail:'Try petting the cat again after closing this note.',label:'The cat',bounds:[1038,744,272,145]},
-  laptop:{title:'Things I’m building',eyebrow:'THE LAPTOP · 03 / 04',lead:'Projects live behind this screen.',
+  laptop:{title:'Things I’m building',eyebrow:'THE LAPTOP · 03 / 06',lead:'Projects live behind this screen.',
     body:'A room of my own is the first project on display: a single illustrated scene with pointer tracking, gentle motion, and objects that open into stories.',
     detail:'Built with browser-native JavaScript, WebGL, and an artwork-led interaction system. More work can be added here as the portfolio grows.',label:'The laptop',bounds:[1410,630,265,260]},
-  guitar:{title:'Beyond the screen',eyebrow:'THE GUITAR · 04 / 04',lead:'A space for interests and ideas.',
+  guitar:{title:'Beyond the screen',eyebrow:'THE GUITAR · 04 / 06',lead:'A space for interests and ideas.',
     body:'This corner of the portfolio is for the things that keep creativity moving outside a project brief. It can hold music, experiments, photos, and whatever comes next.',
     detail:'The room is still growing. This section is ready for personal stories and work you want to share.',label:'The guitar',bounds:[2255,565,205,445]},
+  book:{title:'The next chapter',eyebrow:'THE BOOK · 05 / 06',lead:'A place for what I’m learning.',
+    body:'This book is a space for notes, experiments, and ideas that turn into work. Each chapter can hold a skill, a project, and what changed after trying it.',
+    detail:'The pages are ready for real examples as this portfolio grows.',label:'The book',bounds:[1330,1420,275,116]},
 };
 
 export function createObjectSection({id,room,button,scene,image,getView,getFootMotion,isStill,onChange,onCue}){
   const content=objectSectionContent[id];
   const isLaptop=id==='laptop';
   const isCat=id==='cat';
-  const roomPatch=isLaptop||isCat?document.createElement('img'):null;
-  if(roomPatch){roomPatch.src=isLaptop?'./art/laptop-sofa-patch.png':'./art/cat-sofa-patch.png';roomPatch.alt='';roomPatch.className=isLaptop?'laptop-room-patch':'cat-room-patch';roomPatch.hidden=true;room.append(roomPatch);}
+  const isBook=id==='book';
+  const patchArt={laptop:{file:'laptop-sofa-patch.png',bounds:[1320,560,480,430]},cat:{file:'cat-sofa-patch.png',bounds:[940,680,470,390]},book:{file:'book-floor-patch.png',bounds:[1150,1210,650,326]}}[id];
+  const roomPatch=patchArt?document.createElement('img'):null;
+  if(roomPatch){roomPatch.src=`./art/${patchArt.file}`;roomPatch.alt='';roomPatch.className=`${id}-room-patch`;roomPatch.hidden=true;room.append(roomPatch);}
   const dialog=document.createElement('dialog');
   dialog.className=`object-dialog object-dialog--${id}`;dialog.id=`${id}-dialog`;
   dialog.setAttribute('aria-labelledby',`${id}-title`);
@@ -30,9 +35,10 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
       <span class="object-footer">A ROOM OF MY OWN</span>`;
   const panelHTML=`<article class="object-panel" tabindex="0" aria-label="${content.label} section">${isLaptop?`<div class="laptop-screen-content">${panelBody}</div>`:panelBody}</article>`;
   dialog.innerHTML=`<button class="object-backdrop" type="button" tabindex="-1" aria-label="Close ${content.label} section"></button>
-    ${isLaptop?'':'<canvas class="object-magic" aria-hidden="true"></canvas>'}
+    ${isLaptop||isBook?'':'<canvas class="object-magic" aria-hidden="true"></canvas>'}
     ${isLaptop?`<div class="object-traveler object-laptop"><div class="laptop-machine"><img class="laptop-front" src="./art/laptop-front.png" alt="" draggable="false">${panelHTML}</div></div>`
       :isCat?`<div class="object-traveler object-cat" aria-hidden="true"><img class="cat-front" src="./art/cat-front.png" alt="" draggable="false"></div>${panelHTML}`
+      :isBook?`<div class="object-traveler object-book" aria-hidden="true"><img class="book-front" src="./art/book-front.png" alt="" draggable="false"></div>${panelHTML}`
       :`<div class="object-traveler" aria-hidden="true"><div class="object-portrait"></div></div>${panelHTML}`}`;
   for(const [selector,value] of [['.object-eyebrow',content.eyebrow],['h2',content.title],['.object-lead',content.lead],['.object-body',content.body],['.object-detail',content.detail]]) dialog.querySelector(selector).textContent=value;
   document.body.append(dialog);
@@ -40,18 +46,18 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
   const machine=dialog.querySelector('.laptop-machine');
   const screenContent=dialog.querySelector('.laptop-screen-content');
   const panel=dialog.querySelector('.object-panel'), backdrop=dialog.querySelector('.object-backdrop');
-  const magic=isLaptop?null:createPageMagic(dialog.querySelector('.object-magic'));
+  const magic=isLaptop||isBook?null:createPageMagic(dialog.querySelector('.object-magic'));
   if(portrait)portrait.style.backgroundImage=`url("${image.currentSrc||image.src}")`;
   const closeButton=dialog.querySelector('.object-close');
   button.setAttribute('aria-haspopup','dialog');button.setAttribute('aria-controls',dialog.id);button.setAttribute('aria-expanded','false');
-  button.dataset.label=id==='cat'?'The cat':id==='laptop'?'Projects':'Beyond code';
+  button.dataset.label=id==='cat'?'The cat':id==='laptop'?'Projects':id==='book'?'The book':'Beyond code';
   let active=false,progress=0,direction=1,frame=0,last=0,focus=null;
   const clamp=(value,min,max)=>Math.max(min,Math.min(max,value));
   const ease=value=>value*value*(3-2*value);
   function render(){
     const {rect,crop}=getView(),source=projectPageRect(content.bounds,scene,rect,crop);
     if(roomPatch){
-      const bounds=projectPageRect(isLaptop?[1320,560,480,430]:[940,680,470,390],scene,rect,crop);
+      const bounds=projectPageRect(patchArt.bounds,scene,rect,crop);
       Object.assign(roomPatch.style,{left:`${bounds.left}px`,top:`${bounds.top}px`,width:`${bounds.width}px`,height:`${bounds.height}px`});
       roomPatch.hidden=isCat&&progress<pageTiming.arrival;
     }
@@ -63,20 +69,21 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
     let cy=starting.top+starting.height/2+(destination.top+destination.height/2-starting.top-starting.height/2)*t;
     let width=starting.width+(destination.width-starting.width)*t;
     let height=starting.height+(destination.height-starting.height)*t;
-    if(isCat){
-      const aspect=1312/1199,phase=clamp((progress-pageTiming.arrival)/(1-pageTiming.arrival),0,1);
+    if(isCat||isBook){
+      const aspect=isCat?1312/1199:1115/1410,phase=clamp((progress-pageTiming.arrival)/(1-pageTiming.arrival),0,1);
       const fly=ease(clamp(phase/.6,0,1)),zoom=ease(clamp((phase-.6)/.4,0,1));
-      const startWidth=source.height*aspect,midWidth=Math.min(rect.width*.68,rect.height*.92);
-      const closeWidth=Math.max(rect.width/.32,rect.height*aspect/.2);
+      const startWidth=isCat?source.height*aspect:source.width*.7;
+      const midWidth=isCat?Math.min(rect.width*.68,rect.height*.92):Math.min(rect.width*.68,rect.height*.7*aspect);
+      const closeWidth=isCat?Math.max(rect.width/.32,rect.height*aspect/.2):Math.max(rect.width*1.7,rect.height*aspect*1.6);
       width=startWidth+(midWidth-startWidth)*fly+(closeWidth-midWidth)*zoom;height=width/aspect;
       const startCx=source.left+source.width/2,startCy=source.top+source.height/2;
       const middleCx=rect.left+rect.width/2,middleCy=rect.top+rect.height*.5;
       cx=startCx+(middleCx-startCx)*fly;
-      cy=startCy+(middleCy-startCy)*fly+height*(.5-.21)*zoom;
+      cy=startCy+(middleCy-startCy)*fly+(isCat?height*(.5-.21)*zoom:0);
     }
     Object.assign(traveler.style,{left:`${cx-width/2}px`,top:`${cy-height/2}px`,width:`${width}px`,height:`${height}px`,
-      opacity:isLaptop||isCat?String(progress>=pageTiming.arrival?1:0):String(clamp(1-(progress-.63)/.25,0,1)),
-      transform:isLaptop||isCat?'none':`rotate(${8*Math.sin(t*Math.PI)}deg)`,
+      opacity:isLaptop||isCat||isBook?String(progress>=pageTiming.arrival?1:0):String(clamp(1-(progress-.63)/.25,0,1)),
+      transform:isBook?`perspective(1000px) rotateX(${55*(1-t)}deg) rotateZ(${-16*(1-t)}deg)`:isLaptop||isCat?'none':`rotate(${8*Math.sin(t*Math.PI)}deg)`,
       pointerEvents:isLaptop&&progress>.85?'auto':'none'});
     if(machine){
       const turn=ease(clamp((progress-pageTiming.arrival)/(.9-pageTiming.arrival),0,1));
@@ -89,7 +96,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
       portrait.style.width=`${source.width}px`;portrait.style.height=`${source.height}px`;
       portrait.style.transform=`scale(${width/source.width},${height/source.height})`;
     }
-    panel.style.opacity=isLaptop?'1':String(ease(clamp((progress-(isCat?.8:.66))/(isCat?.2:.34),0,1)));
+    panel.style.opacity=isLaptop?'1':String(ease(clamp((progress-(isCat||isBook?.8:.66))/(isCat||isBook?.2:.34),0,1)));
     if(!isLaptop)panel.style.transform=`translateY(${(1-t)*28}px) scale(${.94+.06*t})`;
     panel.style.pointerEvents=progress>.85?'auto':'none';
     backdrop.style.opacity=String(progress*.75);
@@ -108,13 +115,13 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
     const dt=last?Math.min((now-last)/1000,.25):0;last=now;
     progress=advancePage(progress,direction,dt*1.3,isStill());
     render();
-    if(direction<0&&progress<=((isLaptop||isCat)?pageTiming.arrival:0)){finishClose();return;}
+    if(direction<0&&progress<=((isLaptop||isCat||isBook)?pageTiming.arrival:0)){finishClose();return;}
     if(direction>0&&progress===1){panel.scrollTop=0;last=0;return;}
     frame=requestAnimationFrame(tick);
   }
   function schedule(){if(active&&!frame&&!document.hidden)frame=requestAnimationFrame(tick);}
   function open(){
-    if(active)return;active=true;direction=1;progress=isStill()?1:isLaptop?pageTiming.arrival:0;last=0;
+    if(active)return;active=true;direction=1;progress=isStill()?1:isLaptop||isBook?pageTiming.arrival:0;last=0;
     button.setAttribute('aria-expanded','true');panel.scrollTop=0;
     dialog.showModal();onCue(id);render();closeButton.focus({preventScroll:true});
     if(progress===1)panel.scrollTop=0;

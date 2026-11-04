@@ -18,6 +18,7 @@ export const scene = {
     pivot:[1375/2752,565/1536],tip:[1286,452]},
   clock: { center: [0.55, 0.15], radius: [0.05, 0.05] },
   guitar: { center: [2360/2752,790/1536], radius: [125/2752,220/1536], bounds:[2255,565,205,445] },
+  book: { center: [1468/2752,1475/1536], radius: [145/2752,70/1536], bounds:[1330,1420,275,116] },
   controller: { center: [0.7, 0.85], radius: [0.05, 0.05] },
   futureObjects: ['workbench', 'pinboard', 'bookshelf', 'trophy', 'records', 'camera', 'notebook', 'window'],
 };
