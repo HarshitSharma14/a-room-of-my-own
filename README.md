@@ -80,7 +80,6 @@ cannot supply the hidden parts of those movements.
 - `public/art/room-scene.jpg`: optimized delivery artwork, about 1.1 MB.
 - `public/art/story-*.png`: extracted sheet/nail and retouched background patch.
 - `public/art/laptop-front.png`: front view of the room laptop used during its turn toward the visitor.
-- `public/art/laptop-sofa-patch.png`: restored sofa and lap shown while the laptop is away.
 - `art/`: source prompts, generation metadata, and motion direction.
 
 Gemini generated the illustration using the locally configured key. `.env` stays
