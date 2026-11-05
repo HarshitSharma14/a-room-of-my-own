@@ -49,9 +49,9 @@ const targetOutlines = {
     <path class="hotspot-halo-stroke" d="M 58,102 C 60,95 85,92 115,102 L 129,74 C 150,68 180,68 205,74 C 235,82 255,105 257,135 C 259,155 245,170 215,173 C 185,175 145,175 120,170 L 84,170 C 72,166 65,158 68,148 C 72,138 60,120 58,102 Z"/>
   </svg>`,
   laptop: `<svg class="hotspot-halo" viewBox="0 0 300 300" aria-hidden="true">
-    <path class="hotspot-halo-glow" d="M 105,39 L 164,55 L 182,163 L 252,165 L 244,278 L 94,268 L 88,254 L 46,128 Z M 46,128 L 182,163"/>
-    <path class="hotspot-halo-stroke" d="M 105,39 L 164,55 L 182,163 L 252,165 L 244,278 L 94,268 L 88,254 L 46,128 Z"/>
-    <path class="hotspot-halo-stroke" d="M 46,128 L 182,163" style="stroke-opacity:0.6"/>
+    <path class="hotspot-halo-glow" d="M 47,124 L 152,40 L 176,162 L 254,166 L 246,276 L 94,274 L 87,260 Z M 87,260 L 176,162"/>
+    <path class="hotspot-halo-stroke" d="M 47,124 L 152,40 L 176,162 L 254,166 L 246,276 L 94,274 L 87,260 Z"/>
+    <path class="hotspot-halo-stroke" d="M 87,260 L 176,162" style="stroke-opacity:0.65"/>
   </svg>`,
   story: `<svg class="hotspot-halo" viewBox="0 0 130 200" aria-hidden="true">
     <path class="hotspot-halo-glow" d="M 16,16 L 93,13 L 105,153 L 25,163 Z"/>
