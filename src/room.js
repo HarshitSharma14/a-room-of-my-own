@@ -4,6 +4,7 @@ import { mapPupils, eyeMidpointInArtwork } from './gaze-map.js';
 import { createRenderer } from './renderer.js';
 import { createStoryPage } from './story-page.js';
 import { createObjectSection } from './object-section.js';
+import { createGazeGrid } from './gaze-grid.js';
 
 const room = document.querySelector('#room');
 const image = document.querySelector('#room-image');
@@ -19,8 +20,8 @@ let lastFrame = 0;
 let time = 0;
 let nextBlink = 4.4;
 let petStart = -100;
-let lampStart = -100;
 let pointer = null;
+let gazeGrid = null;
 const gazeOrigin = eyeMidpointInArtwork(scene);
 let gaze = [0,0];
 let pupils = scene.eyes.map(eye => eye.iris.slice(0, 2));
@@ -42,15 +43,9 @@ function fallbackPosition() {
 }
 
 const targets = [
-  {id:'cat', label:'Pet the sleeping cat', center:scene.cat.center, radius:scene.cat.radius},
-  {id:'lamp', label:'Give the lamp a gentle shimmer', center:scene.lamp.center, radius:scene.lamp.radius},
   {id:'story', label:'Read my story on the hanging page', center:scene.page.center, radius:scene.page.radius},
+  {id:'cat', label:'Pet the sleeping cat', center:scene.cat.center, radius:scene.cat.radius},
   {id:'laptop', label:'Explore projects on the laptop', center:scene.laptop.center, radius:scene.laptop.radius},
-  {id:'clock', label:'Check the time', center:scene.clock.center, radius:scene.clock.radius},
-  {id:'guitar', label:'Play the guitar', center:scene.guitar.center, radius:scene.guitar.radius},
-  {id:'book', label:'Open the green book on the floor', center:scene.book.center, radius:scene.book.radius},
-  {id:'phone', label:'Turn the phone around', center:scene.phone.center, radius:scene.phone.radius},
-  {id:'controller', label:'Play a game', center:scene.controller.center, radius:scene.controller.radius},
 ].map(target => {
   const button = document.createElement('button');
   button.type = 'button'; button.className = 'room-hotspot';
@@ -60,19 +55,11 @@ const targets = [
   button.addEventListener('click', event => {
     if (drag?.moved) { event.preventDefault(); return; }
 
-    // Story is handled by its own module, don't do anything here.
-    if (['story','cat','guitar','laptop','book','phone'].includes(target.id)) return;
+    // Handled by their respective modules
+    if (['story','cat','laptop'].includes(target.id)) return;
 
-    // Cat and lamp have simple pulse effects.
-    if (target.id === 'lamp') {
-      lampStart = time;
-      status.textContent = paused ? 'The lamp is warm and steady. Motion is paused.' : 'The lamplight shimmers softly.';
-    } else {
-      // Other items pan into view.
-      targetCenter = target.center[0];
-      status.textContent = `Focused on ${target.label}.`;
-    }
-
+    targetCenter = target.center[0];
+    status.textContent = `Focused on ${target.label}.`;
     room.dataset.lastInteraction = target.id;
     schedule();
   });
@@ -128,11 +115,13 @@ function paint(now) {
   if (time > nextBlink + .26) nextBlink = time + 3.8 + Math.random() * 3.3;
   const petAge = time - petStart;
   const pet = !paused && petAge >= 0 && petAge < 2.5 ? Math.sin(petAge / 2.5 * Math.PI) : 0;
-  const lampAge = time - lampStart;
-  const lampPulse = !paused && lampAge >= 0 && lampAge < 2.8 ? Math.sin(lampAge / 2.8 * Math.PI) : 0;
   footMotion=paused?0:damp(footMotion,activeSection?.getFootGesture()||0,18,dt);
-  renderer?.draw({crop,gaze,pupils,tracking,time,motion:!paused,blink:paused ? 0 : blinkAt(time,nextBlink),pet,lampPulse,footMotion});
+  renderer?.draw({crop,gaze,pupils,tracking,time,motion:!paused,blink:paused ? 0 : blinkAt(time,nextBlink),pet,footMotion});
   fallbackPosition(); positionTargets();
+  if (gazeGrid) {
+    const gridTarget = gazeGrid.getTarget(rect, crop);
+    gazeGrid.update({ rect, crop, pose, pupils, canvas, cursor: gridTarget || (pointer ? pointer : null), renderer });
+  }
   if (renderer && !paused || Math.abs(centerX-targetCenter) > .00001) schedule();
 }
 
@@ -220,11 +209,23 @@ addEventListener('pageshow', event => { if (event.persisted) start(); });
 updateToggle();
 story=createStoryPage({room,button:targets.find(target=>target.id==='story').button,scene,
   getView:()=>({rect,crop}),getFootMotion:()=>footMotion,isStill:()=>paused,onChange:schedule});
-sections=['cat','guitar','laptop','book','phone'].map(id=>createObjectSection({id,room,image,scene,
+sections=['cat','laptop'].map(id=>createObjectSection({id,room,image,scene,
   button:targets.find(target=>target.id===id).button,getView:()=>({rect,crop}),
   getFootMotion:()=>footMotion,isStill:()=>paused,onChange:schedule,onCue:target=>{
     if(target==='cat')petStart=time;
     room.dataset.lastInteraction=target;
     status.textContent=`Opened ${target} section.`;
   }}));
+if (window.ENABLE_GAZE_GRID || location.search.includes('grid') || location.pathname.includes('gaze-grid')) {
+  gazeGrid = createGazeGrid(scene, schedule);
+  room.addEventListener('click', event => {
+    if (event.target.closest('.gaze-panel') || event.target.closest('.gaze-point') || event.target.closest('.object-dialog')) return;
+    const x = (event.clientX - rect.left) / rect.width;
+    const y = (event.clientY - rect.top) / rect.height;
+    const artX = Math.round((crop.x + x * crop.width) * 2752);
+    const artY = Math.round((crop.y + y * crop.height) * 1536);
+    console.log(`Clicked artwork coordinates: x=${artX}, y=${artY}`);
+    console.log(`phone: { center: [${artX}/2752, ${artY}/1536], radius: [40/2752, 45/1536], bounds: [${artX-35}, ${artY-40}, 70, 80] },`);
+  });
+}
 start();

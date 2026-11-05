@@ -111,13 +111,6 @@ void main() {
   color = eyelid(color, faceUV, u_eyeA, u_eyeAngles.x);
   color = eyelid(color, faceUV, u_eyeB, u_eyeAngles.y);
 
-  float lampMask = region(source, u_lamp);
-  float glowMask = region(source, vec4(u_lamp.xy + vec2(0.0, .065), .095, .185));
-  float flicker = (.008 * sin(u_time * 1.73) + .005 * sin(u_time * 2.91) +
-    .003 * sin(u_time * 6.37)) * u_motion;
-  color *= 1.0 + flicker * (lampMask + .38 * glowMask);
-  color += vec3(1.0, .62, .18) * u_lampPulse * .065 * (lampMask + .25 * glowMask);
-
   gl_FragColor = vec4(color, 1.0);
 }`;
 
