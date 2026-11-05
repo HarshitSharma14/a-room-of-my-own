@@ -65,8 +65,8 @@ body { background: #242b38; }
 @media(prefers-reduced-motion:reduce) { .room-hotspot[data-object="story"]::after { transition: none; } }
 
 /* The cat, guitar and laptop bring their own readable surfaces forward. */
-.room-hotspot[data-object="cat"]::after,.room-hotspot[data-object="guitar"]::after,.room-hotspot[data-object="laptop"]::after,.room-hotspot[data-object="book"]::after { content:attr(data-label); position:absolute; bottom:-30px; left:50%; transform:translate(-50%,4px); white-space:nowrap; padding:5px 9px; border-radius:4px; background:#242b38e6; color:#f2ddbd; font:11px/1.4 system-ui,sans-serif; letter-spacing:.06em; opacity:0; transition:opacity .2s,transform .2s; pointer-events:none; }
-.room-hotspot[data-object="cat"]:hover::after,.room-hotspot[data-object="cat"]:focus-visible::after,.room-hotspot[data-object="guitar"]:hover::after,.room-hotspot[data-object="guitar"]:focus-visible::after,.room-hotspot[data-object="laptop"]:hover::after,.room-hotspot[data-object="laptop"]:focus-visible::after,.room-hotspot[data-object="book"]:hover::after,.room-hotspot[data-object="book"]:focus-visible::after {opacity:1;transform:translate(-50%,0);}
+.room-hotspot[data-object="cat"]::after,.room-hotspot[data-object="guitar"]::after,.room-hotspot[data-object="laptop"]::after,.room-hotspot[data-object="book"]::after,.room-hotspot[data-object="phone"]::after { content:attr(data-label); position:absolute; bottom:-30px; left:50%; transform:translate(-50%,4px); white-space:nowrap; padding:5px 9px; border-radius:4px; background:#242b38e6; color:#f2ddbd; font:11px/1.4 system-ui,sans-serif; letter-spacing:.06em; opacity:0; transition:opacity .2s,transform .2s; pointer-events:none; }
+.room-hotspot[data-object="cat"]:hover::after,.room-hotspot[data-object="cat"]:focus-visible::after,.room-hotspot[data-object="guitar"]:hover::after,.room-hotspot[data-object="guitar"]:focus-visible::after,.room-hotspot[data-object="laptop"]:hover::after,.room-hotspot[data-object="laptop"]:focus-visible::after,.room-hotspot[data-object="book"]:hover::after,.room-hotspot[data-object="book"]:focus-visible::after,.room-hotspot[data-object="phone"]:hover::after,.room-hotspot[data-object="phone"]:focus-visible::after {opacity:1;transform:translate(-50%,0);}
 .object-dialog {position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:0;border:0;background:transparent;color:#eee6d8;overflow:hidden;color-scheme:dark;}
 .object-dialog::backdrop {background:transparent;}
 .object-backdrop {position:absolute;inset:0;width:100%;height:100%;padding:0;border:0;background:#101723;opacity:0;cursor:default;}
@@ -97,6 +97,19 @@ body { background: #242b38; }
 .wispr-word-flow .wispr-word {display:inline-block;margin-right:6px;animation:wordFlowIn .22s cubic-bezier(0.16,1,0.3,1) forwards;}
 .wispr-word-flow .wispr-word-latest {color:#a88bff;font-weight:600;text-shadow:0 0 16px #a88bff,0 2px 8px #000000;}
 @keyframes wordFlowIn {from{opacity:0;transform:translateX(-10px) scale(0.9);}to{opacity:1;transform:translateX(0) scale(1);}}
+.object-dialog--phone .object-traveler {z-index:2;overflow:visible;border-radius:0;filter:drop-shadow(0 24px 45px #050a12c0);-webkit-mask-image:none;mask-image:none;perspective:1200px;}
+.phone-machine {position:absolute;inset:0;transform-style:preserve-3d;transform-origin:50% 50%;border-radius:36px;background:#151922;border:3px solid #3a4154;box-shadow:inset 0 0 12px #00000080,0 12px 30px #000000a0;}
+.phone-front {position:absolute;inset:0;width:100%;height:100%;backface-visibility:hidden;}
+.object-dialog--phone .object-panel {inset:0;width:100%;height:100%;margin:0;padding:24px 22px 20px;border:none;border-radius:32px;box-shadow:none;background:linear-gradient(165deg,#1f2536f0,#111522f5);backdrop-filter:blur(12px);transform:none;overflow-y:auto;}
+.object-dialog--phone .object-panel::before {display:none;}
+.phone-header {display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;font:11px/1 ui-monospace,monospace;color:#929db5;}
+.phone-island {width:80px;height:18px;border-radius:10px;background:#090c13;}
+.phone-links {display:flex;flex-direction:column;gap:12px;margin:20px 0;}
+.phone-link-btn {display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:14px;background:#252d42;border:1px solid #3c4866;color:#ede8ff;text-decoration:none;font:13px/1.4 system-ui,sans-serif;transition:background .2s,transform .2s;}
+.phone-link-btn:hover,.phone-link-btn:focus-visible {background:#343e5c;transform:translateY(-2px);}
+.phone-link-primary {background:linear-gradient(135deg,#6c4df6,#482dc7);border-color:#8c72ff;color:#ffffff;font-weight:600;}
+.phone-link-primary:hover {background:linear-gradient(135deg,#7c5eff,#5537d8);}
+.phone-link-icon {font-size:16px;}
 .object-dialog--book .object-traveler {z-index:1;overflow:visible;border-radius:0;filter:drop-shadow(0 24px 40px #080e1890);-webkit-mask-image:none;mask-image:none;}
 .book-open {position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:fill;pointer-events:none;user-select:none;-webkit-user-drag:none;transform-origin:center;}
 .book-cover {position:absolute;left:50%;top:50%;transform-origin:left center;transform-style:preserve-3d;backface-visibility:hidden;pointer-events:none;}

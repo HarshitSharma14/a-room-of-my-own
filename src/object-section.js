@@ -14,6 +14,9 @@ const objectSectionContent={
   book:{title:'The next chapter',eyebrow:'THE BOOK · 05 / 06',lead:'A place for what I’m learning.',
     body:'This book is a space for notes, experiments, and ideas that turn into work. Each chapter can hold a skill, a project, and what changed after trying it.',
     detail:'The pages are ready for real examples as this portfolio grows.',label:'The book',bounds:[1330,1420,275,116]},
+  phone:{title:'Let’s build together',eyebrow:'THE PHONE · CONTACT',lead:'Direct line for engineering & ideas.',
+    body:'Always curious about new projects, creative tools, AI experiments, and collaborative software.',
+    detail:'Reach out via email or connect on GitHub and LinkedIn.',label:'Contact',bounds:[1770,815,120,120]},
 };
 
 export function createObjectSection({id,room,button,scene,image,getView,getFootMotion,isStill,onChange,onCue}){
@@ -21,6 +24,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
   const isLaptop=id==='laptop';
   const isCat=id==='cat';
   const isBook=id==='book';
+  const isPhone=id==='phone';
   const patchArt={laptop:{file:'laptop-sofa-patch.png',bounds:[1320,560,480,430]},cat:{file:'cat-sofa-patch.png',bounds:[940,680,470,390]},book:{file:'book-floor-patch.png',bounds:[1150,1210,650,326]}}[id];
   const roomPatch=patchArt?document.createElement('img'):null;
   if(roomPatch){roomPatch.src=`./art/${patchArt.file}`;roomPatch.alt='';roomPatch.className=`${id}-room-patch`;roomPatch.hidden=true;room.append(roomPatch);}
@@ -42,27 +46,56 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
         </div>
         <div class="wispr-word-flow" id="cat-speech-output" aria-live="polite"></div>
       </div>`;
-  const panelHTML=`<article class="object-panel" tabindex="0" aria-label="${content.label} section">${isLaptop?`<div class="laptop-screen-content">${panelBody}</div>`:isCat?catPanelBody:panelBody}</article>`;
+  const phonePanelBody=`
+      <button class="object-close" type="button" aria-label="Close ${content.label} section" autofocus>×</button>
+      <div class="phone-header" aria-hidden="true">
+        <span class="phone-time">9:41</span>
+        <div class="phone-island"></div>
+        <span class="phone-signal">5G ⚡</span>
+      </div>
+      <span class="object-eyebrow">${content.eyebrow}</span>
+      <h2 id="${id}-title">${content.title}</h2>
+      <p class="object-lead">${content.lead}</p>
+      <div class="phone-links">
+        <a href="mailto:harshitsharmaclg@gmail.com" class="phone-link-btn phone-link-primary">
+          <span class="phone-link-icon">✉️</span>
+          <span>harshitsharmaclg@gmail.com</span>
+        </a>
+        <a href="https://github.com/HarshitSharma14" target="_blank" rel="noopener" class="phone-link-btn">
+          <span class="phone-link-icon">🐙</span>
+          <span>github.com/HarshitSharma14</span>
+        </a>
+        <a href="https://a-room-of-my-own.vercel.app" target="_blank" rel="noopener" class="phone-link-btn">
+          <span class="phone-link-icon">✨</span>
+          <span>a-room-of-my-own.vercel.app</span>
+        </a>
+      </div>
+      <div class="object-rule"></div>
+      <p class="object-detail">${content.detail}</p>
+      <span class="object-footer">A ROOM OF MY OWN</span>`;
+  const panelHTML=`<article class="object-panel" tabindex="0" aria-label="${content.label} section">${isLaptop?`<div class="laptop-screen-content">${panelBody}</div>`:isCat?catPanelBody:isPhone?phonePanelBody:panelBody}</article>`;
   dialog.innerHTML=`<button class="object-backdrop" type="button" tabindex="-1" aria-label="Close ${content.label} section"></button>
-    ${isLaptop||isBook?'':'<canvas class="object-magic" aria-hidden="true"></canvas>'}
+    ${isLaptop||isBook||isPhone?'':'<canvas class="object-magic" aria-hidden="true"></canvas>'}
     ${isLaptop?`<div class="object-traveler object-laptop"><div class="laptop-machine"><img class="laptop-front" src="./art/laptop-front.png" alt="" draggable="false">${panelHTML}</div></div>`
+      :isPhone?`<div class="object-traveler object-phone"><div class="phone-machine"><div class="phone-front">${panelHTML}</div></div></div>`
       :isCat?`<div class="object-traveler object-cat" aria-hidden="true"><img class="cat-front cat-front--closed" src="./art/cat-front.png" alt="" draggable="false"><img class="cat-front cat-front--talking" src="./art/cat-front-talking.png" alt="" draggable="false" style="display:none;"></div>${panelHTML}`
       :isBook?`<div class="object-traveler object-book" aria-hidden="true"><img class="book-open" src="./art/book-open.png" alt="" draggable="false"><div class="book-cover"><img class="book-front" src="./art/book-front.png" alt="" draggable="false"></div></div>${panelHTML}`
       :`<div class="object-traveler" aria-hidden="true"><div class="object-portrait"></div></div>${panelHTML}`}`;
-  if(!isCat){
+  if(!isCat&&!isPhone){
     for(const [selector,value] of [['.object-eyebrow',content.eyebrow],['h2',content.title],['.object-lead',content.lead],['.object-body',content.body],['.object-detail',content.detail]]) dialog.querySelector(selector).textContent=value;
   }
   document.body.append(dialog);
   const traveler=dialog.querySelector('.object-traveler'), portrait=dialog.querySelector('.object-portrait');
   const machine=dialog.querySelector('.laptop-machine');
+  const phoneMachine=dialog.querySelector('.phone-machine');
   const screenContent=dialog.querySelector('.laptop-screen-content');
   const bookOpen=dialog.querySelector('.book-open'),bookCover=dialog.querySelector('.book-cover');
   const panel=dialog.querySelector('.object-panel'), backdrop=dialog.querySelector('.object-backdrop');
-  const magic=isLaptop||isBook?null:createPageMagic(dialog.querySelector('.object-magic'));
+  const magic=isLaptop||isBook||isPhone?null:createPageMagic(dialog.querySelector('.object-magic'));
   if(portrait)portrait.style.backgroundImage=`url("${image.currentSrc||image.src}")`;
   const closeButton=dialog.querySelector('.object-close');
   button.setAttribute('aria-haspopup','dialog');button.setAttribute('aria-controls',dialog.id);button.setAttribute('aria-expanded','false');
-  button.dataset.label=id==='cat'?'The cat':id==='laptop'?'Projects':id==='book'?'The book':'Beyond code';
+  button.dataset.label=id==='cat'?'The cat':id==='laptop'?'Projects':id==='book'?'The book':id==='phone'?'Contact': 'Beyond code';
   let active=false,progress=0,direction=1,frame=0,last=0,focus=null;
   let catSpeechTimer=null,catMouthTimer=null,catAutoReturnTimer=null,catSpeaking=false;
   const catClosedImg=isCat?dialog.querySelector('.cat-front--closed'):null;
@@ -155,6 +188,18 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
       cx=startCx+(targetCx-startCx)*fly;
       cy=startCy+(targetCy-startCy)*fly;
     }
+    if(isPhone){
+      const aspect=360/680;
+      const phase=clamp((progress-pageTiming.arrival)/(1-pageTiming.arrival),0,1);
+      const fly=ease(clamp(phase,0,1));
+      const startWidth=source.width;
+      const isMobile=rect.width<=600;
+      const targetWidth=isMobile?Math.min(rect.width*.85,320):Math.min(rect.width*.32,360);
+      width=startWidth+(targetWidth-startWidth)*fly;
+      height=width/aspect;
+      cx=source.left+source.width/2+(rect.left+rect.width/2-source.left-source.width/2)*fly;
+      cy=source.top+source.height/2+(rect.top+rect.height/2-source.top-source.height/2)*fly;
+    }
     if(isBook){
       const closedAspect=1115/1410,openAspect=1536/1024;
       const phase=clamp((progress-pageTiming.arrival)/(1-pageTiming.arrival),0,1);
@@ -173,13 +218,16 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
       Object.assign(bookCover.style,{width:`${coverWidth}px`,height:`${coverWidth/closedAspect}px`,opacity:String(1-opening),transform:`translate(-50%,-50%) rotateY(${-100*opening}deg)`});
     }
     Object.assign(traveler.style,{left:`${cx-width/2}px`,top:`${cy-height/2}px`,width:`${width}px`,height:`${height}px`,
-      opacity:isLaptop||isCat||isBook?String(progress>=pageTiming.arrival?1:0):String(clamp(1-(progress-.63)/.25,0,1)),
-      transform:isBook?`perspective(1000px) rotateX(${55*(1-bookFlight)}deg) rotateZ(${-16*(1-bookFlight)}deg)`:isLaptop||isCat?'none':`rotate(${8*Math.sin(t*Math.PI)}deg)`,
-      pointerEvents:isLaptop&&progress>.85?'auto':'none'});
+      opacity:isLaptop||isCat||isBook||isPhone?String(progress>=pageTiming.arrival?1:0):String(clamp(1-(progress-.63)/.25,0,1)),
+      transform:isBook?`perspective(1000px) rotateX(${55*(1-bookFlight)}deg) rotateZ(${-16*(1-bookFlight)}deg)`:isLaptop||isCat||isPhone?'none':`rotate(${8*Math.sin(t*Math.PI)}deg)`,
+      pointerEvents:(isLaptop||isPhone)&&progress>.85?'auto':'none'});
     if(machine){
       const turn=ease(clamp((progress-pageTiming.arrival)/(.9-pageTiming.arrival),0,1));
       machine.style.transform=`rotateY(${54*(1-turn)}deg) rotateX(${-9*(1-turn)}deg) rotateZ(${-8*(1-turn)}deg)`;
       screenContent.style.opacity=String(ease(clamp((progress-.61)/.3,0,1)));
+    }else if(phoneMachine){
+      const turn=ease(clamp((progress-pageTiming.arrival)/(.9-pageTiming.arrival),0,1));
+      phoneMachine.style.transform=`rotateY(${180*(1-turn)}deg)`;
     }else if(portrait){
       const imageWidth=rect.width/crop.width,imageHeight=rect.height/crop.height;
       portrait.style.backgroundSize=`${imageWidth}px ${imageHeight}px`;
@@ -187,8 +235,8 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
       portrait.style.width=`${source.width}px`;portrait.style.height=`${source.height}px`;
       portrait.style.transform=`scale(${width/source.width},${height/source.height})`;
     }
-    panel.style.opacity=isLaptop?'1':String(ease(clamp((progress-(isCat||isBook?.8:.66))/(isCat||isBook?.2:.34),0,1)));
-    if(!isLaptop)panel.style.transform=isBook?'translateY(-50%)':isCat?'translateY(-50%)':`translateY(${(1-t)*28}px) scale(${.94+.06*t})`;
+    panel.style.opacity=isLaptop||isPhone?'1':String(ease(clamp((progress-(isCat||isBook?.8:.66))/(isCat||isBook?.2:.34),0,1)));
+    if(!isLaptop&&!isPhone)panel.style.transform=isBook?'translateY(-50%)':isCat?'translateY(-50%)':`translateY(${(1-t)*28}px) scale(${.94+.06*t})`;
     panel.style.pointerEvents=progress>.85?'auto':'none';
     backdrop.style.opacity=String(progress*.75);
     const center=[source.left+source.width/2,source.top+source.height/2];
@@ -207,7 +255,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
     const dt=last?Math.min((now-last)/1000,.25):0;last=now;
     progress=advancePage(progress,direction,dt*1.3,isStill());
     render();
-    if(direction<0&&progress<=((isLaptop||isCat||isBook)?pageTiming.arrival:0)){finishClose();return;}
+    if(direction<0&&progress<=((isLaptop||isCat||isBook||isPhone)?pageTiming.arrival:0)){finishClose();return;}
     if(direction>0&&progress===1){
       panel.scrollTop=0;last=0;
       if(isCat)startCatSpeech();
@@ -217,7 +265,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
   }
   function schedule(){if(active&&!frame&&!document.hidden)frame=requestAnimationFrame(tick);}
   function open(){
-    if(active)return;active=true;direction=1;progress=isStill()?1:isLaptop||isBook?pageTiming.arrival:0;last=0;
+    if(active)return;active=true;direction=1;progress=isStill()?1:isLaptop||isBook||isPhone?pageTiming.arrival:0;last=0;
     button.setAttribute('aria-expanded','true');panel.scrollTop=0;
     dialog.showModal();onCue(id);render();closeButton.focus({preventScroll:true});
     if(progress===1){
