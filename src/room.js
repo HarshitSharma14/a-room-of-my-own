@@ -42,6 +42,25 @@ function fallbackPosition() {
   image.style.objectPosition = `${x}% ${y}%`;
 }
 
+const targetOutlines = {
+  cat: `<svg class="hotspot-halo" viewBox="0 0 100 60" preserveAspectRatio="none" aria-hidden="true">
+    <path class="hotspot-halo-glow" d="M 26,25 L 29,12 L 35,21 C 37,16 39,12 42,10 L 45,21 C 65,13 82,16 90,26 C 98,36 96,48 88,52 C 75,57 45,56 26,53 C 12,50 8,38 14,30 C 18,24 22,23 26,25 Z"/>
+    <path class="hotspot-halo-stroke" d="M 26,25 L 29,12 L 35,21 C 37,16 39,12 42,10 L 45,21 C 65,13 82,16 90,26 C 98,36 96,48 88,52 C 75,57 45,56 26,53 C 12,50 8,38 14,30 C 18,24 22,23 26,25 Z"/>
+  </svg>`,
+  laptop: `<svg class="hotspot-halo" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <path class="hotspot-halo-glow" d="M 15,38 L 52,12 L 57,46 L 82,49 L 92,62 L 40,86 L 24,75 Z"/>
+    <path class="hotspot-halo-stroke" d="M 15,38 L 52,12 L 57,46 L 82,49 L 92,62 L 40,86 L 24,75 Z"/>
+  </svg>`,
+  story: `<svg class="hotspot-halo" viewBox="0 0 100 150" preserveAspectRatio="none" aria-hidden="true">
+    <path class="hotspot-halo-glow" d="M 12,18 L 45,18 C 45,12 47,8 50,8 C 53,8 55,12 55,18 L 88,16 L 86,145 L 10,142 Z"/>
+    <path class="hotspot-halo-stroke" d="M 12,18 L 45,18 C 45,12 47,8 50,8 C 53,8 55,12 55,18 L 88,16 L 86,145 L 10,142 Z"/>
+  </svg>`,
+  book: `<svg class="hotspot-halo" viewBox="0 0 100 50" preserveAspectRatio="none" aria-hidden="true">
+    <path class="hotspot-halo-glow" d="M 45,8 L 88,22 L 88,30 L 55,50 L 12,36 L 12,28 Z M 12,28 L 55,42 L 88,22"/>
+    <path class="hotspot-halo-stroke" d="M 45,8 L 88,22 L 88,30 L 55,50 L 12,36 L 12,28 Z M 12,28 L 55,42 L 88,22"/>
+  </svg>`
+};
+
 const targets = [
   {id:'story', label:'Read my story on the hanging page', center:scene.page.center, radius:scene.page.radius},
   {id:'cat', label:'Pet the sleeping cat', center:scene.cat.center, radius:scene.cat.radius},
@@ -53,6 +72,7 @@ const targets = [
   button.setAttribute('aria-label', target.label);
   button.dataset.object = target.id;
   if(target.id==='story')button.dataset.label='My story';
+  button.innerHTML = targetOutlines[target.id] || '';
   button.addEventListener('click', event => {
     if (drag?.moved) { event.preventDefault(); return; }
 
