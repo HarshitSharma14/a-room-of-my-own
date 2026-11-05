@@ -16,7 +16,7 @@ const objectSectionContent={
     detail:'The pages are ready for real examples as this portfolio grows.',label:'The book',bounds:[1330,1420,275,116]},
   phone:{title:'Let’s build together',eyebrow:'THE PHONE · CONTACT',lead:'Direct line for engineering & ideas.',
     body:'Always curious about new projects, creative tools, AI experiments, and collaborative software.',
-    detail:'Reach out via email or connect on GitHub and LinkedIn.',label:'Contact',bounds:[1770,815,120,120]},
+    detail:'Reach out via email or connect on GitHub and LinkedIn.',label:'Contact',bounds:[1800,828,70,80]},
 };
 
 export function createObjectSection({id,room,button,scene,image,getView,getFootMotion,isStill,onChange,onCue}){
@@ -25,7 +25,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
   const isCat=id==='cat';
   const isBook=id==='book';
   const isPhone=id==='phone';
-  const patchArt={laptop:{file:'laptop-sofa-patch.png',bounds:[1320,560,480,430]},cat:{file:'cat-sofa-patch.png',bounds:[940,680,470,390]},book:{file:'book-floor-patch.png',bounds:[1150,1210,650,326]}}[id];
+  const patchArt={laptop:{file:'laptop-sofa-patch.png',bounds:[1320,560,480,430]},cat:{file:'cat-sofa-patch.png',bounds:[940,680,470,390]},book:{file:'book-floor-patch.png',bounds:[1150,1210,650,326]},phone:{file:'phone-sofa-patch.png',bounds:[1785,815,100,105]}}[id];
   const roomPatch=patchArt?document.createElement('img'):null;
   if(roomPatch){roomPatch.src=`./art/${patchArt.file}`;roomPatch.alt='';roomPatch.className=`${id}-room-patch`;roomPatch.hidden=true;room.append(roomPatch);}
   const dialog=document.createElement('dialog');
@@ -75,9 +75,8 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
       <span class="object-footer">A ROOM OF MY OWN</span>`;
   const panelHTML=`<article class="object-panel" tabindex="0" aria-label="${content.label} section">${isLaptop?`<div class="laptop-screen-content">${panelBody}</div>`:isCat?catPanelBody:isPhone?phonePanelBody:panelBody}</article>`;
   dialog.innerHTML=`<button class="object-backdrop" type="button" tabindex="-1" aria-label="Close ${content.label} section"></button>
-    ${isLaptop||isBook||isPhone?'':'<canvas class="object-magic" aria-hidden="true"></canvas>'}
     ${isLaptop?`<div class="object-traveler object-laptop"><div class="laptop-machine"><img class="laptop-front" src="./art/laptop-front.png" alt="" draggable="false">${panelHTML}</div></div>`
-      :isPhone?`<div class="object-traveler object-phone"><div class="phone-machine"><div class="phone-front">${panelHTML}</div></div></div>`
+      :isPhone?`<div class="object-traveler object-phone"><div class="phone-machine"><div class="phone-front">${panelHTML}</div><div class="phone-back"><img class="phone-back-img" src="./art/phone-back.png" alt="" draggable="false"></div></div></div>`
       :isCat?`<div class="object-traveler object-cat" aria-hidden="true"><img class="cat-front cat-front--closed" src="./art/cat-front.png" alt="" draggable="false"><img class="cat-front cat-front--talking" src="./art/cat-front-talking.png" alt="" draggable="false" style="display:none;"></div>${panelHTML}`
       :isBook?`<div class="object-traveler object-book" aria-hidden="true"><img class="book-open" src="./art/book-open.png" alt="" draggable="false"><div class="book-cover"><img class="book-front" src="./art/book-front.png" alt="" draggable="false"></div></div>${panelHTML}`
       :`<div class="object-traveler" aria-hidden="true"><div class="object-portrait"></div></div>${panelHTML}`}`;
@@ -91,7 +90,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
   const screenContent=dialog.querySelector('.laptop-screen-content');
   const bookOpen=dialog.querySelector('.book-open'),bookCover=dialog.querySelector('.book-cover');
   const panel=dialog.querySelector('.object-panel'), backdrop=dialog.querySelector('.object-backdrop');
-  const magic=isLaptop||isBook||isPhone?null:createPageMagic(dialog.querySelector('.object-magic'));
+  const magic=null;
   if(portrait)portrait.style.backgroundImage=`url("${image.currentSrc||image.src}")`;
   const closeButton=dialog.querySelector('.object-close');
   button.setAttribute('aria-haspopup','dialog');button.setAttribute('aria-controls',dialog.id);button.setAttribute('aria-expanded','false');
@@ -218,7 +217,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
       Object.assign(bookCover.style,{width:`${coverWidth}px`,height:`${coverWidth/closedAspect}px`,opacity:String(1-opening),transform:`translate(-50%,-50%) rotateY(${-100*opening}deg)`});
     }
     Object.assign(traveler.style,{left:`${cx-width/2}px`,top:`${cy-height/2}px`,width:`${width}px`,height:`${height}px`,
-      opacity:isLaptop||isCat||isBook||isPhone?String(progress>=pageTiming.arrival?1:0):String(clamp(1-(progress-.63)/.25,0,1)),
+      opacity:String(progress>=pageTiming.arrival?1:0),
       transform:isBook?`perspective(1000px) rotateX(${55*(1-bookFlight)}deg) rotateZ(${-16*(1-bookFlight)}deg)`:isLaptop||isCat||isPhone?'none':`rotate(${8*Math.sin(t*Math.PI)}deg)`,
       pointerEvents:(isLaptop||isPhone)&&progress>.85?'auto':'none'});
     if(machine){
@@ -240,9 +239,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
     panel.style.pointerEvents=progress>.85?'auto':'none';
     backdrop.style.opacity=String(progress*.75);
     const center=[source.left+source.width/2,source.top+source.height/2];
-    const toe=footTipOnScreen(getFootMotion(),scene,rect,crop);
-    magic?.draw(progress,toe,center,rect,direction>0&&!isStill());
-    focus=direction>0&&progress<pageTiming.arrival?magicPoint(progress,toe,center):[cx,cy];
+    focus=[cx,cy];
     room.dataset.section=id;onChange();
   }
   function finishClose(){
@@ -255,7 +252,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
     const dt=last?Math.min((now-last)/1000,.25):0;last=now;
     progress=advancePage(progress,direction,dt*1.3,isStill());
     render();
-    if(direction<0&&progress<=((isLaptop||isCat||isBook||isPhone)?pageTiming.arrival:0)){finishClose();return;}
+    if(direction<0&&progress<=pageTiming.arrival){finishClose();return;}
     if(direction>0&&progress===1){
       panel.scrollTop=0;last=0;
       if(isCat)startCatSpeech();
@@ -265,7 +262,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
   }
   function schedule(){if(active&&!frame&&!document.hidden)frame=requestAnimationFrame(tick);}
   function open(){
-    if(active)return;active=true;direction=1;progress=isStill()?1:isLaptop||isBook||isPhone?pageTiming.arrival:0;last=0;
+    if(active)return;active=true;direction=1;progress=isStill()?1:pageTiming.arrival;last=0;
     button.setAttribute('aria-expanded','true');panel.scrollTop=0;
     dialog.showModal();onCue(id);render();closeButton.focus({preventScroll:true});
     if(progress===1){
@@ -285,6 +282,5 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
   addEventListener('resize',()=>{if(active)render();});
   document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(frame);frame=0;last=0;}else schedule();});
   addEventListener('pagehide',()=>{cancelAnimationFrame(frame);frame=0;if(active)finishClose();});
-  return {get active(){return active;},getFocus(){return focus;},
-    getFootGesture(){return active&&direction>0?Math.sin(clamp((progress-pageTiming.footStart)/(pageTiming.footEnd-pageTiming.footStart),0,1)*Math.PI):0;}};
+  return {get active(){return active;},getFocus(){return focus;},getFootGesture(){return 0;}};
 }
