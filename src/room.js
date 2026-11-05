@@ -46,6 +46,7 @@ const targets = [
   {id:'story', label:'Read my story on the hanging page', center:scene.page.center, radius:scene.page.radius},
   {id:'cat', label:'Pet the sleeping cat', center:scene.cat.center, radius:scene.cat.radius},
   {id:'laptop', label:'Explore projects on the laptop', center:scene.laptop.center, radius:scene.laptop.radius},
+  {id:'book', label:'Open the green book on the floor', center:scene.book.center, radius:scene.book.radius},
 ].map(target => {
   const button = document.createElement('button');
   button.type = 'button'; button.className = 'room-hotspot';
@@ -56,7 +57,7 @@ const targets = [
     if (drag?.moved) { event.preventDefault(); return; }
 
     // Handled by their respective modules
-    if (['story','cat','laptop'].includes(target.id)) return;
+    if (['story','cat','laptop','book'].includes(target.id)) return;
 
     targetCenter = target.center[0];
     status.textContent = `Focused on ${target.label}.`;
@@ -209,7 +210,7 @@ addEventListener('pageshow', event => { if (event.persisted) start(); });
 updateToggle();
 story=createStoryPage({room,button:targets.find(target=>target.id==='story').button,scene,
   getView:()=>({rect,crop}),getFootMotion:()=>footMotion,isStill:()=>paused,onChange:schedule});
-sections=['cat','laptop'].map(id=>createObjectSection({id,room,image,scene,
+sections=['cat','laptop','book'].map(id=>createObjectSection({id,room,image,scene,
   button:targets.find(target=>target.id===id).button,getView:()=>({rect,crop}),
   getFootMotion:()=>footMotion,isStill:()=>paused,onChange:schedule,onCue:target=>{
     if(target==='cat')petStart=time;
