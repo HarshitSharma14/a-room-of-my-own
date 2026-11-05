@@ -1,6 +1,7 @@
 import { scene } from './scene-config.js';
 import { clamp, damp, coverCrop, gazeAt, blinkAt, headPose } from './scene-math.js';
 import { mapPupils, eyeMidpointInArtwork } from './gaze-map.js';
+import { projectPageRect } from './page-motion.js';
 import { createRenderer } from './renderer.js';
 import { createStoryPage } from './story-page.js';
 import { createObjectSection } from './object-section.js';
@@ -43,29 +44,32 @@ function fallbackPosition() {
 }
 
 const targetOutlines = {
-  cat: `<svg class="hotspot-halo" viewBox="0 0 100 60" preserveAspectRatio="none" aria-hidden="true">
-    <path class="hotspot-halo-glow" d="M 26,25 L 29,12 L 35,21 C 37,16 39,12 42,10 L 45,21 C 65,13 82,16 90,26 C 98,36 96,48 88,52 C 75,57 45,56 26,53 C 12,50 8,38 14,30 C 18,24 22,23 26,25 Z"/>
-    <path class="hotspot-halo-stroke" d="M 26,25 L 29,12 L 35,21 C 37,16 39,12 42,10 L 45,21 C 65,13 82,16 90,26 C 98,36 96,48 88,52 C 75,57 45,56 26,53 C 12,50 8,38 14,30 C 18,24 22,23 26,25 Z"/>
+  cat: `<svg class="hotspot-halo" viewBox="0 0 350 250" aria-hidden="true">
+    <path class="hotspot-halo-glow" d="M 58,102 C 60,95 85,92 115,102 L 129,74 C 150,68 180,68 205,74 C 235,82 255,105 257,135 C 259,155 245,170 215,173 C 185,175 145,175 120,170 L 84,170 C 72,166 65,158 68,148 C 72,138 60,120 58,102 Z"/>
+    <path class="hotspot-halo-stroke" d="M 58,102 C 60,95 85,92 115,102 L 129,74 C 150,68 180,68 205,74 C 235,82 255,105 257,135 C 259,155 245,170 215,173 C 185,175 145,175 120,170 L 84,170 C 72,166 65,158 68,148 C 72,138 60,120 58,102 Z"/>
   </svg>`,
-  laptop: `<svg class="hotspot-halo" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-    <path class="hotspot-halo-glow" d="M 15,38 L 52,12 L 57,46 L 82,49 L 92,62 L 40,86 L 24,75 Z"/>
-    <path class="hotspot-halo-stroke" d="M 15,38 L 52,12 L 57,46 L 82,49 L 92,62 L 40,86 L 24,75 Z"/>
+  laptop: `<svg class="hotspot-halo" viewBox="0 0 300 300" aria-hidden="true">
+    <path class="hotspot-halo-glow" d="M 105,39 L 164,55 L 182,163 L 252,165 L 244,278 L 94,268 L 88,254 L 46,128 Z M 46,128 L 182,163"/>
+    <path class="hotspot-halo-stroke" d="M 105,39 L 164,55 L 182,163 L 252,165 L 244,278 L 94,268 L 88,254 L 46,128 Z"/>
+    <path class="hotspot-halo-stroke" d="M 46,128 L 182,163" style="stroke-opacity:0.6"/>
   </svg>`,
-  story: `<svg class="hotspot-halo" viewBox="0 0 100 150" preserveAspectRatio="none" aria-hidden="true">
-    <path class="hotspot-halo-glow" d="M 12,18 L 45,18 C 45,12 47,8 50,8 C 53,8 55,12 55,18 L 88,16 L 86,145 L 10,142 Z"/>
-    <path class="hotspot-halo-stroke" d="M 12,18 L 45,18 C 45,12 47,8 50,8 C 53,8 55,12 55,18 L 88,16 L 86,145 L 10,142 Z"/>
+  story: `<svg class="hotspot-halo" viewBox="0 0 130 200" aria-hidden="true">
+    <path class="hotspot-halo-glow" d="M 16,16 L 93,13 L 105,153 L 25,163 Z"/>
+    <path class="hotspot-halo-stroke" d="M 16,16 L 93,13 L 105,153 L 25,163 Z"/>
+    <circle cx="56" cy="23" r="4.5" class="hotspot-halo-stroke"/>
   </svg>`,
-  book: `<svg class="hotspot-halo" viewBox="0 0 100 50" preserveAspectRatio="none" aria-hidden="true">
-    <path class="hotspot-halo-glow" d="M 45,8 L 88,22 L 88,30 L 55,50 L 12,36 L 12,28 Z M 12,28 L 55,42 L 88,22"/>
-    <path class="hotspot-halo-stroke" d="M 45,8 L 88,22 L 88,30 L 55,50 L 12,36 L 12,28 Z M 12,28 L 55,42 L 88,22"/>
+  book: `<svg class="hotspot-halo" viewBox="0 0 400 186" aria-hidden="true">
+    <path class="hotspot-halo-glow" d="M 236,73 L 352,117 L 352,126 L 276,186 L 150,153 L 150,143 Z"/>
+    <path class="hotspot-halo-stroke" d="M 236,73 L 352,117 L 352,126 L 276,186 L 150,153 L 150,143 Z"/>
+    <path class="hotspot-halo-stroke" d="M 150,143 L 276,184 L 352,117" style="stroke-opacity:0.65"/>
   </svg>`
 };
 
 const targets = [
-  {id:'story', label:'Read my story on the hanging page', center:scene.page.center, radius:scene.page.radius},
-  {id:'cat', label:'Pet the sleeping cat', center:scene.cat.center, radius:scene.cat.radius},
-  {id:'laptop', label:'Explore projects on the laptop', center:scene.laptop.center, radius:scene.laptop.radius},
-  {id:'book', label:'Open the green book on the floor', center:scene.book.center, radius:scene.book.radius},
+  {id:'story', label:'Read my story on the hanging page', bounds: [360, 490, 130, 200]},
+  {id:'cat', label:'Pet the sleeping cat', bounds: [1000, 700, 350, 250]},
+  {id:'laptop', label:'Explore projects on the laptop', bounds: [1380, 600, 300, 300]},
+  {id:'book', label:'Open the green book on the floor', bounds: [1250, 1350, 400, 186]},
 ].map(target => {
   const button = document.createElement('button');
   button.type = 'button'; button.className = 'room-hotspot';
@@ -79,8 +83,6 @@ const targets = [
     // Handled by their respective modules
     if (['story','cat','laptop','book'].includes(target.id)) return;
 
-    targetCenter = target.center[0];
-    status.textContent = `Focused on ${target.label}.`;
     room.dataset.lastInteraction = target.id;
     schedule();
   });
@@ -90,12 +92,13 @@ const targets = [
 
 function positionTargets() {
   for (const t of targets) {
-    const x = (t.center[0] - crop.x) / crop.width;
-    const y = (t.center[1] - crop.y) / crop.height;
-    t.button.style.left = `${x * 100}%`; t.button.style.top = `${y * 100}%`;
-    t.button.style.width = `${2 * t.radius[0] / crop.width * 100}%`;
-    t.button.style.height = `${2 * t.radius[1] / crop.height * 100}%`;
-    t.button.hidden = x < -.08 || x > 1.08 || y < -.08 || y > 1.08;
+    const projected = projectPageRect(t.bounds, scene, rect, crop);
+    t.button.style.left = `${projected.left}px`;
+    t.button.style.top = `${projected.top}px`;
+    t.button.style.width = `${projected.width}px`;
+    t.button.style.height = `${projected.height}px`;
+    t.button.hidden = projected.left + projected.width < -15 || projected.left > rect.width + 15 ||
+                      projected.top + projected.height < -15 || projected.top > rect.height + 15;
   }
 }
 

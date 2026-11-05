@@ -9,93 +9,88 @@ body { background: #242b38; }
 .room-canvas { opacity: 0; pointer-events: none; }
 .room-hotspot {
   position: absolute;
-  transform: translate(-50%, -50%);
   border: none;
   border-radius: 0;
   background: transparent;
   padding: 0;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  min-width: 44px;
-  min-height: 44px;
   outline: none;
 }
 
 .hotspot-halo {
   position: absolute;
-  inset: -12%;
-  width: 124%;
-  height: 124%;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   overflow: visible;
   pointer-events: none;
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hotspot-halo-glow {
-  fill: rgba(255, 215, 0, 0.05);
-  stroke: rgba(255, 205, 50, 0.38);
-  stroke-width: 7;
+  fill: rgba(255, 215, 0, 0.03);
+  stroke: rgba(255, 200, 40, 0.28);
+  stroke-width: 6;
   stroke-linecap: round;
   stroke-linejoin: round;
   filter: blur(4px);
-  animation: goldenAuraPulse 3s ease-in-out infinite alternate;
+  animation: goldenAuraPulse 3.5s ease-in-out infinite alternate;
 }
 
 .hotspot-halo-stroke {
   fill: transparent;
   stroke: #ffda73;
-  stroke-width: 2.2;
+  stroke-width: 1.8;
   stroke-linecap: round;
   stroke-linejoin: round;
-  filter: drop-shadow(0 0 4px #ffe694) drop-shadow(0 0 10px rgba(255, 210, 50, 0.7));
-  animation: goldenStrokePulse 3s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 3px #ffe694) drop-shadow(0 0 8px rgba(255, 200, 40, 0.5));
+  animation: goldenStrokePulse 3.5s ease-in-out infinite alternate;
   transition: stroke 0.25s ease, stroke-width 0.25s ease, filter 0.25s ease;
 }
 
 @keyframes goldenAuraPulse {
   0% {
-    stroke-opacity: 0.35;
-    fill-opacity: 0.03;
+    stroke-opacity: 0.25;
     filter: blur(3px);
   }
   100% {
-    stroke-opacity: 0.75;
-    fill-opacity: 0.08;
+    stroke-opacity: 0.6;
     filter: blur(5px);
   }
 }
 
 @keyframes goldenStrokePulse {
   0% {
-    stroke: #f5cf68;
-    stroke-opacity: 0.7;
-    filter: drop-shadow(0 0 3px #ffe180) drop-shadow(0 0 8px rgba(255, 200, 40, 0.5));
+    stroke: #f3ca58;
+    stroke-opacity: 0.6;
+    filter: drop-shadow(0 0 2px #ffe180) drop-shadow(0 0 6px rgba(255, 190, 30, 0.35));
   }
   100% {
-    stroke: #fff2a8;
-    stroke-opacity: 1;
-    filter: drop-shadow(0 0 6px #fff4be) drop-shadow(0 0 16px rgba(255, 215, 0, 0.9)) drop-shadow(0 0 24px rgba(255, 185, 0, 0.45));
+    stroke: #ffea88;
+    stroke-opacity: 0.95;
+    filter: drop-shadow(0 0 5px #fff2a8) drop-shadow(0 0 12px rgba(255, 210, 40, 0.75));
   }
 }
 
 .room-hotspot:hover .hotspot-halo,
 .room-hotspot:focus-visible .hotspot-halo {
-  transform: scale(1.06);
+  transform: scale(1.04);
 }
 
 .room-hotspot:hover .hotspot-halo-glow,
 .room-hotspot:focus-visible .hotspot-halo-glow {
-  fill: rgba(255, 220, 50, 0.12);
-  stroke: rgba(255, 220, 70, 0.65);
-  stroke-width: 9;
+  fill: rgba(255, 220, 50, 0.08);
+  stroke: rgba(255, 215, 50, 0.6);
+  stroke-width: 8;
   filter: blur(5px);
 }
 
 .room-hotspot:hover .hotspot-halo-stroke,
 .room-hotspot:focus-visible .hotspot-halo-stroke {
   stroke: #ffffff;
-  stroke-width: 2.8;
-  filter: drop-shadow(0 0 6px #ffffff) drop-shadow(0 0 18px rgba(255, 220, 60, 1)) drop-shadow(0 0 32px rgba(255, 190, 20, 0.7));
+  stroke-width: 2.4;
+  filter: drop-shadow(0 0 5px #ffffff) drop-shadow(0 0 14px rgba(255, 220, 60, 0.95)) drop-shadow(0 0 26px rgba(255, 180, 20, 0.6));
   animation-play-state: paused;
 }
 
