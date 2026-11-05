@@ -47,21 +47,33 @@ const targetOutlines = {
   cat: `<svg class="hotspot-halo" viewBox="0 0 350 250" aria-hidden="true">
     <path class="hotspot-halo-glow" d="M 58,102 C 60,95 85,92 115,102 L 129,74 C 150,68 180,68 205,74 C 235,82 255,105 257,135 C 259,155 245,170 215,173 C 185,175 145,175 120,170 L 84,170 C 72,166 65,158 68,148 C 72,138 60,120 58,102 Z"/>
     <path class="hotspot-halo-stroke" d="M 58,102 C 60,95 85,92 115,102 L 129,74 C 150,68 180,68 205,74 C 235,82 255,105 257,135 C 259,155 245,170 215,173 C 185,175 145,175 120,170 L 84,170 C 72,166 65,158 68,148 C 72,138 60,120 58,102 Z"/>
+    <g transform="translate(129, 74)"><path class="hotspot-sparkle hotspot-sparkle--1" d="M 0,-7 Q 0,0 7,0 Q 0,0 0,7 Q 0,0 -7,0 Q 0,0 0,-7 Z"/></g>
+    <g transform="translate(257, 135)"><path class="hotspot-sparkle hotspot-sparkle--2" d="M 0,-6 Q 0,0 6,0 Q 0,0 0,6 Q 0,0 -6,0 Q 0,0 0,-6 Z"/></g>
+    <g transform="translate(58, 102)"><path class="hotspot-sparkle hotspot-sparkle--3" d="M 0,-5 Q 0,0 5,0 Q 0,0 0,5 Q 0,0 -5,0 Q 0,0 0,-5 Z"/></g>
   </svg>`,
   laptop: `<svg class="hotspot-halo" viewBox="0 0 300 300" aria-hidden="true">
     <path class="hotspot-halo-glow" d="M 47,124 L 152,40 L 176,162 L 254,166 L 246,276 L 94,274 L 87,260 Z M 87,260 L 176,162"/>
     <path class="hotspot-halo-stroke" d="M 47,124 L 152,40 L 176,162 L 254,166 L 246,276 L 94,274 L 87,260 Z"/>
     <path class="hotspot-halo-stroke" d="M 87,260 L 176,162" style="stroke-opacity:0.65"/>
+    <g transform="translate(152, 40)"><path class="hotspot-sparkle hotspot-sparkle--1" d="M 0,-7 Q 0,0 7,0 Q 0,0 0,7 Q 0,0 -7,0 Q 0,0 0,-7 Z"/></g>
+    <g transform="translate(47, 124)"><path class="hotspot-sparkle hotspot-sparkle--2" d="M 0,-6 Q 0,0 6,0 Q 0,0 0,6 Q 0,0 -6,0 Q 0,0 0,-6 Z"/></g>
+    <g transform="translate(246, 276)"><path class="hotspot-sparkle hotspot-sparkle--3" d="M 0,-5 Q 0,0 5,0 Q 0,0 0,5 Q 0,0 -5,0 Q 0,0 0,-5 Z"/></g>
   </svg>`,
   story: `<svg class="hotspot-halo" viewBox="0 0 130 200" aria-hidden="true">
     <path class="hotspot-halo-glow" d="M 16,16 L 93,13 L 105,153 L 25,163 Z"/>
     <path class="hotspot-halo-stroke" d="M 16,16 L 93,13 L 105,153 L 25,163 Z"/>
     <circle cx="56" cy="23" r="4.5" class="hotspot-halo-stroke"/>
+    <g transform="translate(56, 23)"><path class="hotspot-sparkle hotspot-sparkle--1" d="M 0,-7 Q 0,0 7,0 Q 0,0 0,7 Q 0,0 -7,0 Q 0,0 0,-7 Z"/></g>
+    <g transform="translate(93, 13)"><path class="hotspot-sparkle hotspot-sparkle--2" d="M 0,-5 Q 0,0 5,0 Q 0,0 0,5 Q 0,0 -5,0 Q 0,0 0,-5 Z"/></g>
+    <g transform="translate(105, 153)"><path class="hotspot-sparkle hotspot-sparkle--3" d="M 0,-5 Q 0,0 5,0 Q 0,0 0,5 Q 0,0 -5,0 Q 0,0 0,-5 Z"/></g>
   </svg>`,
   book: `<svg class="hotspot-halo" viewBox="0 0 400 186" aria-hidden="true">
     <path class="hotspot-halo-glow" d="M 236,73 L 352,117 L 352,126 L 276,186 L 150,153 L 150,143 Z"/>
     <path class="hotspot-halo-stroke" d="M 236,73 L 352,117 L 352,126 L 276,186 L 150,153 L 150,143 Z"/>
     <path class="hotspot-halo-stroke" d="M 150,143 L 276,184 L 352,117" style="stroke-opacity:0.65"/>
+    <g transform="translate(236, 73)"><path class="hotspot-sparkle hotspot-sparkle--1" d="M 0,-7 Q 0,0 7,0 Q 0,0 0,7 Q 0,0 -7,0 Q 0,0 0,-7 Z"/></g>
+    <g transform="translate(352, 117)"><path class="hotspot-sparkle hotspot-sparkle--2" d="M 0,-6 Q 0,0 6,0 Q 0,0 0,6 Q 0,0 -6,0 Q 0,0 0,-6 Z"/></g>
+    <g transform="translate(276, 186)"><path class="hotspot-sparkle hotspot-sparkle--3" d="M 0,-5 Q 0,0 5,0 Q 0,0 0,5 Q 0,0 -5,0 Q 0,0 0,-5 Z"/></g>
   </svg>`
 };
 
