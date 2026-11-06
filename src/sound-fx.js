@@ -178,73 +178,72 @@ export const soundFX = {
     noise.start(now + 0.04);
   },
 
-  // Cute, expressive procedural kitten meow
+  // Cute, sweet kitten mew
   playCatMeow() {
     const ctx = getContext();
     if (!ctx) return;
     const now = ctx.currentTime;
 
-    // Main vocal cord oscillator (triangle wave gives soft vocal harmonics)
+    // Sweet sine fundamental - warm and organic, zero harshness
     const voice = ctx.createOscillator();
-    voice.type = 'triangle';
+    voice.type = 'sine';
 
-    // Harmonic overtone oscillator (sine wave for throat sweetness)
+    // Soft second harmonic for throat warmth
     const overtone = ctx.createOscillator();
     overtone.type = 'sine';
 
-    // Pitch contour of a real meow: starts ~480Hz, glides up to ~780Hz, holds with vibrato, falls to ~510Hz
-    voice.frequency.setValueAtTime(460, now);
-    voice.frequency.exponentialRampToValueAtTime(760, now + 0.18);
-    voice.frequency.setValueAtTime(760, now + 0.38);
-    voice.frequency.exponentialRampToValueAtTime(510, now + 0.62);
+    // Kitten pitch contour: high, sweet, gentle arch
+    const baseFreq = 740;
+    voice.frequency.setValueAtTime(baseFreq, now);
+    voice.frequency.exponentialRampToValueAtTime(1180, now + 0.11);
+    voice.frequency.setValueAtTime(1180, now + 0.19);
+    voice.frequency.exponentialRampToValueAtTime(820, now + 0.35);
 
-    overtone.frequency.setValueAtTime(920, now);
-    overtone.frequency.exponentialRampToValueAtTime(1520, now + 0.18);
-    overtone.frequency.setValueAtTime(1520, now + 0.38);
-    overtone.frequency.exponentialRampToValueAtTime(1020, now + 0.62);
+    overtone.frequency.setValueAtTime(baseFreq * 2, now);
+    overtone.frequency.exponentialRampToValueAtTime(2360, now + 0.11);
+    overtone.frequency.setValueAtTime(2360, now + 0.19);
+    overtone.frequency.exponentialRampToValueAtTime(1640, now + 0.35);
 
-    // Natural 5.5Hz vibrato (wobble)
+    // Subtle 6.5Hz kitten vocal vibrato
     const vibrato = ctx.createOscillator();
     const vibratoGain = ctx.createGain();
-    vibrato.frequency.value = 5.5;
+    vibrato.frequency.value = 6.5;
     vibratoGain.gain.setValueAtTime(0, now);
-    vibratoGain.gain.linearRampToValueAtTime(14, now + 0.2);
-    vibratoGain.gain.linearRampToValueAtTime(0, now + 0.55);
+    vibratoGain.gain.linearRampToValueAtTime(12, now + 0.11);
+    vibratoGain.gain.linearRampToValueAtTime(0, now + 0.32);
     vibrato.connect(voice.frequency);
+    vibrato.connect(overtone.frequency);
     vibrato.start(now);
-    vibrato.stop(now + 0.65);
+    vibrato.stop(now + 0.36);
 
-    // Formant filter: sweeps from nasal 'm' (650Hz) to open 'ee' (1400Hz) to rounded 'ow' (800Hz)
-    const formant = ctx.createBiquadFilter();
-    formant.type = 'bandpass';
-    formant.Q.value = 2.6;
-    formant.frequency.setValueAtTime(650, now);
-    formant.frequency.exponentialRampToValueAtTime(1450, now + 0.2);
-    formant.frequency.exponentialRampToValueAtTime(820, now + 0.6);
+    // Warm lowpass filter to keep sound rounded and gentle
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(2600, now);
 
-    // Volume envelope
+    // Amplitude envelope: soft attack, gentle body, sweet fade
     const masterGain = ctx.createGain();
     masterGain.gain.setValueAtTime(0.001, now);
-    masterGain.gain.linearRampToValueAtTime(0.18, now + 0.08);
-    masterGain.gain.setValueAtTime(0.18, now + 0.42);
-    masterGain.gain.exponentialRampToValueAtTime(0.001, now + 0.65);
+    masterGain.gain.linearRampToValueAtTime(0.14, now + 0.04);
+    masterGain.gain.setValueAtTime(0.14, now + 0.19);
+    masterGain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
 
     const overtoneGain = ctx.createGain();
-    overtoneGain.gain.value = 0.35;
+    overtoneGain.gain.value = 0.18;
     overtone.connect(overtoneGain);
-    overtoneGain.connect(formant);
+    overtoneGain.connect(filter);
 
-    voice.connect(formant);
-    formant.connect(masterGain);
+    voice.connect(filter);
+    filter.connect(masterGain);
     masterGain.connect(ctx.destination);
 
     voice.start(now);
     overtone.start(now);
-    voice.stop(now + 0.66);
-    overtone.stop(now + 0.66);
+    voice.stop(now + 0.36);
+    overtone.stop(now + 0.36);
   },
 
-  // Soft, quick kitten mew/chirp for streaming speech words
+  // Soft, adorable baby kitten chirps and peeps for streaming speech words
   playCatChirp() {
     const ctx = getContext();
     if (!ctx) return;
@@ -254,19 +253,29 @@ export const soundFX = {
     const gain = ctx.createGain();
     const filter = ctx.createBiquadFilter();
 
-    osc.type = 'triangle';
-    // Gentle cheerful pitch chirp
-    const basePitch = 640 + Math.random() * 80;
-    osc.frequency.setValueAtTime(basePitch, now);
-    osc.frequency.exponentialRampToValueAtTime(basePitch * 1.35, now + 0.05);
-    osc.frequency.exponentialRampToValueAtTime(basePitch * 0.9, now + 0.12);
+    osc.type = 'sine';
 
-    filter.type = 'bandpass';
-    filter.frequency.value = 1200;
-    filter.Q.value = 2.0;
+    // Randomize slightly between a soft baby peep and a gentle kitten mew
+    const isMew = Math.random() > 0.45;
+    if (isMew) {
+      const f0 = 840 + Math.random() * 60;
+      osc.frequency.setValueAtTime(f0, now);
+      osc.frequency.exponentialRampToValueAtTime(f0 * 1.3, now + 0.04);
+      osc.frequency.exponentialRampToValueAtTime(f0 * 0.95, now + 0.12);
+    } else {
+      // Gentle kitten trill / mrrp
+      const f0 = 780 + Math.random() * 50;
+      osc.frequency.setValueAtTime(f0, now);
+      osc.frequency.exponentialRampToValueAtTime(f0 * 1.25, now + 0.08);
+      osc.frequency.exponentialRampToValueAtTime(f0 * 0.9, now + 0.14);
+    }
 
+    filter.type = 'lowpass';
+    filter.frequency.value = 2800;
+
+    // Whisper-soft volume so it sounds like sweet gentle talking
     gain.gain.setValueAtTime(0.001, now);
-    gain.gain.linearRampToValueAtTime(0.08, now + 0.03);
+    gain.gain.linearRampToValueAtTime(0.06, now + 0.02);
     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.13);
 
     osc.connect(filter);
