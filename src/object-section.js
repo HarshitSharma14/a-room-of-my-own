@@ -84,13 +84,13 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
             <a href="https://github.com/HarshitSharma14" target="_blank" rel="noopener" class="meta-link-btn">
               <span class="link-icon">🐙</span> GitHub
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener" class="meta-link-btn">
+            <a href="https://www.linkedin.com/in/harshitsharma1331/" target="_blank" rel="noopener" class="meta-link-btn">
               <span class="link-icon">💼</span> LinkedIn
             </a>
-            <a href="https://leetcode.com" target="_blank" rel="noopener" class="meta-link-btn">
+            <a href="https://leetcode.com/u/Harshit1405/" target="_blank" rel="noopener" class="meta-link-btn">
               <span class="link-icon">⚡</span> LeetCode (Peak: 1695)
             </a>
-            <a href="https://codeforces.com" target="_blank" rel="noopener" class="meta-link-btn">
+            <a href="https://codeforces.com/profile/harshitsharma14" target="_blank" rel="noopener" class="meta-link-btn">
               <span class="link-icon">🏆</span> Codeforces (Peak: 1218)
             </a>
             <span class="meta-link-btn meta-link-btn--static">
@@ -168,6 +168,14 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
                 <h4 class="card-role">Distributed Job Queue</h4>
                 <span class="card-subtitle">Fault-Tolerant Asynchronous Execution Engine</span>
               </div>
+              <div class="card-actions-row">
+                <a href="https://github.com/HarshitSharma14/Distributed-job-queue" target="_blank" rel="noopener" class="project-action-btn">
+                  <span class="action-icon">🐙</span> Repository
+                </a>
+                <a href="https://relay.140-238-241-160.sslip.io/app/login" target="_blank" rel="noopener" class="project-action-btn project-action-btn--live">
+                  <span class="action-icon">🔗</span> Live Application
+                </a>
+              </div>
             </div>
             <div class="card-pill-row">
               <span class="tech-pill tech-pill--cyan">Python</span>
@@ -189,6 +197,11 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
               <div class="card-title-group">
                 <h4 class="card-role">Legalos — Multi-Agent Legal RAG</h4>
                 <span class="card-subtitle">Autonomous Legal Question Decomposition & Statutory Retrieval</span>
+              </div>
+              <div class="card-actions-row">
+                <a href="https://github.com/prasenjitb-cloud/legalos" target="_blank" rel="noopener" class="project-action-btn">
+                  <span class="action-icon">🐙</span> Repository
+                </a>
               </div>
             </div>
             <div class="card-pill-row">
