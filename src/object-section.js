@@ -370,7 +370,38 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
         </section>
 
       </div>`;
-  const panelHTML=`<article class="object-panel" tabindex="0" aria-label="${content.label} section">${isLaptop?`<div class="laptop-screen-content">${laptopPanelBody}</div>`:isCat?catPanelBody:isPhone?phonePanelBody:isBook?bookPanelBody:panelBody}</article>`;
+  const leafPanelBody=`
+      <button class="object-close" type="button" aria-label="Close leaf section" autofocus>×</button>
+      <div class="leaf-content-wrap">
+        <span class="leaf-eyebrow">GET IN TOUCH</span>
+        <h2 class="leaf-heading">Interested in building interesting stuff.</h2>
+        <p class="leaf-subnote">If you're working on hard problems, ambitious ideas, or need an engineer who moves fast and ships—let's talk.</p>
+        <div class="leaf-rule"></div>
+        <div class="leaf-contacts">
+          <a href="mailto:Harshitsharmaclg@gmail.com" class="leaf-contact-card">
+            <span class="leaf-contact-icon">✉️</span>
+            <div class="leaf-contact-text">
+              <span class="leaf-contact-label">EMAIL</span>
+              <strong class="leaf-contact-value">Harshitsharmaclg@gmail.com</strong>
+            </div>
+          </a>
+          <a href="https://github.com/HarshitSharma14" target="_blank" rel="noopener" class="leaf-contact-card">
+            <span class="leaf-contact-icon">🐙</span>
+            <div class="leaf-contact-text">
+              <span class="leaf-contact-label">GITHUB</span>
+              <strong class="leaf-contact-value">github.com/HarshitSharma14</strong>
+            </div>
+          </a>
+          <a href="https://www.linkedin.com/in/harshitsharma1331/" target="_blank" rel="noopener" class="leaf-contact-card">
+            <span class="leaf-contact-icon">💼</span>
+            <div class="leaf-contact-text">
+              <span class="leaf-contact-label">LINKEDIN</span>
+              <strong class="leaf-contact-value">linkedin.com/in/harshitsharma1331</strong>
+            </div>
+          </a>
+        </div>
+      </div>`;
+  const panelHTML=`<article class="object-panel" tabindex="0" aria-label="${content.label} section">${isLaptop?`<div class="laptop-screen-content">${laptopPanelBody}</div>`:isCat?catPanelBody:isPhone?phonePanelBody:isBook?bookPanelBody:isLeaf?leafPanelBody:panelBody}</article>`;
   dialog.innerHTML=`<button class="object-backdrop" type="button" tabindex="-1" aria-label="Close ${content.label} section"></button>
     ${isLaptop?`<div class="object-traveler object-laptop"><div class="laptop-machine"><img class="laptop-front" src="./art/laptop-front.png" alt="" draggable="false">${panelHTML}</div></div>`
       :isPhone?`<div class="object-traveler object-phone"><div class="phone-machine"><div class="phone-front">${panelHTML}</div><div class="phone-back"><img class="phone-back-img" src="./art/phone-back.png" alt="" draggable="false"></div></div></div>`
@@ -378,7 +409,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
       :isBook?`<div class="object-traveler object-book" aria-hidden="true"><img class="book-open" src="./art/book-open.png" alt="" draggable="false"><div class="book-cover"><img class="book-front" src="./art/book-front.png" alt="" draggable="false"></div></div>${panelHTML}`
       :isLeaf?`<div class="object-traveler object-leaf" aria-hidden="true"><img class="leaf-front" src="./art/leaf-front.png" alt="" draggable="false"></div>${panelHTML}`
       :`<div class="object-traveler" aria-hidden="true"><div class="object-portrait"></div></div>${panelHTML}`}`;
-  if(!isCat&&!isPhone&&!isLaptop&&!isBook){
+  if(!isCat&&!isPhone&&!isLaptop&&!isBook&&!isLeaf){
     for(const [selector,value] of [['.object-eyebrow',content.eyebrow],['h2',content.title],['.object-lead',content.lead],['.object-body',content.body],['.object-detail',content.detail]]) dialog.querySelector(selector).textContent=value;
   }
   document.body.append(dialog);
