@@ -340,7 +340,150 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
       <div class="object-rule"></div>
       <p class="object-detail">${content.detail}</p>
       <span class="object-footer">A ROOM OF MY OWN</span>`;
-  const panelHTML=`<article class="object-panel" tabindex="0" aria-label="${content.label} section">${isLaptop?`<div class="laptop-screen-content">${laptopPanelBody}</div>`:isCat?catPanelBody:isPhone?phonePanelBody:panelBody}</article>`;
+  const bookPanelBody=`
+      <button class="object-close" type="button" aria-label="Close book section" autofocus>×</button>
+      <div class="book-journal-spread">
+        
+        <!-- Left Page: Hobbies -->
+        <section class="book-page book-page--left">
+          <div class="book-page-header">
+            <span class="book-page-num">PAGE 42</span>
+            <span class="book-page-tag">OFF-DUTY OBSESSIONS</span>
+          </div>
+          
+          <h2 class="book-heading">Hobbies & Hours</h2>
+          <p class="book-intro">What happens when the IDE closes and the terminal rests.</p>
+          <div class="book-sketch-rule"></div>
+
+          <div class="book-item-list">
+            <div class="book-item">
+              <span class="book-item-icon">💬</span>
+              <div>
+                <h4 class="book-item-title">Deep Conversations</h4>
+                <p class="book-item-desc">Late-night talks about the future, mind-bending philosophy, life, and unfiltered thoughts with genuine people.</p>
+              </div>
+            </div>
+
+            <div class="book-item">
+              <span class="book-item-icon">🎮</span>
+              <div>
+                <h4 class="book-item-title">Gaming</h4>
+                <p class="book-item-desc">Story campaigns, competitive grinds, and testing game mechanics. Where my love for computers began.</p>
+              </div>
+            </div>
+
+            <div class="book-item">
+              <span class="book-item-icon">♟️</span>
+              <div>
+                <h4 class="book-item-title">Chess</h4>
+                <p class="book-item-desc">Tactical calculation, blitz matches, and the quiet satisfaction of finding the one winning move.</p>
+              </div>
+            </div>
+
+            <div class="book-item">
+              <span class="book-item-icon">🎧</span>
+              <div>
+                <h4 class="book-item-title">Music</h4>
+                <p class="book-item-desc">Over-ear headphones on at all times. Ambient beats, dark synth, and lo-fi keeping the flow state alive.</p>
+              </div>
+            </div>
+
+            <div class="book-item">
+              <span class="book-item-icon">⚡</span>
+              <div>
+                <h4 class="book-item-title">POCs for Random Ideas</h4>
+                <p class="book-item-desc">Getting a random 2 AM thought and building a hacky proof-of-concept by sunrise just to see if it works.</p>
+              </div>
+            </div>
+
+            <div class="book-item">
+              <span class="book-item-icon">🐈</span>
+              <div>
+                <h4 class="book-item-title">Doomscrolling Cat Reels</h4>
+                <p class="book-item-desc">Unapologetic consumer of chaotic orange cat videos and wholesome feline antics on repeat.</p>
+              </div>
+            </div>
+
+            <div class="book-item">
+              <span class="book-item-icon">😴</span>
+              <div>
+                <h4 class="book-item-title">Sleeping</h4>
+                <p class="book-item-desc">Total unconscious reset after marathon coding stretches. The sweet reward of a solved bug.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Right Page: Bucket List -->
+        <section class="book-page book-page--right">
+          <div class="book-page-header">
+            <span class="book-page-tag">BEFORE I GO</span>
+            <span class="book-page-num">PAGE 43</span>
+          </div>
+          
+          <h2 class="book-heading">The Bucket List</h2>
+          <p class="book-intro">Adrenaline, dreams, and proving the math works.</p>
+          <div class="book-sketch-rule"></div>
+
+          <div class="book-checklist">
+            
+            <div class="bucket-item">
+              <span class="bucket-checkbox">☐</span>
+              <div>
+                <h4 class="bucket-title">Scuba Diving 🤿</h4>
+                <p class="bucket-desc">Drifting through silence 30 meters down coral walls in open, electric-blue ocean.</p>
+              </div>
+            </div>
+
+            <div class="bucket-item">
+              <span class="bucket-checkbox">☐</span>
+              <div>
+                <h4 class="bucket-title">Skydiving 🪂</h4>
+                <p class="bucket-desc">Stepping out of an airplane door at 15,000 feet and falling at terminal velocity.</p>
+              </div>
+            </div>
+
+            <div class="bucket-item">
+              <span class="bucket-checkbox">☐</span>
+              <div>
+                <h4 class="bucket-title">Bungee Jumping 🧗</h4>
+                <p class="bucket-desc">Standing on the edge of a high canyon suspension bridge and committing 100%.</p>
+              </div>
+            </div>
+
+            <div class="bucket-item">
+              <span class="bucket-checkbox">☐</span>
+              <div>
+                <h4 class="bucket-title">Adopt a Pet Cat 🐾</h4>
+                <p class="bucket-desc">Bring home an orange companion to curl up on my desk while I ship software.</p>
+              </div>
+            </div>
+
+            <div class="bucket-item">
+              <span class="bucket-checkbox">☐</span>
+              <div>
+                <h4 class="bucket-title">Get Filthy Rich 💰</h4>
+                <p class="bucket-desc">Build generational freedom by creating massive value and ownership from scratch.</p>
+              </div>
+            </div>
+
+            <div class="bucket-item">
+              <span class="bucket-checkbox">☐</span>
+              <div>
+                <h4 class="bucket-title">Show Others It's Possible 🌟</h4>
+                <p class="bucket-desc">Be living proof that anyone starting from a messy bedroom with a PC and curiosity can take on the world and win.</p>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="book-quote-box">
+            <p>“Everything was once just an idea in a kid’s bedroom.”</p>
+          </div>
+        </section>
+
+      </div>`;
+  const panelHTML=`<article class="object-panel" tabindex="0" aria-label="${content.label} section">${isLaptop?`<div class="laptop-screen-content">${laptopPanelBody}</div>`:isCat?catPanelBody:isPhone?phonePanelBody:isBook?bookPanelBody:panelBody}</article>`;
   dialog.innerHTML=`<button class="object-backdrop" type="button" tabindex="-1" aria-label="Close ${content.label} section"></button>
     ${isLaptop?`<div class="object-traveler object-laptop"><div class="laptop-machine"><img class="laptop-front" src="./art/laptop-front.png" alt="" draggable="false">${panelHTML}</div></div>`
       :isPhone?`<div class="object-traveler object-phone"><div class="phone-machine"><div class="phone-front">${panelHTML}</div><div class="phone-back"><img class="phone-back-img" src="./art/phone-back.png" alt="" draggable="false"></div></div></div>`
@@ -348,7 +491,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
       :isBook?`<div class="object-traveler object-book" aria-hidden="true"><img class="book-open" src="./art/book-open.png" alt="" draggable="false"><div class="book-cover"><img class="book-front" src="./art/book-front.png" alt="" draggable="false"></div></div>${panelHTML}`
       :isLeaf?`<div class="object-traveler object-leaf" aria-hidden="true"><img class="leaf-front" src="./art/leaf-front.png" alt="" draggable="false"></div>${panelHTML}`
       :`<div class="object-traveler" aria-hidden="true"><div class="object-portrait"></div></div>${panelHTML}`}`;
-  if(!isCat&&!isPhone&&!isLaptop){
+  if(!isCat&&!isPhone&&!isLaptop&&!isBook){
     for(const [selector,value] of [['.object-eyebrow',content.eyebrow],['h2',content.title],['.object-lead',content.lead],['.object-body',content.body],['.object-detail',content.detail]]) dialog.querySelector(selector).textContent=value;
   }
   document.body.append(dialog);
