@@ -30,7 +30,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
   const isBook=id==='book';
   const isLeaf=id==='leaf';
   const isPhone=id==='phone';
-  const patchArt={laptop:{file:'laptop-sofa-patch.png',bounds:[1320,560,480,430]},cat:{file:'cat-sofa-patch.png',bounds:[940,680,470,390]},book:{file:'book-floor-patch.png',bounds:[1150,1210,650,326]},leaf:{file:'leaf-plant-patch.png',bounds:[2130,560,100,55]},phone:{file:'phone-sofa-patch.png',bounds:[1785,815,100,105]}}[id];
+  const patchArt={laptop:{file:'laptop-sofa-patch.png',bounds:[1320,560,480,430]},cat:{file:'cat-sofa-patch.png',bounds:[940,680,470,390]},book:{file:'book-floor-patch.png',bounds:[1150,1210,650,326]},leaf:{file:'leaf-plant-patch.png',bounds:[2125,555,110,64]},phone:{file:'phone-sofa-patch.png',bounds:[1785,815,100,105]}}[id];
   const roomPatch=patchArt?document.createElement('img'):null;
   if(roomPatch){roomPatch.src=`./art/${patchArt.file}`;roomPatch.alt='';roomPatch.className=`${id}-room-patch`;roomPatch.hidden=true;room.append(roomPatch);}
   const dialog=document.createElement('dialog');

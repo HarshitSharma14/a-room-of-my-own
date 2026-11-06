@@ -154,6 +154,13 @@ body { background: #242b38; }
 }
 
 .room-hotspot[hidden] { display: none; }
+.room[data-section="story"] .room-hotspot[data-object="story"],
+.room[data-section="cat"] .room-hotspot[data-object="cat"],
+.room[data-section="laptop"] .room-hotspot[data-object="laptop"],
+.room[data-section="book"] .room-hotspot[data-object="book"],
+.room[data-section="leaf"] .room-hotspot[data-object="leaf"] {
+  display: none !important;
+}
 .room-hotspot[data-object="story"] { z-index: 2; }
 .room[data-renderer="webgl"] .room-canvas { opacity: 1; }
 .room[data-pannable="true"] { cursor: grab; }
