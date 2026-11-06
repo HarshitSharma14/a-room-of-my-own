@@ -287,14 +287,18 @@ body { background: #242b38; }
 .win-dot--red {background:#ff5f56;box-shadow:0 0 6px #ff5f5688;}
 .win-dot--yellow {background:#ffbd2e;box-shadow:0 0 6px #ffbd2e88;}
 .win-dot--green {background:#27c93f;box-shadow:0 0 6px #27c93f88;}
+.laptop-wispr-badge {display:inline-flex;align-items:center;gap:6px;padding:3px 8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:4px;color:#ffffff;font:600 10px/1 ui-monospace,monospace;letter-spacing:.08em;}
+.laptop-wispr-icon {width:14px;height:14px;object-fit:contain;filter:drop-shadow(0 0 4px rgba(255,255,255,.6));}
 .laptop-title-tab {color:#7ec9f5;font-size:10px;letter-spacing:.12em;font-weight:600;}
 .laptop-nav-pills {margin-left:auto;display:flex;align-items:center;gap:6px;}
 .laptop-nav-pill {font:10px/1.4 ui-monospace,monospace;color:#9fc8db;text-decoration:none;padding:3px 9px;border-radius:4px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);transition:all .15s;}
 .laptop-nav-pill:hover,.laptop-nav-pill:focus-visible {background:rgba(56,189,248,.18);color:#ffffff;border-color:rgba(56,189,248,.4);}
 
 .laptop-intro-block {margin-bottom:34px;padding-bottom:28px;border-bottom:1px solid rgba(86,182,238,.15);}
-.laptop-badge-row {display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.laptop-badge-row {display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:12px;}
 .badge-role {font:700 9.5px/1.4 ui-monospace,monospace;letter-spacing:.18em;color:#38bdf8;background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.3);padding:3px 8px;border-radius:4px;}
+.badge-wispr {display:inline-flex;align-items:center;gap:6px;font:700 9.5px/1.4 ui-monospace,monospace;letter-spacing:.14em;color:#ffffff;background:linear-gradient(135deg,rgba(255,255,255,.14),rgba(255,255,255,.06));border:1px solid rgba(255,255,255,.3);padding:3px 8px;border-radius:4px;box-shadow:0 0 10px rgba(255,255,255,.12);}
+.badge-wispr-icon {width:12px;height:12px;object-fit:contain;}
 .badge-avail {display:inline-flex;align-items:center;gap:6px;font:600 9.5px/1.4 ui-monospace,monospace;letter-spacing:.14em;color:#4ade80;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.25);padding:3px 8px;border-radius:4px;}
 .pulse-dot {width:6px;height:6px;border-radius:50%;background:#4ade80;box-shadow:0 0 8px #4ade80;}
 .laptop-headline {margin:0 0 16px;font:normal clamp(22px,3.2vw,34px)/1.26 Georgia,serif;color:#f8fafc;letter-spacing:-.03em;}

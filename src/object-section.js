@@ -44,6 +44,10 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
           <span class="win-dot win-dot--yellow"></span>
           <span class="win-dot win-dot--green"></span>
         </div>
+        <div class="laptop-wispr-badge">
+          <img src="./art/wispr-flow-icon-light.png" alt="Wispr Flow" class="laptop-wispr-icon" />
+          <span>Wispr Flow</span>
+        </div>
         <span class="laptop-title-tab">harshit@portfolio: ~/workspace</span>
         <div class="laptop-nav-pills" role="tablist">
           <a href="#laptop-overview" class="laptop-nav-pill">Overview</a>
@@ -56,6 +60,10 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
       <div id="laptop-overview" class="laptop-intro-block">
         <div class="laptop-badge-row">
           <span class="badge-role">SOFTWARE ENGINEER</span>
+          <span class="badge-wispr">
+            <img src="./art/wispr-flow-icon-light.png" alt="Wispr Flow" class="badge-wispr-icon" />
+            <span>WISPR FLOW '26</span>
+          </span>
           <span class="badge-avail"><span class="pulse-dot"></span> OPEN TO BUILD</span>
         </div>
         <h2 class="laptop-headline">Entrepreneur trapped in the body of a software engineer.</h2>
