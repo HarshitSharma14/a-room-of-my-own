@@ -423,7 +423,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
   if(portrait)portrait.style.backgroundImage=`url("${image.currentSrc||image.src}")`;
   const closeButton=dialog.querySelector('.object-close');
   button.setAttribute('aria-haspopup','dialog');button.setAttribute('aria-controls',dialog.id);button.setAttribute('aria-expanded','false');
-  button.dataset.label=id==='cat'?'The cat':id==='laptop'?'Projects':id==='book'?'The book':id==='leaf'?'The plant':id==='phone'?'Contact': 'Beyond code';
+  button.dataset.label=id==='cat'?'The cat':id==='laptop'?'Projects':id==='book'?'Myself':id==='leaf'?'Contact':id==='phone'?'Contact':'Myself';
   let active=false,progress=0,direction=1,frame=0,last=0,focus=null;
   let catSpeechTimer=null,catMouthTimer=null,catAutoReturnTimer=null,catSpeaking=false;
   const catClosedImg=isCat?dialog.querySelector('.cat-front--closed'):null;
