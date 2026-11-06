@@ -226,12 +226,12 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
       Object.assign(bookCover.style,{width:`${coverWidth}px`,height:`${coverWidth/closedAspect}px`,opacity:String(1-opening),transform:`translate(-50%,-50%) rotateY(${-100*opening}deg)`});
     }
     if(isLeaf){
-      const aspect=100/55;
+      const aspect=1200/680;
       const phase=clamp((progress-pageTiming.arrival)/(1-pageTiming.arrival),0,1);
       const fly=ease(phase);
       const startWidth=source.width;
       const isMobile=rect.width<=700;
-      const targetWidth=isMobile?Math.min(rect.width*0.88,440):Math.min(rect.width*0.5,600);
+      const targetWidth=isMobile?Math.min(rect.width*0.96,520):Math.min(rect.width*0.75,880);
       width=startWidth+(targetWidth-startWidth)*fly;
       height=width/aspect;
       cx=source.left+source.width/2+(rect.left+rect.width/2-source.left-source.width/2)*fly;
@@ -255,8 +255,8 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
       portrait.style.width=`${source.width}px`;portrait.style.height=`${source.height}px`;
       portrait.style.transform=`scale(${width/source.width},${height/source.height})`;
     }
-    panel.style.opacity=isLaptop||isPhone?'1':String(ease(clamp((progress-(isCat||isBook?.8:.66))/(isCat||isBook?.2:.34),0,1)));
-    if(!isLaptop&&!isPhone)panel.style.transform=isBook?'translateY(-50%)':isCat?'translateY(-50%)':`translateY(${(1-t)*28}px) scale(${.94+.06*t})`;
+    panel.style.opacity=isLaptop||isPhone?'1':String(ease(clamp((progress-(isCat||isBook||isLeaf?.8:.66))/(isCat||isBook||isLeaf?.2:.34),0,1)));
+    if(!isLaptop&&!isPhone)panel.style.transform=isBook?'translateY(-50%)':isCat?'translateY(-50%)':isLeaf?'translate(-50%,-50%)':`translateY(${(1-t)*28}px) scale(${.94+.06*t})`;
     panel.style.pointerEvents=progress>.85?'auto':'none';
     backdrop.style.opacity=String(progress*.75);
     const center=[source.left+source.width/2,source.top+source.height/2];

@@ -307,9 +307,98 @@ body { background: #242b38; }
 @media(max-width:600px){.object-panel{padding:42px 28px 30px;border-radius:16px}.object-panel h2{margin-top:38px}.object-lead{font-size:18px}.object-body,.object-detail{font-size:14px}.object-footer{margin-top:38px}.object-dialog--laptop .object-panel{padding:0;border:0;border-radius:3px}.object-dialog--laptop .object-panel h2{margin-top:28px;font-size:clamp(34px,9vw,52px)}.laptop-toolbar{font-size:8px;letter-spacing:.1em}}
 @media(max-width:600px){.object-dialog--cat .object-panel{right:16px;bottom:16px;padding:24px 26px;height:min(420px,calc(100vh - 32px));}}
 @media(max-width:600px){.object-dialog--book .object-panel{left:16px;top:50%;width:calc(100vw - 32px);height:min(620px,calc(100vh - 32px));padding:34px 27px 26px;border:1px solid #7c6b5766;border-radius:12px;background:#f1e2cbe8;box-shadow:0 18px 65px #19201c88;}}
-.object-dialog--leaf .object-traveler {z-index:2;overflow:visible;border-radius:0;filter:drop-shadow(0 24px 45px rgba(0,30,15,0.7));-webkit-mask-image:none;mask-image:none;}
-.leaf-front {display:block;width:100%;height:100%;object-fit:contain;pointer-events:none;user-select:none;-webkit-user-drag:none;}
-.object-dialog--leaf .object-panel {background:linear-gradient(150deg,#192a23,#14201c 65%,#0d1714);border:1px solid #75cf9966;box-shadow:0 30px 90px #04100ba0,inset 0 1px #ffffff18;}
-.object-dialog--leaf .object-eyebrow {color:#8ad6a2;}
-.object-dialog--leaf .object-rule {background:#67c28c;}
-.object-dialog--leaf .object-close:hover,.object-dialog--leaf .object-close:focus-visible {outline-color:#8ad6a2;}
+.object-dialog--leaf .object-traveler {
+  z-index: 1;
+  overflow: visible;
+  border-radius: 0;
+  filter: drop-shadow(0 30px 65px rgba(0,25,12,0.85)) drop-shadow(0 0 25px rgba(80,210,130,0.25));
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+.leaf-front {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.object-dialog--leaf .object-panel {
+  left: 50% !important;
+  top: 50% !important;
+  width: min(760px, calc(100vw - 40px)) !important;
+  height: auto !important;
+  max-height: 75vh !important;
+  margin: 0 !important;
+  padding: 24px 44px !important;
+  border: none !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+  overflow-y: auto !important;
+  text-align: center;
+}
+.object-dialog--leaf .object-panel::before {
+  display: none !important;
+}
+.object-dialog--leaf .object-eyebrow {
+  color: #a3f7c4;
+  letter-spacing: 0.22em;
+  font-size: 11px;
+  text-shadow: 0 1px 8px rgba(0, 30, 15, 0.9), 0 2px 14px rgba(0, 0, 0, 0.9);
+}
+.object-dialog--leaf h2 {
+  color: #f7fffa;
+  font: normal clamp(34px, 4.6vw, 48px)/1.08 Georgia, serif;
+  letter-spacing: -0.035em;
+  text-shadow: 0 2px 16px rgba(0, 30, 15, 0.95), 0 3px 20px rgba(0, 0, 0, 0.9);
+  margin: 16px auto 10px;
+  max-width: 600px;
+}
+.object-dialog--leaf .object-lead {
+  color: #d1f4de;
+  font: italic 18px/1.55 Georgia, serif;
+  text-shadow: 0 1px 10px rgba(0, 30, 15, 0.9), 0 2px 16px rgba(0, 0, 0, 0.9);
+  margin: 0 auto 18px;
+  max-width: 580px;
+}
+.object-dialog--leaf .object-body {
+  color: #ecfaf2;
+  font: 15px/1.8 system-ui, sans-serif;
+  text-shadow: 0 1px 10px rgba(0, 30, 15, 0.95), 0 2px 16px rgba(0, 0, 0, 0.9);
+  max-width: 540px;
+  margin: 0 auto;
+}
+.object-dialog--leaf .object-rule {
+  background: linear-gradient(90deg, transparent, #86e2ab, transparent);
+  width: 90px;
+  height: 1.5px;
+  margin: 18px auto;
+}
+.object-dialog--leaf .object-detail {
+  color: #a4ddbc;
+  font: 13px/1.65 system-ui, sans-serif;
+  text-shadow: 0 1px 8px rgba(0, 30, 15, 0.9), 0 2px 14px rgba(0, 0, 0, 0.9);
+  max-width: 500px;
+  margin: 0 auto;
+}
+.object-dialog--leaf .object-footer {
+  color: #79c99c;
+  border-top: 1px solid rgba(134, 226, 171, 0.3);
+  margin-top: 22px;
+  padding-top: 12px;
+  text-shadow: 0 1px 8px rgba(0, 30, 15, 0.9);
+}
+.object-dialog--leaf .object-close {
+  top: 14px;
+  right: 18px;
+  color: #a3f7c4;
+  border-color: rgba(163, 247, 196, 0.4);
+}
+.object-dialog--leaf .object-close:hover,
+.object-dialog--leaf .object-close:focus-visible {
+  color: #ffffff;
+  background: rgba(163, 247, 196, 0.25);
+  outline-color: #a3f7c4;
+}
