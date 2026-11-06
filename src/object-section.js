@@ -36,9 +36,144 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
   const dialog=document.createElement('dialog');
   dialog.className=`object-dialog object-dialog--${id}`;dialog.id=`${id}-dialog`;
   dialog.setAttribute('aria-labelledby',`${id}-title`);
+  const laptopPanelBody=`
+      <button class="object-close" type="button" aria-label="Close laptop section" autofocus>×</button>
+      <div class="laptop-toolbar" aria-hidden="true">
+        <span class="laptop-led"></span>
+        <span>HARSHIT SHARMA · /dev/workspace</span>
+        <span class="laptop-status">ONLINE 🟢</span>
+      </div>
+      
+      <div class="laptop-intro-block">
+        <span class="laptop-eyebrow">ABOUT & PHILOSOPHY</span>
+        <h2 class="laptop-headline">Entrepreneur trapped in the body of a software engineer.</h2>
+        <p class="laptop-lead">I enjoy building reliable products from the backend to the frontend. I work across distributed systems, full-stack web applications, and AI-powered software, with a focus on writing clean code, solving real problems, and shipping things people actually use.</p>
+        <div class="laptop-meta-bar">
+          <span class="meta-tag">🎓 IIIT Sri City · B.Tech AI & Data Science (2023–2027) · CGPA 8.3</span>
+          <a href="mailto:Harshitsharmaclg@gmail.com" class="meta-link">✉️ Email</a>
+          <a href="https://github.com/HarshitSharma14" target="_blank" rel="noopener" class="meta-link">🐙 GitHub</a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener" class="meta-link">💼 LinkedIn</a>
+          <a href="https://leetcode.com" target="_blank" rel="noopener" class="meta-link">⚡ LeetCode 1695</a>
+          <a href="https://codeforces.com" target="_blank" rel="noopener" class="meta-link">🏆 Codeforces 1218</a>
+        </div>
+      </div>
+
+      <div class="laptop-section">
+        <h3 class="laptop-section-heading"><span>💼</span> Experience & Internships</h3>
+        <div class="laptop-card-stack">
+          
+          <div class="laptop-card">
+            <div class="card-top">
+              <div>
+                <h4 class="card-role">Software Engineer <span class="card-org">@ EmendoAI</span></h4>
+                <span class="card-time">Oct 2026 – Present · Remote</span>
+              </div>
+            </div>
+            <ul class="card-points">
+              <li>Fully owned backend and GenAI development for Paints Closeout, from design to deployment, combining batch image processing, asynchronous color lookup, and surface matching to generate project handover reports.</li>
+              <li>Driving end-to-end development of EmendoAI’s web platform, translating mobile-app workflows into a desktop web experience spanning UX/UI design, frontend architecture and backend integration.</li>
+            </ul>
+          </div>
+
+          <div class="laptop-card">
+            <div class="card-top">
+              <div>
+                <h4 class="card-role">Software Engineer Intern <span class="card-org">@ EmendoAI</span></h4>
+                <span class="card-time">Mar 2026 – Sep 2026 (7 mos) · Remote</span>
+              </div>
+            </div>
+            <ul class="card-points">
+              <li>Developed and owned <strong>AI Actions</strong>, enabling users to create and manage application entities through natural-language conversations.</li>
+              <li>Developed <strong>AMA Bot V3</strong> and owned its ongoing development, rearchitecture, and feature extensions, spanning context management, intent classification, NL2SQL, and multi-tool orchestration.</li>
+              <li>Architected and implemented an automated resource-deletion lifecycle, combining soft deletion, scheduled permanent deletion, and background cleanup of dependent resources.</li>
+            </ul>
+          </div>
+
+          <div class="laptop-card">
+            <div class="card-top">
+              <div>
+                <h4 class="card-role">Full Stack Developer Intern <span class="card-org">@ SiteGuru</span></h4>
+                <span class="card-time">Aug 2025 – Sep 2025 (2 mos) · Remote</span>
+              </div>
+            </div>
+            <ul class="card-points">
+              <li>Developed a multi-tenant CRM with configurable roles, hierarchies, workflows, and permissions; designed SQL schemas for tenant isolation across <strong>65+ interlinked tables</strong>.</li>
+              <li>Built role-based dashboards and audit logs for employee and administrator traceability, along with server-rendered, customizable CRM pages.</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="laptop-section">
+        <h3 class="laptop-section-heading"><span>🚀</span> Featured Projects</h3>
+        <div class="laptop-card-stack">
+          
+          <div class="laptop-card">
+            <div class="card-top">
+              <div>
+                <h4 class="card-role">Distributed Job Queue</h4>
+                <div class="card-badges">
+                  <span>Python</span><span>FastAPI</span><span>PostgreSQL</span><span>Redis</span><span>Docker</span><span>Oracle Cloud</span>
+                </div>
+              </div>
+            </div>
+            <ul class="card-points">
+              <li>Architected and deployed separate API, worker, scheduler, and recovery services on an Oracle Cloud VM; built Admin, Producer, and Worker workflows to publish jobs and monitor queue health.</li>
+              <li>Used PostgreSQL as the source of truth and Redis for delivery; implemented a <strong>transactional outbox</strong> to guarantee zero job loss on publication failure.</li>
+              <li>Added idempotency, attempt fencing, leases, heartbeats, retries, and dead-letter queues for at-least-once execution under worker crashes and duplicate delivery.</li>
+            </ul>
+          </div>
+
+          <div class="laptop-card">
+            <div class="card-top">
+              <div>
+                <h4 class="card-role">Legalos — Multi-Agent Legal RAG</h4>
+                <div class="card-badges">
+                  <span>LangGraph</span><span>Qdrant</span><span>Ollama</span><span>LangChain</span><span>Pydantic</span>
+                </div>
+              </div>
+            </div>
+            <ul class="card-points">
+              <li>Built a legal-document RAG system using LangGraph, Qdrant, and local language models, combining query rewriting, multi-query retrieval, and structured cited answers.</li>
+              <li>Developed automated retrieval and generation evaluations, improving an internal benchmark from <strong>33.93% to 43.37%</strong> through retrieval changes.</li>
+              <li>Engineered a multi-agent RAG architecture that breaks down multi-issue questions, classifies each along intent axes, and coordinates specialist agents for legal-section lookup and applicability checks.</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="laptop-section">
+        <h3 class="laptop-section-heading"><span>⚡</span> Technical Skills</h3>
+        <div class="laptop-skills-grid">
+          <div class="skill-box">
+            <span class="skill-head">Languages</span>
+            <p class="skill-list">Python, JavaScript, TypeScript, Java, C++, C, SQL</p>
+          </div>
+          <div class="skill-box">
+            <span class="skill-head">Backend & Systems</span>
+            <p class="skill-list">FastAPI, Node.js, PostgreSQL, Redis, REST APIs, MongoDB, Distributed Systems, System Design</p>
+          </div>
+          <div class="skill-box">
+            <span class="skill-head">Frontend</span>
+            <p class="skill-list">React, Next.js, Vue, HTML5, CSS3, Figma</p>
+          </div>
+          <div class="skill-box">
+            <span class="skill-head">AI Systems</span>
+            <p class="skill-list">LangGraph, LangChain, RAG, Qdrant, Google ADK, LLM APIs, Prompt Engineering</p>
+          </div>
+          <div class="skill-box">
+            <span class="skill-head">Cloud & Tools</span>
+            <p class="skill-list">Docker, Linux, Git, CI/CD, AWS (EC2, S3, Lambda), Oracle Cloud</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="object-rule"></div>
+      <span class="object-footer">A ROOM OF MY OWN · HARSHIT SHARMA</span>`;
   const panelBody=`
       <button class="object-close" type="button" aria-label="Close ${content.label} section" autofocus>×</button>
-      ${isLaptop?'<div class="laptop-toolbar" aria-hidden="true"><span class="laptop-led"></span><span>HARSHIT / PROJECTS</span></div>':''}
       <span class="object-eyebrow"></span><h2 id="${id}-title"></h2>
       <p class="object-lead"></p><p class="object-body"></p><div class="object-rule"></div><p class="object-detail"></p>
       <span class="object-footer">A ROOM OF MY OWN</span>`;
@@ -78,7 +213,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
       <div class="object-rule"></div>
       <p class="object-detail">${content.detail}</p>
       <span class="object-footer">A ROOM OF MY OWN</span>`;
-  const panelHTML=`<article class="object-panel" tabindex="0" aria-label="${content.label} section">${isLaptop?`<div class="laptop-screen-content">${panelBody}</div>`:isCat?catPanelBody:isPhone?phonePanelBody:panelBody}</article>`;
+  const panelHTML=`<article class="object-panel" tabindex="0" aria-label="${content.label} section">${isLaptop?`<div class="laptop-screen-content">${laptopPanelBody}</div>`:isCat?catPanelBody:isPhone?phonePanelBody:panelBody}</article>`;
   dialog.innerHTML=`<button class="object-backdrop" type="button" tabindex="-1" aria-label="Close ${content.label} section"></button>
     ${isLaptop?`<div class="object-traveler object-laptop"><div class="laptop-machine"><img class="laptop-front" src="./art/laptop-front.png" alt="" draggable="false">${panelHTML}</div></div>`
       :isPhone?`<div class="object-traveler object-phone"><div class="phone-machine"><div class="phone-front">${panelHTML}</div><div class="phone-back"><img class="phone-back-img" src="./art/phone-back.png" alt="" draggable="false"></div></div></div>`
@@ -86,7 +221,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
       :isBook?`<div class="object-traveler object-book" aria-hidden="true"><img class="book-open" src="./art/book-open.png" alt="" draggable="false"><div class="book-cover"><img class="book-front" src="./art/book-front.png" alt="" draggable="false"></div></div>${panelHTML}`
       :isLeaf?`<div class="object-traveler object-leaf" aria-hidden="true"><img class="leaf-front" src="./art/leaf-front.png" alt="" draggable="false"></div>${panelHTML}`
       :`<div class="object-traveler" aria-hidden="true"><div class="object-portrait"></div></div>${panelHTML}`}`;
-  if(!isCat&&!isPhone){
+  if(!isCat&&!isPhone&&!isLaptop){
     for(const [selector,value] of [['.object-eyebrow',content.eyebrow],['h2',content.title],['.object-lead',content.lead],['.object-body',content.body],['.object-detail',content.detail]]) dialog.querySelector(selector).textContent=value;
   }
   document.body.append(dialog);
