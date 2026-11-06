@@ -2,6 +2,7 @@ import { scene } from './scene-config.js';
 import { clamp, damp, coverCrop, gazeAt, blinkAt, headPose } from './scene-math.js';
 import { mapPupils, eyeMidpointInArtwork } from './gaze-map.js';
 import { projectPageRect } from './page-motion.js';
+import { soundFX } from './sound-fx.js';
 import { createRenderer } from './renderer.js';
 import { createStoryPage } from './story-page.js';
 import { createObjectSection } from './object-section.js';
@@ -170,7 +171,7 @@ function updateToggle() {
   room.dataset.motion = paused ? 'paused' : 'playing';
 }
 
-toggle.addEventListener('click', () => { paused = !paused; updateToggle(); schedule(); });
+toggle.addEventListener('click', () => { soundFX.playClick(); paused = !paused; updateToggle(); schedule(); });
 preference.addEventListener('change', () => { paused = preference.matches; updateToggle(); schedule(); });
 
 addEventListener('pointermove', event => {

@@ -1,5 +1,6 @@
 import { projectPageRect, pageDestination, advancePage, pageTiming, footTipOnScreen, magicPoint } from './page-motion.js';
 import { createPageMagic } from './page-magic.js';
+import { soundFX } from './sound-fx.js';
 
 const objectSectionContent={
   cat:{title:'A little room to breathe',eyebrow:'THE CAT · 02 / 06',lead:'A quiet companion for a curious mind.',
@@ -116,6 +117,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
     if(!isCat||catSpeaking)return;
     stopCatSpeech();
     catSpeaking=true;
+    soundFX.playCatMeow();
     if(catSpeechOutput)catSpeechOutput.innerHTML='';
     if(catWisprWrap)catWisprWrap.classList.add('is-speaking');
 
@@ -135,6 +137,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
       if(!catSpeaking)return;
       if(wordIndex<words.length){
         const word=words[wordIndex++];
+        if(wordIndex%4===1) soundFX.playCatChirp();
         const span=document.createElement('span');
         span.className='wispr-word wispr-word-latest';
         span.textContent=word;
@@ -263,6 +266,10 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
   function schedule(){if(active&&!frame&&!document.hidden)frame=requestAnimationFrame(tick);}
   function open(){
     if(active)return;active=true;direction=1;progress=isStill()?1:pageTiming.arrival;last=0;
+    if(isCat)soundFX.playCatMeow();
+    else if(isLaptop)soundFX.playLaptopOpen();
+    else if(isBook)soundFX.playBookOpen();
+    else soundFX.playClick();
     button.setAttribute('aria-expanded','true');panel.scrollTop=0;
     dialog.showModal();onCue(id);render();closeButton.focus({preventScroll:true});
     if(progress===1){
@@ -273,6 +280,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
   }
   function close(){
     if(!active||direction<0)return;
+    soundFX.playClose();
     stopCatSpeech();
     direction=-1;last=0;schedule();
   }

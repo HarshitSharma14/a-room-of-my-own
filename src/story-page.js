@@ -1,5 +1,6 @@
 import { projectPageRect, pageDestination, advancePage, pagePose, pageTiming, footTipOnScreen, magicPoint } from './page-motion.js';
 import { storyContent } from './story-content.js';
+import { soundFX } from './sound-fx.js';
 
 export function createStoryPage({room,button,scene,getView,getFootMotion,isStill,onChange}) {
   const patch=document.createElement('img');
@@ -89,13 +90,16 @@ export function createStoryPage({room,button,scene,getView,getFootMotion,isStill
   function schedule() {if(!frame&&active&&!document.hidden)frame=requestAnimationFrame(tick);}
   async function open() {
     if(active||pending)return;pending=true;await ready;pending=false;
+    soundFX.playPageOpen();
     active=true;direction=1;progress=isStill()||!assetsReady?1:pageTiming.arrival;last=0;
     patch.hidden=!assetsReady;copy.scrollTop=0;
     button.setAttribute('aria-expanded','true');
     dialog.showModal();render();closeButton.focus({preventScroll:true});schedule();
   }
   function close() {
-    if(!active||direction<0)return;direction=-1;last=0;schedule();
+    if(!active||direction<0)return;
+    soundFX.playClose();
+    direction=-1;last=0;schedule();
   }
   button.addEventListener('click',open);
   closeButton.addEventListener('click',close);backdrop.addEventListener('click',close);
