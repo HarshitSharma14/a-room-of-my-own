@@ -2,6 +2,7 @@
 // Audio starts on user interaction per browser autoplay policies.
 
 let audioCtx = null;
+let catAudio = null;
 
 function getContext() {
   if (!audioCtx) {
@@ -12,6 +13,14 @@ function getContext() {
     audioCtx.resume().catch(() => {});
   }
   return audioCtx;
+}
+
+function getCatAudio() {
+  if (!catAudio && typeof Audio !== 'undefined') {
+    catAudio = new Audio('./art/cat-meow.mp3');
+    catAudio.preload = 'auto';
+  }
+  return catAudio;
 }
 
 export const soundFX = {
@@ -178,69 +187,25 @@ export const soundFX = {
     noise.start(now + 0.04);
   },
 
-  // Cute, sweet kitten mew
+  // Authentic kitten meow from recorded audio
   playCatMeow() {
-    const ctx = getContext();
-    if (!ctx) return;
-    const now = ctx.currentTime;
+    try {
+      const audio = getCatAudio();
+      if (audio) {
+        audio.currentTime = 0;
+        audio.volume = 0.85;
+        const playPromise = audio.play();
+        if (playPromise) playPromise.catch(() => {});
+      }
+    } catch (_) {}
+  },
 
-    // Sweet sine fundamental - warm and organic, zero harshness
-    const voice = ctx.createOscillator();
-    voice.type = 'sine';
-
-    // Soft second harmonic for throat warmth
-    const overtone = ctx.createOscillator();
-    overtone.type = 'sine';
-
-    // Kitten pitch contour: high, sweet, gentle arch
-    const baseFreq = 740;
-    voice.frequency.setValueAtTime(baseFreq, now);
-    voice.frequency.exponentialRampToValueAtTime(1180, now + 0.11);
-    voice.frequency.setValueAtTime(1180, now + 0.19);
-    voice.frequency.exponentialRampToValueAtTime(820, now + 0.35);
-
-    overtone.frequency.setValueAtTime(baseFreq * 2, now);
-    overtone.frequency.exponentialRampToValueAtTime(2360, now + 0.11);
-    overtone.frequency.setValueAtTime(2360, now + 0.19);
-    overtone.frequency.exponentialRampToValueAtTime(1640, now + 0.35);
-
-    // Subtle 6.5Hz kitten vocal vibrato
-    const vibrato = ctx.createOscillator();
-    const vibratoGain = ctx.createGain();
-    vibrato.frequency.value = 6.5;
-    vibratoGain.gain.setValueAtTime(0, now);
-    vibratoGain.gain.linearRampToValueAtTime(12, now + 0.11);
-    vibratoGain.gain.linearRampToValueAtTime(0, now + 0.32);
-    vibrato.connect(voice.frequency);
-    vibrato.connect(overtone.frequency);
-    vibrato.start(now);
-    vibrato.stop(now + 0.36);
-
-    // Warm lowpass filter to keep sound rounded and gentle
-    const filter = ctx.createBiquadFilter();
-    filter.type = 'lowpass';
-    filter.frequency.setValueAtTime(2600, now);
-
-    // Amplitude envelope: soft attack, gentle body, sweet fade
-    const masterGain = ctx.createGain();
-    masterGain.gain.setValueAtTime(0.001, now);
-    masterGain.gain.linearRampToValueAtTime(0.14, now + 0.04);
-    masterGain.gain.setValueAtTime(0.14, now + 0.19);
-    masterGain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
-
-    const overtoneGain = ctx.createGain();
-    overtoneGain.gain.value = 0.18;
-    overtone.connect(overtoneGain);
-    overtoneGain.connect(filter);
-
-    voice.connect(filter);
-    filter.connect(masterGain);
-    masterGain.connect(ctx.destination);
-
-    voice.start(now);
-    overtone.start(now);
-    voice.stop(now + 0.36);
-    overtone.stop(now + 0.36);
+  // Stop kitten meow when closing
+  stopCatMeow() {
+    if (catAudio) {
+      catAudio.pause();
+      catAudio.currentTime = 0;
+    }
   },
 
   // Soft, adorable baby kitten chirps and peeps for streaming speech words

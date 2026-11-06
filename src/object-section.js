@@ -104,6 +104,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
   const catWisprWrap=isCat?dialog.querySelector('.wispr-icon-wrap'):null;
 
   function stopCatSpeech(){
+    soundFX.stopCatMeow();
     if(catSpeechTimer){clearInterval(catSpeechTimer);catSpeechTimer=null;}
     if(catMouthTimer){clearInterval(catMouthTimer);catMouthTimer=null;}
     if(catAutoReturnTimer){clearTimeout(catAutoReturnTimer);catAutoReturnTimer=null;}

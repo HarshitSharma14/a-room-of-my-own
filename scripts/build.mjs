@@ -13,6 +13,8 @@ for (const file of await readdir(path.join(root, 'src'))) {
 await copyFile(path.join(root, 'public/art/room-scene.jpg'), path.join(out, 'art/room-scene.jpg'));
 const pageAssets=['story-page.png','story-wall.png','story-nail.png','laptop-front.png','laptop-sofa-patch.png','cat-front.png','cat-front-talking.png','cat-sofa-patch.png','book-front.png','book-open.png','book-floor-patch.png','phone-back.png','phone-sofa-patch.png','wispr-flow-icon-light.png'];
 for(const file of pageAssets) await copyFile(path.join(root,'public/art',file),path.join(out,'art',file));
+const audioAssets=['cat-meow.mp3'];
+for(const file of audioAssets) await copyFile(path.join(root,'public/art',file),path.join(out,'art',file));
 const image = await stat(path.join(out, 'art/room-scene.jpg'));
 // A portable preview uses the exact same sources, with assets embedded so a
 // browser can open it directly without a server or file-origin fetches.
@@ -33,6 +35,10 @@ for(const file of pageAssets) {
   const asset=await readFile(path.join(root,'public/art',file));
   preview=preview.replaceAll(`./art/${file}`,`data:image/png;base64,${asset.toString('base64')}`);
 }
+for(const file of audioAssets) {
+  const asset=await readFile(path.join(root,'public/art',file));
+  preview=preview.replaceAll(`./art/${file}`,`data:audio/mp3;base64,${asset.toString('base64')}`);
+}
 await writeFile(path.join(out, 'preview.html'), preview);
 
 let calibrationPreview = (await readFile(path.join(root, 'index.html'), 'utf8'))
@@ -43,6 +49,10 @@ let calibrationPreview = (await readFile(path.join(root, 'index.html'), 'utf8'))
 for(const file of pageAssets) {
   const asset=await readFile(path.join(root,'public/art',file));
   calibrationPreview=calibrationPreview.replaceAll(`./art/${file}`,`data:image/png;base64,${asset.toString('base64')}`);
+}
+for(const file of audioAssets) {
+  const asset=await readFile(path.join(root,'public/art',file));
+  calibrationPreview=calibrationPreview.replaceAll(`./art/${file}`,`data:audio/mp3;base64,${asset.toString('base64')}`);
 }
 await writeFile(path.join(out, 'gaze-grid.html'), calibrationPreview);
 console.log(`Built dist/ — no runtime dependencies; room artwork ${(image.size / 1024).toFixed(0)} KB.`);
