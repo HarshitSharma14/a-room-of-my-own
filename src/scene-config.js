@@ -19,7 +19,8 @@ export const scene = {
   clock: { center: [0.55, 0.15], radius: [0.05, 0.05] },
   guitar: { center: [2360/2752,790/1536], radius: [125/2752,220/1536], bounds:[2255,565,205,445] },
   book: { center: [1468/2752,1475/1536], radius: [145/2752,70/1536], bounds:[1330,1420,275,116] },
-  phone: { center: [1830/2752, 875/1536], radius: [40/2752, 50/1536], bounds:[1795, 830, 70, 95] },
+  leaf: { center: [2180/2752, 587/1536], radius: [50/2752, 28/1536], bounds: [2130, 560, 100, 55] },
+  phone: { center: [1835/2752, 868/1536], radius: [40/2752, 45/1536], bounds:[1800, 828, 70, 80] },
   controller: { center: [0.7, 0.85], radius: [0.05, 0.05] },
   futureObjects: ['workbench', 'pinboard', 'bookshelf', 'trophy', 'records', 'camera', 'notebook', 'window'],
 };

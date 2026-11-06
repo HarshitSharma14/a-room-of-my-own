@@ -249,5 +249,50 @@ export const soundFX = {
 
     osc.start(now);
     osc.stop(now + 0.14);
+  },
+
+  // Organic plant leaf pluck snap and soft foliage rustle
+  playLeafPluck() {
+    const ctx = getContext();
+    if (!ctx) return;
+    const now = ctx.currentTime;
+
+    // Stem pluck snap
+    const snap = ctx.createOscillator();
+    const snapGain = ctx.createGain();
+    snap.type = 'triangle';
+    snap.frequency.setValueAtTime(1700, now);
+    snap.frequency.exponentialRampToValueAtTime(450, now + 0.035);
+    snapGain.gain.setValueAtTime(0.14, now);
+    snapGain.gain.exponentialRampToValueAtTime(0.001, now + 0.035);
+    snap.connect(snapGain);
+    snapGain.connect(ctx.destination);
+    snap.start(now);
+    snap.stop(now + 0.04);
+
+    // Green leaf flutter
+    const flutterSize = Math.floor(ctx.sampleRate * 0.25);
+    const flutterBuf = ctx.createBuffer(1, flutterSize, ctx.sampleRate);
+    const data = flutterBuf.getChannelData(0);
+    for (let i = 0; i < flutterSize; i++) {
+      data[i] = (Math.random() * 2 - 1) * Math.sin((i / flutterSize) * Math.PI);
+    }
+    const noise = ctx.createBufferSource();
+    noise.buffer = flutterBuf;
+
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'bandpass';
+    filter.frequency.setValueAtTime(2200, now + 0.02);
+    filter.frequency.exponentialRampToValueAtTime(1100, now + 0.22);
+    filter.Q.value = 2.0;
+
+    const noiseGain = ctx.createGain();
+    noiseGain.gain.setValueAtTime(0.07, now + 0.02);
+    noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+
+    noise.connect(filter);
+    filter.connect(noiseGain);
+    noiseGain.connect(ctx.destination);
+    noise.start(now + 0.02);
   }
 };

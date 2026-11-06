@@ -15,6 +15,9 @@ const objectSectionContent={
   book:{title:'The next chapter',eyebrow:'THE BOOK · 05 / 06',lead:'A place for what I’m learning.',
     body:'This book is a space for notes, experiments, and ideas that turn into work. Each chapter can hold a skill, a project, and what changed after trying it.',
     detail:'The pages are ready for real examples as this portfolio grows.',label:'The book',bounds:[1330,1420,275,116]},
+  leaf:{title:'Room to grow',eyebrow:'THE PLANT · GROWTH',lead:'Ideas take root when given space to branch out.',
+    body:'Like everything in this room, good projects start small. A little patience, regular attention, and the freedom to explore off the beaten path are what turn curious experiments into living creations.',
+    detail:'Click anywhere or close to return the leaf to the plant.',label:'The plant',bounds:[2130,560,100,55]},
   phone:{title:'Let’s build together',eyebrow:'THE PHONE · CONTACT',lead:'Direct line for engineering & ideas.',
     body:'Always curious about new projects, creative tools, AI experiments, and collaborative software.',
     detail:'Reach out via email or connect on GitHub and LinkedIn.',label:'Contact',bounds:[1800,828,70,80]},
@@ -25,8 +28,9 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
   const isLaptop=id==='laptop';
   const isCat=id==='cat';
   const isBook=id==='book';
+  const isLeaf=id==='leaf';
   const isPhone=id==='phone';
-  const patchArt={laptop:{file:'laptop-sofa-patch.png',bounds:[1320,560,480,430]},cat:{file:'cat-sofa-patch.png',bounds:[940,680,470,390]},book:{file:'book-floor-patch.png',bounds:[1150,1210,650,326]},phone:{file:'phone-sofa-patch.png',bounds:[1785,815,100,105]}}[id];
+  const patchArt={laptop:{file:'laptop-sofa-patch.png',bounds:[1320,560,480,430]},cat:{file:'cat-sofa-patch.png',bounds:[940,680,470,390]},book:{file:'book-floor-patch.png',bounds:[1150,1210,650,326]},leaf:{file:'leaf-plant-patch.png',bounds:[2130,560,100,55]},phone:{file:'phone-sofa-patch.png',bounds:[1785,815,100,105]}}[id];
   const roomPatch=patchArt?document.createElement('img'):null;
   if(roomPatch){roomPatch.src=`./art/${patchArt.file}`;roomPatch.alt='';roomPatch.className=`${id}-room-patch`;roomPatch.hidden=true;room.append(roomPatch);}
   const dialog=document.createElement('dialog');
@@ -80,6 +84,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
       :isPhone?`<div class="object-traveler object-phone"><div class="phone-machine"><div class="phone-front">${panelHTML}</div><div class="phone-back"><img class="phone-back-img" src="./art/phone-back.png" alt="" draggable="false"></div></div></div>`
       :isCat?`<div class="object-traveler object-cat" aria-hidden="true"><img class="cat-front cat-front--closed" src="./art/cat-front.png" alt="" draggable="false"><img class="cat-front cat-front--talking" src="./art/cat-front-talking.png" alt="" draggable="false" style="display:none;"></div>${panelHTML}`
       :isBook?`<div class="object-traveler object-book" aria-hidden="true"><img class="book-open" src="./art/book-open.png" alt="" draggable="false"><div class="book-cover"><img class="book-front" src="./art/book-front.png" alt="" draggable="false"></div></div>${panelHTML}`
+      :isLeaf?`<div class="object-traveler object-leaf" aria-hidden="true"><img class="leaf-front" src="./art/leaf-front.png" alt="" draggable="false"></div>${panelHTML}`
       :`<div class="object-traveler" aria-hidden="true"><div class="object-portrait"></div></div>${panelHTML}`}`;
   if(!isCat&&!isPhone){
     for(const [selector,value] of [['.object-eyebrow',content.eyebrow],['h2',content.title],['.object-lead',content.lead],['.object-body',content.body],['.object-detail',content.detail]]) dialog.querySelector(selector).textContent=value;
@@ -95,7 +100,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
   if(portrait)portrait.style.backgroundImage=`url("${image.currentSrc||image.src}")`;
   const closeButton=dialog.querySelector('.object-close');
   button.setAttribute('aria-haspopup','dialog');button.setAttribute('aria-controls',dialog.id);button.setAttribute('aria-expanded','false');
-  button.dataset.label=id==='cat'?'The cat':id==='laptop'?'Projects':id==='book'?'The book':id==='phone'?'Contact': 'Beyond code';
+  button.dataset.label=id==='cat'?'The cat':id==='laptop'?'Projects':id==='book'?'The book':id==='leaf'?'The plant':id==='phone'?'Contact': 'Beyond code';
   let active=false,progress=0,direction=1,frame=0,last=0,focus=null;
   let catSpeechTimer=null,catMouthTimer=null,catAutoReturnTimer=null,catSpeaking=false;
   const catClosedImg=isCat?dialog.querySelector('.cat-front--closed'):null;
@@ -220,9 +225,21 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
       const coverWidth=startWidth+(midClosedWidth-startWidth)*fly;
       Object.assign(bookCover.style,{width:`${coverWidth}px`,height:`${coverWidth/closedAspect}px`,opacity:String(1-opening),transform:`translate(-50%,-50%) rotateY(${-100*opening}deg)`});
     }
+    if(isLeaf){
+      const aspect=100/55;
+      const phase=clamp((progress-pageTiming.arrival)/(1-pageTiming.arrival),0,1);
+      const fly=ease(phase);
+      const startWidth=source.width;
+      const isMobile=rect.width<=700;
+      const targetWidth=isMobile?Math.min(rect.width*0.88,440):Math.min(rect.width*0.5,600);
+      width=startWidth+(targetWidth-startWidth)*fly;
+      height=width/aspect;
+      cx=source.left+source.width/2+(rect.left+rect.width/2-source.left-source.width/2)*fly;
+      cy=source.top+source.height/2+(rect.top+rect.height/2-source.top-source.height/2)*fly;
+    }
     Object.assign(traveler.style,{left:`${cx-width/2}px`,top:`${cy-height/2}px`,width:`${width}px`,height:`${height}px`,
       opacity:String(progress>=pageTiming.arrival?1:0),
-      transform:isBook?`perspective(1000px) rotateX(${55*(1-bookFlight)}deg) rotateZ(${-16*(1-bookFlight)}deg)`:isLaptop||isCat||isPhone?'none':`rotate(${8*Math.sin(t*Math.PI)}deg)`,
+      transform:isBook?`perspective(1000px) rotateX(${55*(1-bookFlight)}deg) rotateZ(${-16*(1-bookFlight)}deg)`:isLeaf?`perspective(1000px) rotateZ(${-30*(1-t)+20*Math.sin(t*Math.PI)}deg) rotateY(${70*(1-t)}deg) rotateX(${15*Math.sin(t*Math.PI)}deg)`:isLaptop||isCat||isPhone?'none':`rotate(${8*Math.sin(t*Math.PI)}deg)`,
       pointerEvents:(isLaptop||isPhone)&&progress>.85?'auto':'none'});
     if(machine){
       const turn=ease(clamp((progress-pageTiming.arrival)/(.9-pageTiming.arrival),0,1));
@@ -270,6 +287,7 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
     if(isCat)soundFX.playCatMeow();
     else if(isLaptop)soundFX.playLaptopOpen();
     else if(isBook)soundFX.playBookOpen();
+    else if(isLeaf)soundFX.playLeafPluck();
     else soundFX.playClick();
     button.setAttribute('aria-expanded','true');panel.scrollTop=0;
     dialog.showModal();onCue(id);render();closeButton.focus({preventScroll:true});

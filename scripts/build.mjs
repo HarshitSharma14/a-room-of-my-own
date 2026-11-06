@@ -11,7 +11,7 @@ for (const file of await readdir(path.join(root, 'src'))) {
   if (/\.(js|css)$/.test(file)) await copyFile(path.join(root, 'src', file), path.join(out, 'src', file));
 }
 await copyFile(path.join(root, 'public/art/room-scene.jpg'), path.join(out, 'art/room-scene.jpg'));
-const pageAssets=['story-page.png','story-wall.png','story-nail.png','laptop-front.png','laptop-sofa-patch.png','cat-front.png','cat-front-talking.png','cat-sofa-patch.png','book-front.png','book-open.png','book-floor-patch.png','phone-back.png','phone-sofa-patch.png','wispr-flow-icon-light.png'];
+const pageAssets=['story-page.png','story-wall.png','story-nail.png','laptop-front.png','laptop-sofa-patch.png','cat-front.png','cat-front-talking.png','cat-sofa-patch.png','book-front.png','book-open.png','book-floor-patch.png','leaf-front.png','leaf-plant-patch.png','phone-back.png','phone-sofa-patch.png','wispr-flow-icon-light.png'];
 for(const file of pageAssets) await copyFile(path.join(root,'public/art',file),path.join(out,'art',file));
 const audioAssets=['cat-meow.mp3'];
 for(const file of audioAssets) await copyFile(path.join(root,'public/art',file),path.join(out,'art',file));

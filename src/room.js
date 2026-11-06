@@ -75,6 +75,13 @@ const targetOutlines = {
     <g transform="translate(236, 73)"><path class="hotspot-sparkle hotspot-sparkle--1" d="M 0,-7 Q 0,0 7,0 Q 0,0 0,7 Q 0,0 -7,0 Q 0,0 0,-7 Z"/></g>
     <g transform="translate(352, 117)"><path class="hotspot-sparkle hotspot-sparkle--2" d="M 0,-6 Q 0,0 6,0 Q 0,0 0,6 Q 0,0 -6,0 Q 0,0 0,-6 Z"/></g>
     <g transform="translate(276, 186)"><path class="hotspot-sparkle hotspot-sparkle--3" d="M 0,-5 Q 0,0 5,0 Q 0,0 0,5 Q 0,0 -5,0 Q 0,0 0,-5 Z"/></g>
+  </svg>`,
+  leaf: `<svg class="hotspot-halo" viewBox="0 0 100 55" aria-hidden="true">
+    <path class="hotspot-halo-glow" d="M 4,4 C 20,3 50,10 78,24 C 88,30 92,36 92,40 C 90,46 82,49 68,50 C 48,46 25,32 4,4 Z"/>
+    <path class="hotspot-halo-stroke" d="M 4,4 C 20,3 50,10 78,24 C 88,30 92,36 92,40 C 90,46 82,49 68,50 C 48,46 25,32 4,4 Z"/>
+    <g transform="translate(6, 6)"><path class="hotspot-sparkle hotspot-sparkle--1" d="M 0,-7 Q 0,0 7,0 Q 0,0 0,7 Q 0,0 -7,0 Q 0,0 0,-7 Z"/></g>
+    <g transform="translate(55, 20)"><path class="hotspot-sparkle hotspot-sparkle--2" d="M 0,-6 Q 0,0 6,0 Q 0,0 0,6 Q 0,0 -6,0 Q 0,0 0,-6 Z"/></g>
+    <g transform="translate(90, 40)"><path class="hotspot-sparkle hotspot-sparkle--3" d="M 0,-5 Q 0,0 5,0 Q 0,0 0,5 Q 0,0 -5,0 Q 0,0 0,-5 Z"/></g>
   </svg>`
 };
 
@@ -83,6 +90,7 @@ const targets = [
   {id:'cat', label:'Pet the sleeping cat', bounds: [1000, 700, 350, 250]},
   {id:'laptop', label:'Explore projects on the laptop', bounds: [1380, 600, 300, 300]},
   {id:'book', label:'Open the green book on the floor', bounds: [1250, 1350, 400, 186]},
+  {id:'leaf', label:'Pluck a leaf from the plant', bounds: [2130, 560, 100, 55]},
 ].map(target => {
   const button = document.createElement('button');
   button.type = 'button'; button.className = 'room-hotspot';
@@ -94,7 +102,7 @@ const targets = [
     if (drag?.moved) { event.preventDefault(); return; }
 
     // Handled by their respective modules
-    if (['story','cat','laptop','book'].includes(target.id)) return;
+    if (['story','cat','laptop','book','leaf'].includes(target.id)) return;
 
     room.dataset.lastInteraction = target.id;
     schedule();
@@ -246,7 +254,7 @@ addEventListener('pageshow', event => { if (event.persisted) start(); });
 updateToggle();
 story=createStoryPage({room,button:targets.find(target=>target.id==='story').button,scene,
   getView:()=>({rect,crop}),getFootMotion:()=>footMotion,isStill:()=>paused,onChange:schedule});
-sections=['cat','laptop','book'].map(id=>createObjectSection({id,room,image,scene,
+sections=['cat','laptop','book','leaf'].map(id=>createObjectSection({id,room,image,scene,
   button:targets.find(target=>target.id===id).button,getView:()=>({rect,crop}),
   getFootMotion:()=>footMotion,isStill:()=>paused,onChange:schedule,onCue:target=>{
     if(target==='cat')petStart=time;
