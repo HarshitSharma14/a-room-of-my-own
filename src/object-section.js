@@ -38,66 +38,107 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
   dialog.setAttribute('aria-labelledby',`${id}-title`);
   const laptopPanelBody=`
       <button class="object-close" type="button" aria-label="Close laptop section" autofocus>×</button>
-      <div class="laptop-toolbar" aria-hidden="true">
-        <span class="laptop-led"></span>
-        <span>HARSHIT SHARMA · /dev/workspace</span>
-        <span class="laptop-status">ONLINE 🟢</span>
+      <div class="laptop-toolbar">
+        <div class="laptop-window-controls" aria-hidden="true">
+          <span class="win-dot win-dot--red"></span>
+          <span class="win-dot win-dot--yellow"></span>
+          <span class="win-dot win-dot--green"></span>
+        </div>
+        <span class="laptop-title-tab">harshit@portfolio: ~/workspace</span>
+        <div class="laptop-nav-pills" role="tablist">
+          <a href="#laptop-overview" class="laptop-nav-pill">Overview</a>
+          <a href="#laptop-experience" class="laptop-nav-pill">Experience</a>
+          <a href="#laptop-projects" class="laptop-nav-pill">Projects</a>
+          <a href="#laptop-skills" class="laptop-nav-pill">Skills</a>
+        </div>
       </div>
       
-      <div class="laptop-intro-block">
-        <span class="laptop-eyebrow">ABOUT & PHILOSOPHY</span>
+      <div id="laptop-overview" class="laptop-intro-block">
+        <div class="laptop-badge-row">
+          <span class="badge-role">SOFTWARE ENGINEER</span>
+          <span class="badge-avail"><span class="pulse-dot"></span> OPEN TO BUILD</span>
+        </div>
         <h2 class="laptop-headline">Entrepreneur trapped in the body of a software engineer.</h2>
         <p class="laptop-lead">I enjoy building reliable products from the backend to the frontend. I work across distributed systems, full-stack web applications, and AI-powered software, with a focus on writing clean code, solving real problems, and shipping things people actually use.</p>
-        <div class="laptop-meta-bar">
-          <span class="meta-tag">🎓 IIIT Sri City · B.Tech AI & Data Science (2023–2027) · CGPA 8.3</span>
-          <a href="mailto:Harshitsharmaclg@gmail.com" class="meta-link">✉️ Email</a>
-          <a href="https://github.com/HarshitSharma14" target="_blank" rel="noopener" class="meta-link">🐙 GitHub</a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener" class="meta-link">💼 LinkedIn</a>
-          <a href="https://leetcode.com" target="_blank" rel="noopener" class="meta-link">⚡ LeetCode 1695</a>
-          <a href="https://codeforces.com" target="_blank" rel="noopener" class="meta-link">🏆 Codeforces 1218</a>
+        
+        <div class="laptop-meta-card">
+          <div class="meta-edu-row">
+            <span class="edu-icon">🎓</span>
+            <div>
+              <h4 class="edu-school">Indian Institute of Information Technology Sri City</h4>
+              <p class="edu-degree">B.Tech in Artificial Intelligence & Data Science <span class="edu-time">(Aug 2023 – Jun 2027)</span> · <strong>CGPA: 8.3</strong></p>
+            </div>
+          </div>
+          <div class="meta-links-grid">
+            <a href="mailto:Harshitsharmaclg@gmail.com" class="meta-link-btn">
+              <span class="link-icon">✉️</span> Harshitsharmaclg@gmail.com
+            </a>
+            <a href="https://github.com/HarshitSharma14" target="_blank" rel="noopener" class="meta-link-btn">
+              <span class="link-icon">🐙</span> GitHub
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="meta-link-btn">
+              <span class="link-icon">💼</span> LinkedIn
+            </a>
+            <a href="https://leetcode.com" target="_blank" rel="noopener" class="meta-link-btn">
+              <span class="link-icon">⚡</span> LeetCode (Peak: 1695)
+            </a>
+            <a href="https://codeforces.com" target="_blank" rel="noopener" class="meta-link-btn">
+              <span class="link-icon">🏆</span> Codeforces (Peak: 1218)
+            </a>
+            <span class="meta-link-btn meta-link-btn--static">
+              <span class="link-icon">🎯</span> JEE Advanced (Top 9%)
+            </span>
+          </div>
         </div>
       </div>
 
-      <div class="laptop-section">
-        <h3 class="laptop-section-heading"><span>💼</span> Experience & Internships</h3>
+      <div id="laptop-experience" class="laptop-section">
+        <div class="section-header-row">
+          <h3 class="laptop-section-heading"><span>💼</span> Work Experience & Internships</h3>
+          <span class="section-counter">3 ROLES</span>
+        </div>
+        
         <div class="laptop-card-stack">
           
           <div class="laptop-card">
-            <div class="card-top">
-              <div>
-                <h4 class="card-role">Software Engineer <span class="card-org">@ EmendoAI</span></h4>
-                <span class="card-time">Oct 2026 – Present · Remote</span>
+            <div class="card-top-row">
+              <div class="card-title-group">
+                <h4 class="card-role">Software Engineer</h4>
+                <span class="card-company">EmendoAI</span>
               </div>
+              <div class="card-timing-badge">Oct 2026 – Present · Remote</div>
             </div>
             <ul class="card-points">
-              <li>Fully owned backend and GenAI development for Paints Closeout, from design to deployment, combining batch image processing, asynchronous color lookup, and surface matching to generate project handover reports.</li>
-              <li>Driving end-to-end development of EmendoAI’s web platform, translating mobile-app workflows into a desktop web experience spanning UX/UI design, frontend architecture and backend integration.</li>
+              <li>Fully owned backend and GenAI development for <strong>Paints Closeout</strong>, from design to deployment, combining batch image processing, asynchronous color lookup, and surface matching to generate project handover reports.</li>
+              <li>Driving end-to-end development of <strong>EmendoAI’s web platform</strong>, translating mobile-app workflows into a desktop web experience spanning UX/UI design, frontend architecture, and backend integration.</li>
             </ul>
           </div>
 
           <div class="laptop-card">
-            <div class="card-top">
-              <div>
-                <h4 class="card-role">Software Engineer Intern <span class="card-org">@ EmendoAI</span></h4>
-                <span class="card-time">Mar 2026 – Sep 2026 (7 mos) · Remote</span>
+            <div class="card-top-row">
+              <div class="card-title-group">
+                <h4 class="card-role">Software Engineer Intern</h4>
+                <span class="card-company">EmendoAI</span>
               </div>
+              <div class="card-timing-badge">Mar 2026 – Sep 2026 · 7 mos · Remote</div>
             </div>
             <ul class="card-points">
               <li>Developed and owned <strong>AI Actions</strong>, enabling users to create and manage application entities through natural-language conversations.</li>
-              <li>Developed <strong>AMA Bot V3</strong> and owned its ongoing development, rearchitecture, and feature extensions, spanning context management, intent classification, NL2SQL, and multi-tool orchestration.</li>
-              <li>Architected and implemented an automated resource-deletion lifecycle, combining soft deletion, scheduled permanent deletion, and background cleanup of dependent resources.</li>
+              <li>Developed <strong>AMA Bot V3</strong> and own its ongoing development, rearchitecture, and feature extensions, spanning context management, intent classification, <strong>NL2SQL</strong>, and multi-tool orchestration.</li>
+              <li>Architected and implemented an automated <strong>resource-deletion lifecycle</strong>, combining soft deletion, scheduled permanent deletion, and background cleanup of dependent resources.</li>
             </ul>
           </div>
 
           <div class="laptop-card">
-            <div class="card-top">
-              <div>
-                <h4 class="card-role">Full Stack Developer Intern <span class="card-org">@ SiteGuru</span></h4>
-                <span class="card-time">Aug 2025 – Sep 2025 (2 mos) · Remote</span>
+            <div class="card-top-row">
+              <div class="card-title-group">
+                <h4 class="card-role">Full Stack Developer Intern</h4>
+                <span class="card-company">SiteGuru</span>
               </div>
+              <div class="card-timing-badge">Aug 2025 – Sep 2025 · 2 mos · Remote</div>
             </div>
             <ul class="card-points">
-              <li>Developed a multi-tenant CRM with configurable roles, hierarchies, workflows, and permissions; designed SQL schemas for tenant isolation across <strong>65+ interlinked tables</strong>.</li>
+              <li>Developed a <strong>multi-tenant CRM</strong> with configurable roles, hierarchies, workflows, and permissions; designed SQL schemas for tenant isolation across <strong>65+ interlinked tables</strong>.</li>
               <li>Built role-based dashboards and audit logs for employee and administrator traceability, along with server-rendered, customizable CRM pages.</li>
             </ul>
           </div>
@@ -105,73 +146,138 @@ export function createObjectSection({id,room,button,scene,image,getView,getFootM
         </div>
       </div>
 
-      <div class="laptop-section">
-        <h3 class="laptop-section-heading"><span>🚀</span> Featured Projects</h3>
+      <div id="laptop-projects" class="laptop-section">
+        <div class="section-header-row">
+          <h3 class="laptop-section-heading"><span>🚀</span> Featured Projects</h3>
+          <span class="section-counter">SYSTEMS & AI</span>
+        </div>
+
         <div class="laptop-card-stack">
           
           <div class="laptop-card">
-            <div class="card-top">
-              <div>
+            <div class="card-top-row">
+              <div class="card-title-group">
                 <h4 class="card-role">Distributed Job Queue</h4>
-                <div class="card-badges">
-                  <span>Python</span><span>FastAPI</span><span>PostgreSQL</span><span>Redis</span><span>Docker</span><span>Oracle Cloud</span>
-                </div>
+                <span class="card-subtitle">Fault-Tolerant Asynchronous Execution Engine</span>
               </div>
             </div>
+            <div class="card-pill-row">
+              <span class="tech-pill tech-pill--cyan">Python</span>
+              <span class="tech-pill tech-pill--cyan">FastAPI</span>
+              <span class="tech-pill tech-pill--blue">PostgreSQL</span>
+              <span class="tech-pill tech-pill--red">Redis</span>
+              <span class="tech-pill tech-pill--slate">Docker</span>
+              <span class="tech-pill tech-pill--amber">Oracle Cloud</span>
+            </div>
             <ul class="card-points">
-              <li>Architected and deployed separate API, worker, scheduler, and recovery services on an Oracle Cloud VM; built Admin, Producer, and Worker workflows to publish jobs and monitor queue health.</li>
-              <li>Used PostgreSQL as the source of truth and Redis for delivery; implemented a <strong>transactional outbox</strong> to guarantee zero job loss on publication failure.</li>
-              <li>Added idempotency, attempt fencing, leases, heartbeats, retries, and dead-letter queues for at-least-once execution under worker crashes and duplicate delivery.</li>
+              <li>Architected and deployed separate <strong>API, worker, scheduler, and recovery services</strong> on an Oracle Cloud VM; built Admin, Producer, and Worker workflows to publish jobs and monitor queue health.</li>
+              <li>Used PostgreSQL as the source of truth and Redis for delivery; implemented a <strong>transactional outbox</strong> to guarantee zero job loss when publication fails.</li>
+              <li>Engineered <strong>idempotency, attempt fencing, leases, heartbeats, retries</strong>, and dead-letter queues for at-least-once execution under worker crashes and duplicate delivery.</li>
             </ul>
           </div>
 
           <div class="laptop-card">
-            <div class="card-top">
-              <div>
+            <div class="card-top-row">
+              <div class="card-title-group">
                 <h4 class="card-role">Legalos — Multi-Agent Legal RAG</h4>
-                <div class="card-badges">
-                  <span>LangGraph</span><span>Qdrant</span><span>Ollama</span><span>LangChain</span><span>Pydantic</span>
-                </div>
+                <span class="card-subtitle">Autonomous Legal Question Decomposition & Statutory Retrieval</span>
               </div>
             </div>
+            <div class="card-pill-row">
+              <span class="tech-pill tech-pill--purple">LangGraph</span>
+              <span class="tech-pill tech-pill--purple">LangChain</span>
+              <span class="tech-pill tech-pill--emerald">Qdrant</span>
+              <span class="tech-pill tech-pill--slate">Ollama</span>
+              <span class="tech-pill tech-pill--cyan">Pydantic</span>
+            </div>
             <ul class="card-points">
-              <li>Built a legal-document RAG system using LangGraph, Qdrant, and local language models, combining query rewriting, multi-query retrieval, and structured cited answers.</li>
-              <li>Developed automated retrieval and generation evaluations, improving an internal benchmark from <strong>33.93% to 43.37%</strong> through retrieval changes.</li>
-              <li>Engineered a multi-agent RAG architecture that breaks down multi-issue questions, classifies each along intent axes, and coordinates specialist agents for legal-section lookup and applicability checks.</li>
+              <li>Built a legal-document RAG system using LangGraph, Qdrant, and local language models, combining <strong>query rewriting, multi-query retrieval</strong>, and structured cited answers.</li>
+              <li>Developed automated retrieval and generation evaluations, improving an internal benchmark from <strong>33.93% to 43.37%</strong> through retrieval pipeline optimizations.</li>
+              <li>Architected a <strong>multi-agent RAG workflow</strong> that breaks down multi-issue questions, classifies each along intent axes, and coordinates specialist agents for statutory lookup and cited answers.</li>
             </ul>
           </div>
 
         </div>
       </div>
 
-      <div class="laptop-section">
-        <h3 class="laptop-section-heading"><span>⚡</span> Technical Skills</h3>
+      <div id="laptop-skills" class="laptop-section">
+        <div class="section-header-row">
+          <h3 class="laptop-section-heading"><span>⚡</span> Technical Skills</h3>
+          <span class="section-counter">CORE STACK</span>
+        </div>
+
         <div class="laptop-skills-grid">
-          <div class="skill-box">
-            <span class="skill-head">Languages</span>
-            <p class="skill-list">Python, JavaScript, TypeScript, Java, C++, C, SQL</p>
+          
+          <div class="skill-category-card">
+            <span class="category-title">Languages</span>
+            <div class="skill-tags">
+              <span class="tech-pill">Python</span>
+              <span class="tech-pill">JavaScript</span>
+              <span class="tech-pill">TypeScript</span>
+              <span class="tech-pill">Java</span>
+              <span class="tech-pill">C++</span>
+              <span class="tech-pill">C</span>
+              <span class="tech-pill">SQL</span>
+            </div>
           </div>
-          <div class="skill-box">
-            <span class="skill-head">Backend & Systems</span>
-            <p class="skill-list">FastAPI, Node.js, PostgreSQL, Redis, REST APIs, MongoDB, Distributed Systems, System Design</p>
+
+          <div class="skill-category-card">
+            <span class="category-title">Backend & Distributed Systems</span>
+            <div class="skill-tags">
+              <span class="tech-pill">FastAPI</span>
+              <span class="tech-pill">Node.js</span>
+              <span class="tech-pill">PostgreSQL</span>
+              <span class="tech-pill">Redis</span>
+              <span class="tech-pill">REST APIs</span>
+              <span class="tech-pill">MongoDB</span>
+              <span class="tech-pill">Distributed Systems</span>
+              <span class="tech-pill">System Design</span>
+            </div>
           </div>
-          <div class="skill-box">
-            <span class="skill-head">Frontend</span>
-            <p class="skill-list">React, Next.js, Vue, HTML5, CSS3, Figma</p>
+
+          <div class="skill-category-card">
+            <span class="category-title">AI & Agentic Systems</span>
+            <div class="skill-tags">
+              <span class="tech-pill">LangGraph</span>
+              <span class="tech-pill">LangChain</span>
+              <span class="tech-pill">RAG</span>
+              <span class="tech-pill">Qdrant</span>
+              <span class="tech-pill">Google ADK</span>
+              <span class="tech-pill">LLM APIs</span>
+              <span class="tech-pill">NL2SQL</span>
+              <span class="tech-pill">Prompt Engineering</span>
+            </div>
           </div>
-          <div class="skill-box">
-            <span class="skill-head">AI Systems</span>
-            <p class="skill-list">LangGraph, LangChain, RAG, Qdrant, Google ADK, LLM APIs, Prompt Engineering</p>
+
+          <div class="skill-category-card">
+            <span class="category-title">Frontend & Interfaces</span>
+            <div class="skill-tags">
+              <span class="tech-pill">React</span>
+              <span class="tech-pill">Next.js</span>
+              <span class="tech-pill">Vue</span>
+              <span class="tech-pill">HTML5</span>
+              <span class="tech-pill">CSS3 / WebGL</span>
+              <span class="tech-pill">Figma</span>
+            </div>
           </div>
-          <div class="skill-box">
-            <span class="skill-head">Cloud & Tools</span>
-            <p class="skill-list">Docker, Linux, Git, CI/CD, AWS (EC2, S3, Lambda), Oracle Cloud</p>
+
+          <div class="skill-category-card">
+            <span class="category-title">Cloud, DevOps & Tools</span>
+            <div class="skill-tags">
+              <span class="tech-pill">Docker</span>
+              <span class="tech-pill">Linux</span>
+              <span class="tech-pill">Git</span>
+              <span class="tech-pill">CI/CD</span>
+              <span class="tech-pill">AWS (EC2, S3, Lambda)</span>
+              <span class="tech-pill">Oracle Cloud</span>
+            </div>
           </div>
+
         </div>
       </div>
 
       <div class="object-rule"></div>
-      <span class="object-footer">A ROOM OF MY OWN · HARSHIT SHARMA</span>`;
+      <span class="object-footer">HARSHIT SHARMA · A ROOM OF MY OWN</span>`;
   const panelBody=`
       <button class="object-close" type="button" aria-label="Close ${content.label} section" autofocus>×</button>
       <span class="object-eyebrow"></span><h2 id="${id}-title"></h2>
